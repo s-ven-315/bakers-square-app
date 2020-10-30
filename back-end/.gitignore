@@ -1,0 +1,8 @@
+.vscode
+*.DS_Store
+*__pycache__
+*.env
+flask_web/static/.webassets-cache
+flask_web/static/gen
+*credentials.json
+token.pickle
