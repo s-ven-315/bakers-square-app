@@ -1,11 +1,14 @@
 from flask_login import UserMixin
 from playhouse.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
+
 from models.base_model import BaseModel
 import peewee as pw
 
 
 class User(BaseModel, UserMixin):
+    user_id = pw.CharField(unique=True, null=False)
     name = pw.CharField(unique=False, null=False)
     email = pw.CharField(unique=True, null=False)
     pw_hash = pw.CharField(unique=False, null=False)
@@ -15,6 +18,8 @@ class User(BaseModel, UserMixin):
         if duplicate_user:
             self.errors.append('This email has been registered! Try another email!')
             return
+
+        self.user_id = secure_filename(self.name).lower().replace("_", "") + ("%02d" % User.select().count())
 
         rules = [lambda s: any(x.isupper() for x in s),  # must have at least one uppercase
                  lambda s: any(x.islower() for x in s),  # must have at least one lowercase
