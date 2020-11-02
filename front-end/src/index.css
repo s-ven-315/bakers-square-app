@@ -1,13 +1,68 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Nunito', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 0px 3rem;
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-narrow{
+  z-index: 1;
+}
+
+
+.banner-container {
+  position:relative;
+  height: 80vh;
+}
+
+.banner {
+  background-image: url("assets/images/white-flower-with-cooking-ingredients-table.jpg");
+  background-position: center center;
+  background-size: cover;
+  height: 100%;
+  opacity: 0.5;
+
+}
+
+.banner-text-container {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 1;
+  position: absolute;
+}
+
+.banner-text-container div {
+  margin: auto;
+}
+
+.container {
+  display: flex;
+  height: 80vh;
+  background-color:#ebc6a844;
+}
+
+.container-inner {
+  margin: auto
+}
+
+@media screen and (max-width: 475px) {
+  .menu-wide {
+    display:None;
+  }
+}
+@media screen and (min-width: 476px) {
+  .menu-narrow {
+    display: none;
+  }
 }
