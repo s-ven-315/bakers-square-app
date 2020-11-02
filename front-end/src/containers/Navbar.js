@@ -50,8 +50,8 @@ const Navbar = () => {
                 <div className="menu-wide">
                     {loggedIn ?
                         <>
-                            <Button href="/signup" color="inherit">Profile</Button>
-                            <Button href="/signup" color="inherit" onClick={handleLogout}>Log out</Button>
+                            <Button color="inherit">Profile</Button>
+                            <Button color="inherit" onClick={handleLogout}>Log out</Button>
                         </>
                         :
                         <>
