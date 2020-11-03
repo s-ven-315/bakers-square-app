@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -8,16 +8,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu'
-import SessionContext from "../contexts/SessionContext"
 
-const Navbar = () => {
-    const [loggedIn, setLogged] = useState(localStorage.getItem("token"))
-
-
+const Navbar = ({ loggedIn, setLogged }) => {
     const handleLogout = () => {
-        localStorage.removeItem("token")
-        setLogged(false)
-
+        localStorage.removeItem("user")
+        setLogged(null)
     }
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -42,7 +37,7 @@ const Navbar = () => {
     }
 
     return (
-        <SessionContext.Provider value={{ loggedIn, setLogged }}>
+        <>
             <div className="navbar">
                 <div>
                     <h2>Baker's Square</h2>
@@ -50,7 +45,7 @@ const Navbar = () => {
                 <div className="menu-wide">
                     {loggedIn ?
                         <>
-                            <Button color="inherit">Profile</Button>
+                            <Button color="inherit">Profile {loggedIn.name}</Button>
                             <Button color="inherit" onClick={handleLogout}>Log out</Button>
                         </>
                         :
@@ -99,7 +94,7 @@ const Navbar = () => {
                     </Popper>
                 </div>
             </div>
-        </SessionContext.Provider>
+        </>
     )
 }
 

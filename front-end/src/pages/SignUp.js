@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios"
-import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp() {
-    const history = useHistory();
+export default function SignUp({ loggedIn, setLogged }) {
     const classes = useStyles();
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -52,14 +50,15 @@ export default function SignUp() {
         })
             .then(response => {
                 console.log(response)
-                localStorage.setItem("token", response.data.access_token)
-                history.push("/")
+                localStorage.setItem("user", JSON.stringify(response.data.user))
+                setLogged(response.data)
+
             })
             .catch(error => {
                 console.error(error.response)
             })
     }
-    if (localStorage.getItem("token")) {
+    if (loggedIn) {
         return <Redirect to="/" />
     }
     return (
