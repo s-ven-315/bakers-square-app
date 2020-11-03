@@ -1,11 +1,14 @@
 import requests
 
+TIMEOUT = 100000
 
-def test_url(url, data):
+
+def test_url(url, method='GET', data=None):
     print("\nSending request to %s" % url)
-    print("Input Data: ")
-    print(data)
-    response = requests.post(url, json=data, timeout=5000)
+    if method == "POST" and data is not None:
+        print("Input Data: ")
+        print(data)
+    response = requests.get(url, timeout=TIMEOUT) if method == "GET" else requests.post(url, json=data, timeout=TIMEOUT)
     print("Status Code: %d" % response.status_code)
     if response.status_code != 200:
         try:

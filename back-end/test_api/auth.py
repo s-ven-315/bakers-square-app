@@ -4,14 +4,13 @@ from test_utils import test_url
 def test_signup(name, email, password):
     url = 'http://localhost:5000/api/auth/signup'
     data = dict(name=name, email=email, password=password, )
-    return test_url(url, data)
+    return test_url(url, method="POST", data=data)
 
 
 def test_login(email='', password=''):
     url = 'http://localhost:5000/api/auth/login'
     data = dict(email=email, password=password)
-
-    return test_url(url, data)
+    return test_url(url, method="POST", data=data)
 
 
 if __name__ == '__main__':
