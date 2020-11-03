@@ -32,3 +32,10 @@ class User(BaseModel, UserMixin):
 
         if len(self.errors) == 0:
             self.pw_hash = generate_password_hash(self.pw)
+
+    def as_dict(self):
+        return dict(
+            userId=self.user_id,
+            name=self.name,
+            email=self.email,
+        )

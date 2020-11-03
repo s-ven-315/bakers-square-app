@@ -20,9 +20,9 @@ def signup():
         return flask.jsonify({"msg": "Missing password"}), 400
 
     user = User(name=data['name'], email=data['email'], pw=data['password'])
-    if user.save(force_insert=True) and len(user.errors) == 0:
+    if user.save() and len(user.errors) == 0:
         access_token = create_access_token(identity=user.email)
-        return flask.jsonify({'access_token': access_token}), 200
+        return flask.jsonify({'access_token': access_token, 'user': user.as_dict()}), 200
     else:
         return flask.jsonify({'msg': user.errors}), 400
 
@@ -42,7 +42,7 @@ def login():
 
     if successful_login:
         access_token = create_access_token(identity=user.email)
-        return flask.jsonify({'access_token': access_token}), 200
+        return flask.jsonify({'access_token': access_token, 'user': user.as_dict()}), 200
 
     else:
         msgs = []
