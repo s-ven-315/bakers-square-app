@@ -8,7 +8,7 @@ import peewee as pw
 
 
 class User(BaseModel, UserMixin):
-    userId = pw.CharField(unique=True, null=True)
+    userId = pw.CharField(unique=True, null=False)
     name = pw.CharField(unique=False, null=False)
     email = pw.CharField(unique=True, null=False)
     pw_hash = pw.CharField(unique=False, null=False)
@@ -35,7 +35,7 @@ class User(BaseModel, UserMixin):
 
         if not all([rule(self.pw) for rule in rules]):
             self.errors.append(
-                'Password must have at least one uppercase, one lowercase and be at least 6 characters long')
+                'Password must have at least one uppercase, one lowercase and be at least 7 characters long')
 
         if len(self.errors) == 0:
             self.pw_hash = generate_password_hash(self.pw)

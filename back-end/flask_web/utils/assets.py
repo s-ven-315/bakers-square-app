@@ -1,7 +1,6 @@
 from flask_assets import Bundle
 
 bundles = {
-
     'home_js': Bundle(
         'js/vendor/jquery-3.3.1.js',
         'js/vendor/popper.js',

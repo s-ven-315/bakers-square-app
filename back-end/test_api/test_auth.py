@@ -1,6 +1,6 @@
 import requests
 
-from models.model_users import User
+from models.model_user import User
 from test_utils.test_utils import assert_msg, test_url
 
 

@@ -793,9 +793,20 @@ false Zulu
     <database id="3" parent="1" name="bake_app_dev">
       <ObjectId>16588</ObjectId>
       <Owner>Tan Yi Quan</Owner>
-      <IntrospectionStateNumber>691</IntrospectionStateNumber>
+      <IntrospectionStateNumber>730</IntrospectionStateNumber>
       <Current>1</Current>
-      <Relations>sequence|table|16623|16625|1
+      <Relations>sequence|table|16709|16711|1
+sequence|table|16717|16719|1
+sequence|table|16623|16625|1
+sequence|table|16637|16639|1
+sequence|table|16645|16647|1
+sequence|table|16653|16655|1
+sequence|table|16661|16663|1
+sequence|table|16669|16671|1
+sequence|table|16677|16679|1
+sequence|table|16685|16687|1
+sequence|table|16693|16695|1
+sequence|table|16701|16703|1
 </Relations>
     </database>
     <database id="4" parent="1" name="inventory_management_dev">
@@ -877,7 +888,7 @@ false Zulu
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>692</IntrospectionStateNumber>
+      <IntrospectionStateNumber>731</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="22" parent="3" name="heap">
@@ -947,19 +958,951 @@ false Zulu
     <language id="31" parent="3" name="internal"/>
     <language id="32" parent="3" name="plpgsql"/>
     <language id="33" parent="3" name="sql"/>
-    <sequence id="34" parent="21" name="user_id_seq">
+    <sequence id="34" parent="21" name="comment_id_seq">
+      <ObjectId>16701</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="35" parent="21" name="equipment_id_seq">
+      <ObjectId>16685</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="36" parent="21" name="ingredient_id_seq">
+      <ObjectId>16709</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="37" parent="21" name="like_relation_id_seq">
+      <ObjectId>16669</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="38" parent="21" name="recipe_equipment_relation_id_seq">
+      <ObjectId>16661</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="39" parent="21" name="recipe_id_seq">
+      <ObjectId>16653</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="40" parent="21" name="recipe_ingredient_relation_id_seq">
+      <ObjectId>16645</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="41" parent="21" name="step_equipment_relation_id_seq">
+      <ObjectId>16693</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="42" parent="21" name="step_id_seq">
+      <ObjectId>16637</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="43" parent="21" name="step_ingredient_relation_id_seq">
+      <ObjectId>16677</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="44" parent="21" name="subscription_relation_id_seq">
+      <ObjectId>16717</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="45" parent="21" name="user_id_seq">
       <ObjectId>16623</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>690</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <table id="35" parent="21" name="user">
-      <ObjectId>16625</ObjectId>
-      <Outdated>1</Outdated>
+    <table id="46" parent="21" name="comment">
+      <ObjectId>16703</ObjectId>
       <Owner>Tan Yi Quan</Owner>
-      <StateNumber>690</StateNumber>
+      <StateNumber>728</StateNumber>
     </table>
-    <column id="36" parent="35" name="id">
+    <table id="47" parent="21" name="equipment">
+      <ObjectId>16687</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="48" parent="21" name="ingredient">
+      <ObjectId>16711</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="49" parent="21" name="like_relation">
+      <ObjectId>16671</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="50" parent="21" name="recipe">
+      <ObjectId>16655</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="51" parent="21" name="recipe_equipment_relation">
+      <ObjectId>16663</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="52" parent="21" name="recipe_ingredient_relation">
+      <ObjectId>16647</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="53" parent="21" name="step">
+      <ObjectId>16639</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="54" parent="21" name="step_equipment_relation">
+      <ObjectId>16695</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="55" parent="21" name="step_ingredient_relation">
+      <ObjectId>16679</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="56" parent="21" name="subscription_relation">
+      <ObjectId>16719</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <table id="57" parent="21" name="user">
+      <ObjectId>16625</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>728</StateNumber>
+    </table>
+    <column id="58" parent="46" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;comment_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="59" parent="46" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="60" parent="46" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="61" parent="46" name="text">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="62" parent="46" name="user_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="63" parent="46" name="recipe_id">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="64" parent="46" name="comment_pkey">
+      <ObjectId>16707</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="65" parent="46" name="comment_user_id">
+      <ObjectId>16806</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>user_id</ColNames>
+    </index>
+    <index id="66" parent="46" name="comment_recipe_id">
+      <ObjectId>16807</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+    </index>
+    <key id="67" parent="46" name="comment_pkey">
+      <ObjectId>16708</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>comment_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="68" parent="46" name="fk_comment_user_id_refs_user">
+      <ObjectId>16730</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>user_id</ColNames>
+      <RefTableId>16625</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>user</RefTableName>
+      <RefKeyName>user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="69" parent="46" name="fk_comment_recipe_id_refs_recipe">
+      <ObjectId>16735</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+      <RefTableId>16655</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>recipe</RefTableName>
+      <RefKeyName>recipe_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="70" parent="47" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;equipment_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="71" parent="47" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="72" parent="47" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="73" parent="47" name="name">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="74" parent="47" name="equipment_pkey">
+      <ObjectId>16691</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="75" parent="47" name="equipment_name">
+      <ObjectId>16808</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="76" parent="47" name="equipment_pkey">
+      <ObjectId>16692</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>equipment_pkey</UnderlyingIndexName>
+    </key>
+    <column id="77" parent="48" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;ingredient_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="78" parent="48" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="79" parent="48" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="80" parent="48" name="name">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="81" parent="48" name="ingredient_pkey">
+      <ObjectId>16715</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="82" parent="48" name="ingredient_pkey">
+      <ObjectId>16716</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>ingredient_pkey</UnderlyingIndexName>
+    </key>
+    <column id="83" parent="49" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;like_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="84" parent="49" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="85" parent="49" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="86" parent="49" name="user_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="87" parent="49" name="recipe_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="88" parent="49" name="like_relation_pkey">
+      <ObjectId>16675</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="89" parent="49" name="like_relation_user_id">
+      <ObjectId>16810</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>user_id</ColNames>
+    </index>
+    <index id="90" parent="49" name="like_relation_recipe_id">
+      <ObjectId>16811</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+    </index>
+    <key id="91" parent="49" name="like_relation_pkey">
+      <ObjectId>16676</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>like_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="92" parent="49" name="fk_like_relation_user_id_refs_user">
+      <ObjectId>16745</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>user_id</ColNames>
+      <RefTableId>16625</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>user</RefTableName>
+      <RefKeyName>user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="93" parent="49" name="fk_like_relation_recipe_id_refs_recipe">
+      <ObjectId>16750</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+      <RefTableId>16655</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>recipe</RefTableName>
+      <RefKeyName>recipe_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="94" parent="50" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;recipe_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="95" parent="50" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="96" parent="50" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="97" parent="50" name="name">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="98" parent="50" name="user_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="99" parent="50" name="recipe_pkey">
+      <ObjectId>16659</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="100" parent="50" name="recipe_user_id">
+      <ObjectId>16805</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="101" parent="50" name="recipe_pkey">
+      <ObjectId>16660</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>recipe_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="102" parent="50" name="fk_recipe_user_id_refs_user">
+      <ObjectId>16725</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>user_id</ColNames>
+      <RefTableId>16625</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>user</RefTableName>
+      <RefKeyName>user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="103" parent="51" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;recipe_equipment_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="104" parent="51" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="105" parent="51" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="106" parent="51" name="recipe_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="107" parent="51" name="equipment_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="108" parent="51" name="recipe_equipment_relation_pkey">
+      <ObjectId>16667</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="109" parent="51" name="recipe_equipment_relation_recipe_id">
+      <ObjectId>16812</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+    </index>
+    <index id="110" parent="51" name="recipe_equipment_relation_equipment_id">
+      <ObjectId>16813</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>equipment_id</ColNames>
+    </index>
+    <key id="111" parent="51" name="recipe_equipment_relation_pkey">
+      <ObjectId>16668</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>recipe_equipment_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="112" parent="51" name="fk_recipe_equipment_relation_recipe_id_refs_recipe">
+      <ObjectId>16755</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+      <RefTableId>16655</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>recipe</RefTableName>
+      <RefKeyName>recipe_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="113" parent="51" name="fk_recipe_equipment_relation_equipment_id_refs_equipment">
+      <ObjectId>16760</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>equipment_id</ColNames>
+      <RefTableId>16687</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>equipment</RefTableName>
+      <RefKeyName>equipment_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="114" parent="52" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;recipe_ingredient_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="115" parent="52" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="116" parent="52" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="117" parent="52" name="recipe_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="118" parent="52" name="ingredient_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="119" parent="52" name="recipe_ingredient_relation_pkey">
+      <ObjectId>16651</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="120" parent="52" name="recipe_ingredient_relation_recipe_id">
+      <ObjectId>16815</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+    </index>
+    <index id="121" parent="52" name="recipe_ingredient_relation_ingredient_id">
+      <ObjectId>16814</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>ingredient_id</ColNames>
+    </index>
+    <key id="122" parent="52" name="recipe_ingredient_relation_pkey">
+      <ObjectId>16652</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>recipe_ingredient_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="123" parent="52" name="fk_recipe_ingredient_relation_recipe_id_refs_recipe">
+      <ObjectId>16765</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+      <RefTableId>16655</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>recipe</RefTableName>
+      <RefKeyName>recipe_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="124" parent="52" name="fk_recipe_ingredient_relation_ingredient_id_refs_ingredient">
+      <ObjectId>16770</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>ingredient_id</ColNames>
+      <RefTableId>16711</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>ingredient</RefTableName>
+      <RefKeyName>ingredient_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="125" parent="53" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;step_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="126" parent="53" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="127" parent="53" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="128" parent="53" name="no">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="129" parent="53" name="text">
+      <Position>5</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="130" parent="53" name="recipe_id">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="131" parent="53" name="step_pkey">
+      <ObjectId>16643</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="132" parent="53" name="step_recipe_id">
+      <ObjectId>16809</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+    </index>
+    <key id="133" parent="53" name="step_pkey">
+      <ObjectId>16644</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>step_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="134" parent="53" name="fk_step_recipe_id_refs_recipe">
+      <ObjectId>16740</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>recipe_id</ColNames>
+      <RefTableId>16655</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>recipe</RefTableName>
+      <RefKeyName>recipe_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="135" parent="54" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;step_equipment_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="136" parent="54" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="137" parent="54" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="138" parent="54" name="step_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="139" parent="54" name="equipment_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="140" parent="54" name="step_equipment_relation_pkey">
+      <ObjectId>16699</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="141" parent="54" name="step_equipment_relation_step_id">
+      <ObjectId>16816</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>step_id</ColNames>
+    </index>
+    <index id="142" parent="54" name="step_equipment_relation_equipment_id">
+      <ObjectId>16817</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>equipment_id</ColNames>
+    </index>
+    <key id="143" parent="54" name="step_equipment_relation_pkey">
+      <ObjectId>16700</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>step_equipment_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="144" parent="54" name="fk_step_equipment_relation_step_id_refs_step">
+      <ObjectId>16775</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>step_id</ColNames>
+      <RefTableId>16639</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>step</RefTableName>
+      <RefKeyName>step_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="145" parent="54" name="fk_step_equipment_relation_equipment_id_refs_equipment">
+      <ObjectId>16780</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>equipment_id</ColNames>
+      <RefTableId>16687</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>equipment</RefTableName>
+      <RefKeyName>equipment_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="146" parent="55" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;step_ingredient_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="147" parent="55" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="148" parent="55" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="149" parent="55" name="step_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="150" parent="55" name="ingredient_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="151" parent="55" name="step_ingredient_relation_pkey">
+      <ObjectId>16683</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="152" parent="55" name="step_ingredient_relation_step_id">
+      <ObjectId>16818</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>step_id</ColNames>
+    </index>
+    <index id="153" parent="55" name="step_ingredient_relation_ingredient_id">
+      <ObjectId>16819</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>ingredient_id</ColNames>
+    </index>
+    <key id="154" parent="55" name="step_ingredient_relation_pkey">
+      <ObjectId>16684</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>step_ingredient_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="155" parent="55" name="fk_step_ingredient_relation_step_id_refs_step">
+      <ObjectId>16785</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>step_id</ColNames>
+      <RefTableId>16639</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>step</RefTableName>
+      <RefKeyName>step_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="156" parent="55" name="fk_step_ingredient_relation_ingredient_id_refs_ingredient">
+      <ObjectId>16790</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>ingredient_id</ColNames>
+      <RefTableId>16711</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>ingredient</RefTableName>
+      <RefKeyName>ingredient_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="157" parent="56" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <DefaultExpression>nextval(&apos;subscription_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="158" parent="56" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="159" parent="56" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="160" parent="56" name="from_user_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="161" parent="56" name="to_user_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="162" parent="56" name="subscription_relation_pkey">
+      <ObjectId>16723</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="163" parent="56" name="subscription_relation_from_user_id">
+      <ObjectId>16820</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>from_user_id</ColNames>
+    </index>
+    <index id="164" parent="56" name="subscription_relation_to_user_id">
+      <ObjectId>16821</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>to_user_id</ColNames>
+    </index>
+    <key id="165" parent="56" name="subscription_relation_pkey">
+      <ObjectId>16724</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>subscription_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="166" parent="56" name="fk_subscription_relation_from_user_id_refs_user">
+      <ObjectId>16795</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>from_user_id</ColNames>
+      <RefTableId>16625</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>user</RefTableName>
+      <RefKeyName>user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="167" parent="56" name="fk_subscription_relation_to_user_id_refs_user">
+      <ObjectId>16800</ObjectId>
+      <StateNumber>728</StateNumber>
+      <ColNames>to_user_id</ColNames>
+      <RefTableId>16625</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>user</RefTableName>
+      <RefKeyName>user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="168" parent="57" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -967,68 +1910,68 @@ false Zulu
       <DefaultExpression>nextval(&apos;user_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="37" parent="35" name="created_at">
+    <column id="169" parent="57" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="38" parent="35" name="updated_at">
+    <column id="170" parent="57" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="39" parent="35" name="user_id">
-      <Position>4</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>690</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="40" parent="35" name="name">
+    <column id="171" parent="57" name="name">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="41" parent="35" name="email">
+    <column id="172" parent="57" name="email">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="42" parent="35" name="pw_hash">
+    <column id="173" parent="57" name="pw_hash">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="43" parent="35" name="user_pkey">
+    <column id="174" parent="57" name="userId">
+      <Position>8</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>728</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="175" parent="57" name="user_pkey">
       <ObjectId>16632</ObjectId>
       <StateNumber>690</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="44" parent="35" name="user_user_id">
-      <ObjectId>16635</ObjectId>
-      <StateNumber>690</StateNumber>
-      <ColNames>user_id</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="45" parent="35" name="user_email">
+    <index id="176" parent="57" name="user_email">
       <ObjectId>16634</ObjectId>
       <StateNumber>690</StateNumber>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="46" parent="35" name="user_pkey">
+    <index id="177" parent="57" name="user_userId">
+      <ObjectId>16636</ObjectId>
+      <StateNumber>716</StateNumber>
+      <ColNames>userId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="178" parent="57" name="user_pkey">
       <ObjectId>16633</ObjectId>
       <StateNumber>690</StateNumber>
       <ColNames>id</ColNames>
