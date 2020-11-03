@@ -91,7 +91,7 @@ const Navbar = ({ loggedIn, setLogged }) => {
                                     ref={anchorRef}
                                     aria-controls={open ? 'menu-list-grow' : undefined}
                                     aria-haspopup="true"
-                                    onClick={handleOpen}>
+                                    onClick={handleToggle}>
                                     <MenuIcon />
                                 </IconButton>
                             </div>
