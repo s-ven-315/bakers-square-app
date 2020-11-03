@@ -7,6 +7,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import IconButton from '@material-ui/core/IconButton';
+import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu'
 
 const Navbar = ({ loggedIn, setLogged }) => {
@@ -16,84 +17,105 @@ const Navbar = ({ loggedIn, setLogged }) => {
     }
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
-
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
-
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
-
         setOpen(false);
     };
-
     function handleListKeyDown(event) {
         if (event.key === 'Tab') {
             event.preventDefault();
             setOpen(false);
         }
     }
-
     return (
         <>
             <div className="navbar">
                 <div>
                     <h2>Baker's Square</h2>
                 </div>
-                <div className="menu-wide">
+                <div className="navbar-menu">
                     {loggedIn ?
                         <>
-                            <Button color="inherit">Profile {loggedIn.name}</Button>
-                            <Button color="inherit" onClick={handleLogout}>Log out</Button>
+
+                            <Button
+                                onClick={handleToggle}
+                                ref={anchorRef}
+                                aria-controls={open ? 'menu-list-grow' : undefined}
+                                aria-haspopup="true"
+                            >
+                                <div className="menu-wide">
+                                    <Button
+                                        variant="contained" color="primary"
+                                    >
+                                        {loggedIn.name}
+                                    </Button>
+                                </div>
+                                <div className="menu-narrow">
+                                    <MenuIcon />
+                                </div>
+                            </Button>
+                            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                {({ TransitionProps, placement }) => (
+                                    <Grow
+                                        {...TransitionProps}
+                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                    >
+                                        <Paper>
+                                            <ClickAwayListener onClickAway={handleClose}>
+                                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                    <ListItemText /><Button href="/profile">Profile Page</Button>
+                                                    <ListItemText /><Button href="/signup">Start Baking</Button>
+                                                    <ListItemText /><Button href="/login">Ingredient Checklist</Button>
+                                                    <ListItemText /><Button onClick={handleLogout}>Logout</Button>
+                                                </MenuList>
+                                            </ClickAwayListener>
+                                        </Paper>
+                                    </Grow>
+                                )}
+                            </Popper>
                         </>
                         :
                         <>
-                            <Button href="/signup" color="inherit">Sign Up</Button>
-                            <Button href="/login" variant="contained" color="primary">Login</Button>
+                            <div className="menu-wide">
+                                <Button href="/signup" color="inherit">Sign Up</Button>
+                                <Button href="/login" variant="contained" color="primary">Login</Button>
+                            </div>
+                            <div className="menu-narrow">
+                                <IconButton
+                                    variant="contained" color="primary"
+                                    ref={anchorRef}
+                                    aria-controls={open ? 'menu-list-grow' : undefined}
+                                    aria-haspopup="true"
+                                    onClick={handleOpen}>
+                                    <MenuIcon />
+                                </IconButton>
+                            </div>
+                            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                {({ TransitionProps, placement }) => (
+                                    <Grow
+                                        {...TransitionProps}
+                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                    >
+                                        <Paper>
+                                            <ClickAwayListener onClickAway={handleClose}>
+                                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                    <ListItemText /><Button href="/signup">Sign Up</Button>
+                                                    <ListItemText /><Button href="/login">Login</Button>
+                                                </MenuList>
+                                            </ClickAwayListener>
+                                        </Paper>
+                                    </Grow>
+                                )}
+                            </Popper>
                         </>
                     }
-
-                </div>
-                <div className="menu-narrow">
-
-                    <IconButton
-                        ref={anchorRef}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleToggle}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-
-                    <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                        {({ TransitionProps, placement }) => (
-                            <Grow
-                                {...TransitionProps}
-                                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                            >
-                                <Paper>
-                                    <ClickAwayListener onClickAway={handleClose}>
-                                        <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                            {loggedIn ?
-                                                <>
-                                                    <MenuItem>Profile</MenuItem>
-                                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                                </>
-                                                : <>
-                                                    <MenuItem>Sign Up</MenuItem>
-                                                    <MenuItem>Login</MenuItem>
-                                                </>
-                                            }
-                                        </MenuList>
-                                    </ClickAwayListener>
-                                </Paper>
-                            </Grow>
-                        )}
-                    </Popper>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }
