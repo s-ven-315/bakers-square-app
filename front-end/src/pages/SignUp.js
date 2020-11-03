@@ -50,7 +50,7 @@ export default function SignUp({ loggedIn, setLogged }) {
         })
             .then(response => {
                 console.log(response)
-                localStorage.setItem("user", JSON.stringify(response.data.user))
+                localStorage.setItem("user", JSON.stringify(response.data))
                 setLogged(response.data)
 
             })
