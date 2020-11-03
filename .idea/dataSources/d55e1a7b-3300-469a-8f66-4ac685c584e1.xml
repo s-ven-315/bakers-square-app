@@ -955,6 +955,7 @@ false Zulu
     </sequence>
     <table id="35" parent="21" name="user">
       <ObjectId>16625</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>690</StateNumber>
     </table>

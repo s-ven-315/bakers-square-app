@@ -1,1 +1,1 @@
-from .utils import test_url
+from .test_utils import test_url

@@ -2,14 +2,14 @@ import flask
 from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash
 
-from flask_api.utils.decorators import api_func
-from models.user import User
+from .utils.decorators import api_post
+from models.model_users import User
 
 auth_api_blueprint = flask.Blueprint('auth_api', __name__)
 
 
 @auth_api_blueprint.route('/signup', methods=['POST'])
-@api_func(['name', 'email', 'password'])
+@api_post(['name', 'email', 'password'])
 def signup():
     data = flask.request.json
     if not data['name']:
@@ -26,11 +26,11 @@ def signup():
         user_dict['access_token'] = access_token
         return flask.jsonify(user_dict), 200
     else:
-        return flask.jsonify({'msg': user.errors}), 400
+        return flask.jsonify({'msg': user.errors[0]}), 400
 
 
 @auth_api_blueprint.route('/login', methods=['POST'])
-@api_func(['email', 'password'])
+@api_post(['email', 'password'])
 def login():
     data = flask.request.json
 
@@ -49,7 +49,14 @@ def login():
         return flask.jsonify(user_dict), 200
 
     else:
-        msgs = []
-        if user is None: msgs.append("Email does not exists in database")
-        elif successful_login is False: msgs.append("Wrong password has been provided")
-        return flask.jsonify({'msg': msgs}), 400
+        if user is None: msg = "Email does not exists in database"
+        elif successful_login is False: msg = "Wrong password is provided"
+        else: msg = ''
+        return flask.jsonify({'msg': msg}), 400
+
+
+@auth_api_blueprint.route('/userExists', methods=['GET'])
+def userExists():
+    userId = flask.request.args.get('userId')
+    user = User.get_or_none(User.userId == userId)
+    return flask.jsonify(user is not None), 200
