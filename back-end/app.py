@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 from flask import Flask
 from flask_wtf.csrf import CSRFProtect
-from models.user import User
+from models.model_users import User
 from services.database import db
 
 web_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'flask_web')

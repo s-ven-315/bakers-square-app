@@ -2,7 +2,7 @@ import flask
 from functools import wraps
 
 
-def api_func(keywords=None):
+def api_post(keywords=None):
     if keywords is None: keywords = []
 
     def inner(func):
