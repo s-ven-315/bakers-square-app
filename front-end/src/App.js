@@ -5,6 +5,7 @@ import Homepage from "./pages/Homepage"
 import SignUp from "./pages/SignUp"
 import Login from "./pages/Login"
 import Profile from "./pages/Profile"
+import Recipe from "./pages/Recipe"
 import { Profiler, useState } from "react"
 import React from 'react'
 
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/signup"><SignUp loggedIn={loggedIn} setLogged={setLogged} /></Route>
         <Route exact path="/login"><Login loggedIn={loggedIn} setLogged={setLogged} /></Route>
         <Route exact path="/users/:name"><Profile loggedIn={loggedIn} /></Route>
+        <Route exact path="/recipes/:id"><Recipe /></Route>
         <Redirect to="/" />
       </Switch>
     </div>
