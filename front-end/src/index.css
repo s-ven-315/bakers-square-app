@@ -11,6 +11,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width:88vw;
+  border-bottom: 1px solid #aaa;
 }
 
 .navbar-menu{
@@ -58,87 +60,97 @@ body {
 .MuiList-root a{
   display: block
 }
+/* Profile details */
+.profile-page-container {
+  display:flex;
+  width:88vw;
+}
+
 .profile-container {
-  display: flex;
-  flex-flow: row nowrap;
-  /* border: 1px solid rgba(0, 0, 0, 0.1); */
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 1.5rem;
-  border-radius: 5px;
-  margin: 20px 50px 0;
-  /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.06); */
-  transition: background-color .4s cubic-bezier(.25, .8, .25, 1), box-shadow .4s cubic-bezier(.25, .8, .25, 1);
-  user-select: none;
-  text-decoration: none;
-  position: relative;
+  width: 25vw;
+  color: #c6783c;
 }
-
-.profile-container .profile-img {
+.profile-container-inner {
+  width: 90%;
+  margin: 30px auto 0;
+}
+.profile-img {
+  width: 15vw;
+  height: 15vw;
+  max-width: 150px;
+  max-height: 150px;
+  margin-bottom: -70px;
   border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.25);
-  width: 120px;
-  height: 120px;
-  margin-right: 5px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-left: auto;
+  margin-right: auto;
+  position:relative;
+  z-index: 2
 }
 
-.profile-container .profile-details-container{
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  padding-left: 20px;
-  flex: 1 1;
-  min-width: 0;
+.profile-img img{
+  width: 100%;
 }
 
-.profile-container .profile-details-container .profile-name {
-  font-size: 2.5rem;
+.profile-details {
+  padding: 85px 20px 20px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.12);
+}
+
+.profile-name {
+  font-size: 2.3rem;
   line-height: 2.5rem;
   font-weight: 500;
-  color: black;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-align:left;
+}
+.profile-name>svg{
+  cursor:pointer;
+  margin-left:0.5rem;
 }
 
-.profile-container .profile-details-container .profile-id {
-  font-size: 1.3rem;
-  margin-top: .5rem;
-  margin-bottom: .5rem;
-  font-weight: 400;
-  color: black;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: start;
-}
-
-.profile-container .profile-details-container .profile-following-container {
-  display: flex;
-  flex-flow: row nowrap;
-}
-
-.profile-container .profile-details-container .profile-following-button {
-  width: 120px;
-  border: 1px solid rgba(0,0,0,0.1);
-  text-align: center;
-  border-radius: 4px;
-  margin: 0.1rem 0.1rem;
-  font-size: 0.75rem;
+.profile-id {
+  margin-top:1rem;
+  font-size: 1.2rem;
+  line-height: 2.5rem;
   font-weight: 500;
-  padding: 5px 15px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.profile-container .profile-button-container {
+.profile-following-container {
+  margin-top: 1.5rem;
   display: flex;
-  flex-flow: column nowrap;
   justify-content: center;
 }
+.profile-following-container>div:not(:first-child) {
+  border-left: 1px solid #c6783c;
+  cursor: pointer
+}
 
-.profile-container .profile-button-container .profile-button {
+.profile-following-container>div {
+  padding: 8px;
+  margin: 0.1rem 0.1rem;
+
+}
+
+.profile-following-container span{
+  display:block
+}
+
+.profile-button-container {
+  margin-top: 1.5rem
+}
+.profile-button {
   border: 1px solid rgba(219, 219, 219, 1);
   background-color: white;
   font-size: 0.75rem;
@@ -154,15 +166,15 @@ body {
   color: black;
   text-decoration: none;
 
-  min-width: 120px;
+  min-width: 50px;
+}
+/* Recipe */
+.recipe-container-outer {
+  width: 72vw;
+  margin-top:50px;
+  padding-left: 50px;
 }
 
-.profile-container .profile-button-container .profile-button:hover {
-  border: 1px solid rgba(219,219,219, 1);
-  background-color: #fafafa;
-}
-
-/* recipe */
 .recipe-container {
   display: flex;
   flex-flow: row nowrap;
@@ -171,32 +183,39 @@ body {
   align-items: flex-start;
   padding: 1.5rem;
   border-radius: 5px;
-  margin: 0px 50px 0;
-  /* box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.06); */
+  margin: 20px 50px 0;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.06);
   transition: background-color .4s cubic-bezier(.25, .8, .25, 1), box-shadow .4s cubic-bezier(.25, .8, .25, 1);
   user-select: none;
   text-decoration: none;
   position: relative;
 }
 
-.recipe-container .recipe-img {
+.recipe-container:hover {
+  text-decoration: none;
+  color: black;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.12);
+}
+
+.recipe-img {
   border-radius: 50%;
   border: 1px solid rgba(0,0,0,0.25);
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
   margin-right: 5px;
 }
 
-.recipe-container .recipe-details-container{
+.recipe-details-container{
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: space-between;
   padding-left: 20px;
   flex: 1 1;
   min-width: 0;
+  height:7.5rem;
 }
 
-.recipe-container .recipe-details-container .recipe-name {
+.recipe-name {
   font-size: 2rem;
   line-height: 2.5rem;
   font-weight: 500;
@@ -205,13 +224,12 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-align:left;
+  text-align:left
 }
 
-.recipe-container .recipe-details-container .recipe-id {
-  font-size: 1.3rem;
-  margin-top: .5rem;
-  margin-bottom: .5rem;
+.recipe-baker {
+  font-size: 1.2 rem;
+  margin-bottom: .2rem;
   font-weight: 400;
   color: black;
   text-decoration: none;
@@ -221,12 +239,12 @@ body {
   text-align: start;
 }
 
-.recipe-container .recipe-details-container .recipe-following-container {
+.recipe-following-container {
   display: flex;
   flex-flow: row nowrap;
 }
 
-.recipe-container .recipe-details-container .recipe-following-button {
+.recipe-following-button {
   width: 120px;
   border: 1px solid rgba(0,0,0,0.1);
   text-align: center;
@@ -237,13 +255,13 @@ body {
   padding: 5px 15px;
 }
 
-.recipe-container .recipe-button-container {
+.recipe-button-container {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
 }
 
-.recipe-container .recipe-button-container .recipe-button {
+.recipe-button {
   border: 1px solid rgba(219, 219, 219, 1);
   background-color: white;
   font-size: 0.75rem;
@@ -259,14 +277,80 @@ body {
   color: black;
   text-decoration: none;
 
-  min-width: 120px;
+  min-width: 50px;
 }
 
-.recipe-container .recipe-button-container .recipe-button:hover {
+.recipe-button:hover {
   border: 1px solid rgba(219,219,219, 1);
   background-color: #fafafa;
 }
 
+.recipe-header-container {
+  display: flex;
+  width: 70vw;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem;
+  margin: auto;
+  user-select: none;
+  text-decoration: none;
+  position: relative;
+  border-bottom: 1px solid #aaa;
+}
+
+.tab-container .MuiTabs-root .MuiTabs-centered{
+  justify-content: left !important;
+}
+
+.tab-panel-container .MuiBox-root {
+  padding: 0px;
+}
+
+.tab-panel-container .recipe-container {
+    display: flex;
+    flex-flow: row nowrap;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin: 1.5rem 0px 0px 0px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.06);
+    transition: background-color .4s cubic-bezier(.25, .8, .25, 1), box-shadow .4s cubic-bezier(.25, .8, .25, 1);
+    user-select: none;
+    text-decoration: none;
+    position: relative;
+}
+
+.add-new-recipe-button{
+  text-align: left
+}
+
+.component-container {
+  display: flex;
+  width: 70vw;
+  flex-flow: row nowrap;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.06);
+  transition: background-color .4s cubic-bezier(.25, .8, .25, 1), box-shadow .4s cubic-bezier(.25, .8, .25, 1);
+  user-select: none;
+  text-decoration: none;
+  position: relative;
+}
+
+.component-title {
+  font-size: 1.5rem;
+  color: black;
+  text-decoration: none;
+  overflow: hidden;
+  text-align:left
+}
 @media screen and (max-width: 475px) {
   .menu-wide {
     display:None;
