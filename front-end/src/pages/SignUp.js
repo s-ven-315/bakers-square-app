@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -66,7 +66,7 @@ export default function SignUp({ loggedIn, setLogged }) {
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+                    <AccountCircleOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     New Account
@@ -93,7 +93,6 @@ export default function SignUp({ loggedIn, setLogged }) {
                         label="Email"
                         type="email"
                         name="email"
-                        autoFocus
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
