@@ -4,7 +4,10 @@ from models.model_user import User
 
 
 class Ingredient(BaseModel):
-    name = pw.CharField(unique=False, null=False)
+    name = pw.CharField(unique=True, null=False)
 
     def as_dict(self):
-        return dict()
+        return dict(
+            id=self.id,
+            name=self.name,
+        )

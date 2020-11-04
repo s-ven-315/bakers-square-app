@@ -7,4 +7,7 @@ class Equipment(BaseModel):
     name = pw.CharField(unique=True, null=False)
 
     def as_dict(self):
-        return dict()
+        return dict(
+            id=self.id,
+            name=self.name,
+        )
