@@ -5,6 +5,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
+
+const useStyles = makeStyles({
+    span: {
+        marginLeft: 5,
+    },
+    button: {
+        marginTop: '1rem',
+    }
+});
 
 function FollowerDialog(props) {
     const followers = ['test100', 'test101'];
@@ -32,7 +44,9 @@ function FollowerDialog(props) {
     );
 }
 
-export default function YourRecipes({ loggedIn }) {
+export default function YourRecipes({ loggedIn, user }) {
+    const classes = useStyles();
+
     // like dialog
     const [likeOpen, setLikeOpen] = React.useState(false);
 
@@ -45,24 +59,31 @@ export default function YourRecipes({ loggedIn }) {
     };
     return (
         <>
-            <div className="profile-container">
+            <div className='add-new-recipe-button'>
+                {user.name === loggedIn.name ?
+                    <Button className={classes.button} variant="contained" color="primary"><AddCircleOutlineOutlinedIcon /> <span className={classes.span} >Add New Recipe</span></Button> : null
+                }
+            </div>
+            <div className="recipe-container">
                 <a href="">
-                    <img className='profile-img' src="#" alt="" />
+                    <img className='recipe-img' src="#" alt="" />
                 </a>
-                <div className="profile-details-container">
-                    <div className="profile-name">Mango Cake</div>
-                    <div className="profile-id">by {loggedIn.name}</div>
-                    <div className="profile-following-container">
+                <div className="recipe-details-container">
+                    <div className="recipe-name">Mango Cake</div>
+                    <div className="recipe-baker">by {user.name}</div>
+                    <div className="recipe-following-container">
                         <Button color="inherit" onClick={handleLikeOpen}>3 Likes</Button>
                         <FollowerDialog open={likeOpen} onClose={handleLikeClose} />
                         <Button color="inherit">5 Comments</Button>
                     </div>
                 </div>
-                <div className="profile-button-container">
-                    {loggedIn ?
-                        <a className="profile-button" href="#">Start Baking</a>
-                        :
-                        <a className="profile-button" href="#">Follow</a>
+                <div className="recipe-button-container">
+                    {user.name === loggedIn.name ?
+                        <>
+                            <a className="recipe-button" href="#"><EditIcon /></a>
+                            <a className="recipe-button" href="#">Start Baking</a>
+                        </> :
+                        <a className="recipe-button" href="#">Start Baking</a>
                     }
                 </div>
             </div>
