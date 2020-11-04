@@ -1,18 +1,19 @@
+import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
 
-from ..api_recipe import recipes_api_blueprint
+from ..api_recipe import recipes_api_blueprint, recipeExists
 
 
-@recipes_api_blueprint.route('/setIngredient', methods=['POST'])
-@jwt_required
+@recipes_api_blueprint.route('/<recipeId>/setIngredient', methods=['POST'])
 @api_post(['ingredientId'])
-def set_ingredient():
-    pass
+@recipeExists
+def set_ingredient(recipeId: str):
+    return flask.jsonify({'msg': 'Success'}), 200
 
 
-@recipes_api_blueprint.route('/unsetIngredient', methods=['POST'])
-@jwt_required
+@recipes_api_blueprint.route('/<recipeId>/unsetIngredient', methods=['POST'])
 @api_post(['ingredientId'])
-def unset_ingredient():
-    pass
+@recipeExists
+def unset_ingredient(recipeId: str):
+    return flask.jsonify({'msg': 'Success'}), 200

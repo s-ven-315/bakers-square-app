@@ -9,4 +9,12 @@ class Step(BaseModel):
     recipe = pw.ForeignKeyField(Recipe, on_delete="CASCADE")
 
     def as_dict(self):
-        return dict()
+        return dict(
+            id=self.id,
+            no=self.no,
+            text=self.text,
+            recipe=dict(
+                id=self.recipe.id,
+                name=self.recipe.name,
+            )
+        )
