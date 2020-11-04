@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,8 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios"
-import SessionContext from "../contexts/SessionContext"
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Login() {
-    const history = useHistory();
+export default function Login({ loggedIn, setLogged }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const classes = useStyles();
@@ -51,14 +48,14 @@ export default function Login() {
         })
             .then(response => {
                 console.log(response)
-                localStorage.setItem("token", response.data.access_token)
-                history.push("/")
+                localStorage.setItem("user", JSON.stringify(response.data))
+                setLogged(response.data)
             })
             .catch(error => {
                 console.error(error.response)
             })
     }
-    if (localStorage.getItem("token")) {
+    if (loggedIn) {
         return <Redirect to="/" />
     }
     return (
