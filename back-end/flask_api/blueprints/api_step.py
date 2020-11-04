@@ -1,6 +1,7 @@
 import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
+from models.model_step import Step
 
 steps_api_blueprint = flask.Blueprint('steps_api', __name__)
 
@@ -15,7 +16,13 @@ def get_steps():
 @steps_api_blueprint.route('/<stepId>', methods=['GET'])
 @jwt_required
 def get_step(stepId: str):
-    return flask.jsonify({}), 200
+    step = Step.get_or_none(Step.id == stepId)
+
+    if step:
+        return flask.jsonify(step.as_dict()), 200
+    else:
+        return flask.jsonify({'msg': 'Step does not exists'}), 400
+
 
 @steps_api_blueprint.route('/', methods=['POST'])
 @jwt_required

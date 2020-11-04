@@ -1,6 +1,7 @@
 import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
+from models.model_recipe import Recipe
 
 recipes_api_blueprint = flask.Blueprint('recipes_api', __name__)
 
@@ -15,7 +16,12 @@ def get_recipes():
 @recipes_api_blueprint.route('/<recipeId>', methods=['GET'])
 @jwt_required
 def get_recipe(recipeId: str):
-    return flask.jsonify({}), 200
+    recipe = Recipe.get_or_none(Recipe.id == recipeId)
+
+    if recipe:
+        return flask.jsonify(recipe.as_dict()), 200
+    else:
+        return flask.jsonify({'msg': 'Recipe does not exists'}), 400
 
 
 @recipes_api_blueprint.route('/', methods=['POST'])

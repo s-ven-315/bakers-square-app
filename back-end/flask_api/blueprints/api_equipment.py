@@ -1,6 +1,7 @@
 import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
+from models.model_equipment import Equipment
 
 equipments_api_blueprint = flask.Blueprint('equipments_api', __name__)
 
@@ -14,7 +15,12 @@ def get_equipments():
 @equipments_api_blueprint.route('/<equipmentId>', methods=['GET'])
 @jwt_required
 def get_equipment(equipmentId: str):
-    return flask.jsonify({}), 200
+    equipment = Equipment.get_or_none(Equipment.id == equipmentId)
+
+    if equipment:
+        return flask.jsonify(equipment.as_dict()), 200
+    else:
+        return flask.jsonify({'msg': 'Equipment does not exists'}), 400
 
 
 @equipments_api_blueprint.route('/', methods=['POST'])
