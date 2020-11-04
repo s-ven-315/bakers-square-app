@@ -60,7 +60,7 @@ def add_recipe():
 
 
 @recipes_api_blueprint.route('/<recipeId>/edit', methods=['POST'])
-@api_post(['name'])
+@api_post()
 @recipeExists
 def edit_recipe(recipeId: str):
     json_data = flask.request.json
@@ -68,9 +68,9 @@ def edit_recipe(recipeId: str):
 
     # name
     name = json_data.get('name')
-    if not name: return flask.jsonify({'msg': 'Must provide non-empty name'}), 400
+    if name:
+        recipe.name = name
 
-    recipe.name = name
     if not recipe.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
 

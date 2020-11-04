@@ -27,18 +27,22 @@ class User(BaseModel, UserMixin):
 
         self.userId = userIdText + ("%02d" % idx)
 
-        rules = [lambda s: any(x.isupper() for x in s),  # must have at least one uppercase
-                 lambda s: any(x.islower() for x in s),  # must have at least one lowercase
-                 lambda s: any(x.isdigit() for x in s),  # must have at least one digit
-                 lambda s: len(s) >= 7  # must be at least 7 characters
-                 ]
+        if hasattr(self, 'pw'):
+            rules = [lambda s: any(x.isupper() for x in s),  # must have at least one uppercase
+                     lambda s: any(x.islower() for x in s),  # must have at least one lowercase
+                     lambda s: any(x.isdigit() for x in s),  # must have at least one digit
+                     lambda s: len(s) >= 7  # must be at least 7 characters
+                     ]
 
-        if not all([rule(self.pw) for rule in rules]):
-            self.errors.append(
-                'Password must have at least one uppercase, one lowercase and be at least 7 characters long')
+            if not all([rule(self.pw) for rule in rules]):
+                self.errors.append(
+                    'Password must have at least one uppercase, one lowercase and be at least 7 characters long')
 
-        if len(self.errors) == 0:
-            self.pw_hash = generate_password_hash(self.pw)
+            if len(self.errors) == 0:
+                self.pw_hash = generate_password_hash(self.pw)
+        else:
+            if len(self.pw_hash) == 0:
+                self.errors.append('Password is not provided')
 
     def as_dict(self):
         return dict(

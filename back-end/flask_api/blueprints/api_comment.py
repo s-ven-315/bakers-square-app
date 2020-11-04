@@ -70,7 +70,7 @@ def add_comment():
 
 
 @comments_api_blueprint.route('/<commentId>/edit', methods=['POST'])
-@api_post(['text'])
+@api_post()
 @commentExists
 def edit_comment(commentId: str):
     json_data = flask.request.json
@@ -78,9 +78,9 @@ def edit_comment(commentId: str):
 
     # text
     text = json_data.get('text')
-    if not text: return flask.jsonify({'msg': 'Must provide non-empty text'}), 400
+    if text:
+        comment.text = text
 
-    comment.text = text
     if not comment.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
 

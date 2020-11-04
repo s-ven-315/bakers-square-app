@@ -11,7 +11,7 @@ class Recipe(BaseModel):
         return dict(
             id=self.id,
             user=dict(
-                id=self.user.id,
+                userId=self.user.id,
                 name=self.user.name,
             )
         )
