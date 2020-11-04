@@ -4,13 +4,10 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Link, Redirect } from "react-router-dom"
 import MenuIcon from '@material-ui/icons/Menu'
-import { useHistory } from "react-router-dom";
 
 const Navbar = ({ loggedIn, setLogged }) => {
     const handleLogout = () => {
@@ -34,10 +31,8 @@ const Navbar = ({ loggedIn, setLogged }) => {
             setOpen(false);
         }
     }
-    const history = useHistory()
-    const goToProfilePage = () => {
-        history.push(`/users/${loggedIn.name}`)
-    }
+    const goToProfilePage = `/users/${loggedIn.userId}`
+
     return (
         <>
             <div className="navbar">
@@ -74,7 +69,7 @@ const Navbar = ({ loggedIn, setLogged }) => {
                                         <Paper>
                                             <ClickAwayListener onClickAway={handleClose}>
                                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                    <ListItemText /><Button onClick={goToProfilePage}>Profile Page</Button>
+                                                    <ListItemText /><Button href={goToProfilePage}>Profile Page</Button>
                                                     <ListItemText /><Button href="/signup">Start Baking</Button>
                                                     <ListItemText /><Button href="/login">Ingredient Checklist</Button>
                                                     <ListItemText /><Button onClick={handleLogout}>Logout</Button>
