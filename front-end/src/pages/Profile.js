@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams, Redirect } from "react-router-dom";
 import axios from "axios"
 import Button from '@material-ui/core/Button';
@@ -14,6 +14,10 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
+import YourRecipes from '../components/YourRecipes';
+import LikedRecipes from '../components/LikedRecipes';
+import ProfileImg from '../assets/images/profile-placeholder.png'
+import EditIcon from '@material-ui/icons/Edit';
 
 function FollowerDialog(props) {
     const followers = ['test100', 'test101'];
@@ -93,24 +97,29 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        backgroundColor: "#fff",
+        border: theme.palette.secondary.main,
     },
-});
+}));
 
 export default function Profile({ loggedIn }) {
+    const [user, setUser] = useState({})
+    const [error, setError] = useState(null)
     const classes = useStyles();
-    const { name } = useParams()
+    const { userId } = useParams()
 
-    // tab change
-    const [value, setValue] = React.useState(0);
+
+    // change tab
+    const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     // followers dialog
-    const [followerOpen, setFollowerOpen] = React.useState(false);
+    const [followerOpen, setFollowerOpen] = useState(false);
 
     const handleFollowerOpen = () => {
         setFollowerOpen(true);
@@ -121,7 +130,7 @@ export default function Profile({ loggedIn }) {
     };
 
     // following dialog
-    const [followingOpen, setFollowingOpen] = React.useState(false);
+    const [followingOpen, setFollowingOpen] = useState(false);
 
     const handleFollowingOpen = () => {
         setFollowingOpen(true);
@@ -131,124 +140,95 @@ export default function Profile({ loggedIn }) {
         setFollowingOpen(false);
     };
 
+    // axios get
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/users/" + userId, {
+            headers: {
+                Authorization: "Bearer " + loggedIn.access_token
+            }
+        })
+            .then((response) => {
+                console.log(response)
+                setUser(response.data.data)
+            })
+            .catch((error) => {
+                console.log(error)
+                setError(error)
+            })
+    }, [])
+
     if (!loggedIn) {
         return <Redirect to="/" />
     }
 
-    // useEffect(() => {
-    //     if (name == loggedIn.name) {
-    //         axios.get("http://localhost:5000/api/users/" + name, {
-    //             headers: {
-    //                 Authorization: "Bearer " + loggedIn.access_token
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 console.log(response)
-    //             })
-    //     } else {
-    //         axios.get("http://localhost:5000/api/users/" + name)
-    //             .then((response) => {
-    //                 console.log(response)
-    //             })
-    //     }
-    // }, [])
     return (
         <>
-            <div className="profile-container">
-                <a href="#">
-                    <img className='profile-img' src="#" alt="" />
-                </a>
-                <div className="profile-details-container">
-                    <div className="profile-name">{loggedIn.name}</div>
-                    <div className="profile-id">@{loggedIn.userId}</div>
-                    <div className="profile-following-container">
-                        <Button color="inherit" onClick={handleFollowerOpen}>2 Followers</Button>
-                        <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
-                        <Button color="inherit" onClick={handleFollowingOpen}>3 Following</Button>
-                        <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
-                    </div>
-                </div>
-                <div className="profile-button-container">
-                    {loggedIn ?
-                        <a className="profile-button" href="#">Update Details</a> :
-                        <a className="profile-button" href="#">Follow</a>
-                    }
-                </div>
-            </div>
-            <Paper className={classes.root}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered
-                >
-                    <Tab label="Your Recipes" />
-                    <Tab label="Liked Recipes" />
-                </Tabs>
-            </Paper>
-            <TabPanel value={value} index={0}>
-                <div className="profile-container">
-                    <a href="">
-                        <img className='profile-img' src="#" alt="" />
-                    </a>
-                    <div className="profile-details-container">
-                        <div className="profile-name">Mango Cake</div>
-                        <div className="profile-id">by {loggedIn.name}</div>
-                        <div className="profile-following-container">
-                            <Button color="inherit" onClick={handleFollowerOpen}>3 Likes</Button>
-                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
-                            <Button color="inherit" onClick={handleFollowingOpen}>5 Comments</Button>
-                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
+            {error !== null ?
+                <h1>User not found</h1> :
+                <>
+                    <div class="profile-page-container">
+                        <div class="profile-container">
+                            <div class="profile-container-inner">
+                                <div class="profile-img"><img src={ProfileImg} /></div>
+                                <div class="profile-details">
+                                    <div className="profile-name">{user.name}
+                                        {user.name === loggedIn.name ?
+                                            <EditIcon color="primary" /> : null
+                                        }
+                                    </div>
+                                    <div className="profile-id">@{user.userId}</div>
+                                    <div class="profile-following-container">
+                                        <div>
+                                            <span>2</span> Recipes
+                                        </div>
+                                        <div>
+                                            <div onClick={handleFollowerOpen}>
+                                                <span>2</span>Followers
+                                            </div>
+
+                                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
+                                        </div>
+                                        <div>
+                                            <div onClick={handleFollowingOpen}>
+                                                <span>2</span>Following
+                                            </div>
+
+                                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
+                                        </div>
+                                    </div>
+                                    <div className="profile-button-container">
+                                        {user.name !== loggedIn.name ?
+                                            <Button variant="contained" color="primary" className="profile-button" href="#">Follow</Button> :
+                                            null
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recipe-container-outer">
+                            <div class="tab-container">
+                                <Tabs
+                                    value={value}
+                                    onChange={handleChange}
+                                    indicatorColor="primary"
+                                    centered
+                                >
+                                    <Tab label={`${user.name}'s Recipes`} />
+                                    <Tab label={`${user.name}'s Liked Recipes`} />
+                                </Tabs>
+                            </div>
+                            <div class="tab-panel-container">
+                                <TabPanel value={value} index={0}>
+                                    <YourRecipes user={user} loggedIn={loggedIn} />
+                                </TabPanel>
+                                <TabPanel value={value} index={1}>
+                                    <LikedRecipes />
+                                </TabPanel>
+                            </div>
                         </div>
                     </div>
-                    <div className="profile-button-container">
-                        {loggedIn ?
-                            <a className="profile-button" href="#">Start Baking</a>
-                            :
-                            <a className="profile-button" href="#">Follow</a>
-                        }
-                    </div>
-                </div>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <div className="recipe-container">
-                    <a href="">
-                        <img className='recipe-img' src="#" alt="" />
-                    </a>
-                    <div className="recipe-details-container">
-                        <div className="recipe-name">Red Velvet Cake</div>
-                        <div className="recipe-id">by anonymous</div>
-                        <div className="recipe-following-container">
-                            <Button color="inherit" onClick={handleFollowerOpen}>3 Likes</Button>
-                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
-                            <Button color="inherit" onClick={handleFollowingOpen}>5 Comments</Button>
-                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
-                        </div>
-                    </div>
-                    <div className="profile-button-container">
-                        <a className="profile-button" href="#">Start Baking</a>
-                    </div>
-                </div>
-                <div className="recipe-container">
-                    <a href="">
-                        <img className='recipe-img' src="#" alt="" />
-                    </a>
-                    <div className="recipe-details-container">
-                        <div className="recipe-name">Red Velvet Cake</div>
-                        <div className="recipe-id">by anonymous</div>
-                        <div className="recipe-following-container">
-                            <Button color="inherit" onClick={handleFollowerOpen}>3 Likes</Button>
-                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
-                            <Button color="inherit" onClick={handleFollowingOpen}>5 Comments</Button>
-                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
-                        </div>
-                    </div>
-                    <div className="profile-button-container">
-                        <a className="profile-button" href="#">Start Baking</a>
-                    </div>
-                </div>
-            </TabPanel>
+                </>
+            }
         </>
     )
 }
