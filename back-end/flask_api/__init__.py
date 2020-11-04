@@ -10,6 +10,14 @@ from flask_api.blueprints.api_step import steps_api_blueprint
 from flask_api.blueprints.api_tag import tags_api_blueprint
 from flask_api.blueprints.api_user import users_api_blueprint
 
+import flask_api.blueprints.relations.api_like
+import flask_api.blueprints.relations.api_recipe_equipment
+import flask_api.blueprints.relations.api_recipe_ingredient
+import flask_api.blueprints.relations.api_recipe_tag
+import flask_api.blueprints.relations.api_step_equipment
+import flask_api.blueprints.relations.api_step_ingredient
+import flask_api.blueprints.relations.api_subscription
+
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.register_blueprint(auth_api_blueprint, url_prefix='/api/auth')

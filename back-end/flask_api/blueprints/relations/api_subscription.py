@@ -1,18 +1,19 @@
+import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
 
-from ..api_user import users_api_blueprint
+from ..api_user import users_api_blueprint, userExists
 
 
-@users_api_blueprint.route('/subscribe', methods=['POST'])
-@jwt_required
+@users_api_blueprint.route('/<userId>/subscribe', methods=['POST'])
 @api_post(['userId'])
-def set_like():
-    pass
+@userExists
+def set_subscribe(userId: str):
+    return flask.jsonify({'msg': 'Success'}), 200
 
 
-@users_api_blueprint.route('/unsubscribe', methods=['POST'])
-@jwt_required
+@users_api_blueprint.route('/<userId>/unsubscribe', methods=['POST'])
 @api_post(['userId'])
-def unset_like():
-    pass
+@userExists
+def unset_subscribe(userId: str):
+    return flask.jsonify({'msg': 'Success'}), 200
