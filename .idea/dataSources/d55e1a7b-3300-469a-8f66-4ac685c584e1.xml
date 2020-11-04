@@ -793,10 +793,12 @@ false Zulu
     <database id="3" parent="1" name="bake_app_dev">
       <ObjectId>16588</ObjectId>
       <Owner>Tan Yi Quan</Owner>
-      <IntrospectionStateNumber>730</IntrospectionStateNumber>
+      <IntrospectionStateNumber>791</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|16709|16711|1
 sequence|table|16717|16719|1
+sequence|table|16831|16833|1
+sequence|table|16823|16825|1
 sequence|table|16623|16625|1
 sequence|table|16637|16639|1
 sequence|table|16645|16647|1
@@ -888,7 +890,7 @@ sequence|table|16701|16703|1
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>731</IntrospectionStateNumber>
+      <IntrospectionStateNumber>792</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="22" parent="3" name="heap">
@@ -1000,97 +1002,119 @@ sequence|table|16701|16703|1
       <StateNumber>728</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <sequence id="41" parent="21" name="step_equipment_relation_id_seq">
+    <sequence id="41" parent="21" name="recipe_tag_relation_id_seq">
+      <ObjectId>16831</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>736</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="42" parent="21" name="step_equipment_relation_id_seq">
       <ObjectId>16693</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <sequence id="42" parent="21" name="step_id_seq">
+    <sequence id="43" parent="21" name="step_id_seq">
       <ObjectId>16637</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <sequence id="43" parent="21" name="step_ingredient_relation_id_seq">
+    <sequence id="44" parent="21" name="step_ingredient_relation_id_seq">
       <ObjectId>16677</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <sequence id="44" parent="21" name="subscription_relation_id_seq">
+    <sequence id="45" parent="21" name="subscription_relation_id_seq">
       <ObjectId>16717</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <sequence id="45" parent="21" name="user_id_seq">
+    <sequence id="46" parent="21" name="tag_id_seq">
+      <ObjectId>16823</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>736</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="47" parent="21" name="user_id_seq">
       <ObjectId>16623</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>690</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <table id="46" parent="21" name="comment">
+    <table id="48" parent="21" name="comment">
       <ObjectId>16703</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="47" parent="21" name="equipment">
+    <table id="49" parent="21" name="equipment">
       <ObjectId>16687</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="48" parent="21" name="ingredient">
+    <table id="50" parent="21" name="ingredient">
       <ObjectId>16711</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="49" parent="21" name="like_relation">
+    <table id="51" parent="21" name="like_relation">
       <ObjectId>16671</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="50" parent="21" name="recipe">
+    <table id="52" parent="21" name="recipe">
       <ObjectId>16655</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="51" parent="21" name="recipe_equipment_relation">
+    <table id="53" parent="21" name="recipe_equipment_relation">
       <ObjectId>16663</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="52" parent="21" name="recipe_ingredient_relation">
+    <table id="54" parent="21" name="recipe_ingredient_relation">
       <ObjectId>16647</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="53" parent="21" name="step">
+    <table id="55" parent="21" name="recipe_tag_relation">
+      <ObjectId>16833</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>736</StateNumber>
+    </table>
+    <table id="56" parent="21" name="step">
       <ObjectId>16639</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="54" parent="21" name="step_equipment_relation">
+    <table id="57" parent="21" name="step_equipment_relation">
       <ObjectId>16695</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="55" parent="21" name="step_ingredient_relation">
+    <table id="58" parent="21" name="step_ingredient_relation">
       <ObjectId>16679</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="56" parent="21" name="subscription_relation">
+    <table id="59" parent="21" name="subscription_relation">
       <ObjectId>16719</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <table id="57" parent="21" name="user">
+    <table id="60" parent="21" name="tag">
+      <ObjectId>16825</ObjectId>
+      <Owner>Tan Yi Quan</Owner>
+      <StateNumber>736</StateNumber>
+    </table>
+    <table id="61" parent="21" name="user">
       <ObjectId>16625</ObjectId>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
-    <column id="58" parent="46" name="id">
+    <column id="62" parent="48" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1098,66 +1122,66 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;comment_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="59" parent="46" name="created_at">
+    <column id="63" parent="48" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="60" parent="46" name="updated_at">
+    <column id="64" parent="48" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="61" parent="46" name="text">
+    <column id="65" parent="48" name="text">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="62" parent="46" name="user_id">
+    <column id="66" parent="48" name="user_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="63" parent="46" name="recipe_id">
+    <column id="67" parent="48" name="recipe_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="64" parent="46" name="comment_pkey">
+    <index id="68" parent="48" name="comment_pkey">
       <ObjectId>16707</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="65" parent="46" name="comment_user_id">
+    <index id="69" parent="48" name="comment_user_id">
       <ObjectId>16806</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>user_id</ColNames>
     </index>
-    <index id="66" parent="46" name="comment_recipe_id">
+    <index id="70" parent="48" name="comment_recipe_id">
       <ObjectId>16807</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
     </index>
-    <key id="67" parent="46" name="comment_pkey">
+    <key id="71" parent="48" name="comment_pkey">
       <ObjectId>16708</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>comment_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="68" parent="46" name="fk_comment_user_id_refs_user">
+    <foreign-key id="72" parent="48" name="fk_comment_user_id_refs_user">
       <ObjectId>16730</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>user_id</ColNames>
@@ -1168,7 +1192,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="69" parent="46" name="fk_comment_recipe_id_refs_recipe">
+    <foreign-key id="73" parent="48" name="fk_comment_recipe_id_refs_recipe">
       <ObjectId>16735</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
@@ -1179,7 +1203,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="70" parent="47" name="id">
+    <column id="74" parent="49" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1187,48 +1211,48 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;equipment_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="71" parent="47" name="created_at">
+    <column id="75" parent="49" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="72" parent="47" name="updated_at">
+    <column id="76" parent="49" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="73" parent="47" name="name">
+    <column id="77" parent="49" name="name">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="74" parent="47" name="equipment_pkey">
+    <index id="78" parent="49" name="equipment_pkey">
       <ObjectId>16691</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="75" parent="47" name="equipment_name">
+    <index id="79" parent="49" name="equipment_name">
       <ObjectId>16808</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="76" parent="47" name="equipment_pkey">
+    <key id="80" parent="49" name="equipment_pkey">
       <ObjectId>16692</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>equipment_pkey</UnderlyingIndexName>
     </key>
-    <column id="77" parent="48" name="id">
+    <column id="81" parent="50" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1236,42 +1260,42 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;ingredient_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="78" parent="48" name="created_at">
+    <column id="82" parent="50" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="79" parent="48" name="updated_at">
+    <column id="83" parent="50" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="80" parent="48" name="name">
+    <column id="84" parent="50" name="name">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="81" parent="48" name="ingredient_pkey">
+    <index id="85" parent="50" name="ingredient_pkey">
       <ObjectId>16715</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="82" parent="48" name="ingredient_pkey">
+    <key id="86" parent="50" name="ingredient_pkey">
       <ObjectId>16716</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>ingredient_pkey</UnderlyingIndexName>
     </key>
-    <column id="83" parent="49" name="id">
+    <column id="87" parent="51" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1279,59 +1303,59 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;like_relation_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="84" parent="49" name="created_at">
+    <column id="88" parent="51" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="85" parent="49" name="updated_at">
+    <column id="89" parent="51" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="86" parent="49" name="user_id">
+    <column id="90" parent="51" name="user_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="87" parent="49" name="recipe_id">
+    <column id="91" parent="51" name="recipe_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="88" parent="49" name="like_relation_pkey">
+    <index id="92" parent="51" name="like_relation_pkey">
       <ObjectId>16675</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="89" parent="49" name="like_relation_user_id">
+    <index id="93" parent="51" name="like_relation_user_id">
       <ObjectId>16810</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>user_id</ColNames>
     </index>
-    <index id="90" parent="49" name="like_relation_recipe_id">
+    <index id="94" parent="51" name="like_relation_recipe_id">
       <ObjectId>16811</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
     </index>
-    <key id="91" parent="49" name="like_relation_pkey">
+    <key id="95" parent="51" name="like_relation_pkey">
       <ObjectId>16676</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>like_relation_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="92" parent="49" name="fk_like_relation_user_id_refs_user">
+    <foreign-key id="96" parent="51" name="fk_like_relation_user_id_refs_user">
       <ObjectId>16745</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>user_id</ColNames>
@@ -1342,7 +1366,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="93" parent="49" name="fk_like_relation_recipe_id_refs_recipe">
+    <foreign-key id="97" parent="51" name="fk_like_relation_recipe_id_refs_recipe">
       <ObjectId>16750</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
@@ -1353,7 +1377,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="94" parent="50" name="id">
+    <column id="98" parent="52" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1361,54 +1385,54 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;recipe_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="95" parent="50" name="created_at">
+    <column id="99" parent="52" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="96" parent="50" name="updated_at">
+    <column id="100" parent="52" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="97" parent="50" name="name">
+    <column id="101" parent="52" name="name">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="98" parent="50" name="user_id">
+    <column id="102" parent="52" name="user_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="99" parent="50" name="recipe_pkey">
+    <index id="103" parent="52" name="recipe_pkey">
       <ObjectId>16659</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="100" parent="50" name="recipe_user_id">
+    <index id="104" parent="52" name="recipe_user_id">
       <ObjectId>16805</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>user_id</ColNames>
     </index>
-    <key id="101" parent="50" name="recipe_pkey">
+    <key id="105" parent="52" name="recipe_pkey">
       <ObjectId>16660</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>recipe_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="102" parent="50" name="fk_recipe_user_id_refs_user">
+    <foreign-key id="106" parent="52" name="fk_recipe_user_id_refs_user">
       <ObjectId>16725</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>user_id</ColNames>
@@ -1419,7 +1443,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="103" parent="51" name="id">
+    <column id="107" parent="53" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1427,59 +1451,59 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;recipe_equipment_relation_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="104" parent="51" name="created_at">
+    <column id="108" parent="53" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="105" parent="51" name="updated_at">
+    <column id="109" parent="53" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="106" parent="51" name="recipe_id">
+    <column id="110" parent="53" name="recipe_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="107" parent="51" name="equipment_id">
+    <column id="111" parent="53" name="equipment_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="108" parent="51" name="recipe_equipment_relation_pkey">
+    <index id="112" parent="53" name="recipe_equipment_relation_pkey">
       <ObjectId>16667</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="109" parent="51" name="recipe_equipment_relation_recipe_id">
+    <index id="113" parent="53" name="recipe_equipment_relation_recipe_id">
       <ObjectId>16812</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
     </index>
-    <index id="110" parent="51" name="recipe_equipment_relation_equipment_id">
+    <index id="114" parent="53" name="recipe_equipment_relation_equipment_id">
       <ObjectId>16813</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>equipment_id</ColNames>
     </index>
-    <key id="111" parent="51" name="recipe_equipment_relation_pkey">
+    <key id="115" parent="53" name="recipe_equipment_relation_pkey">
       <ObjectId>16668</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>recipe_equipment_relation_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="112" parent="51" name="fk_recipe_equipment_relation_recipe_id_refs_recipe">
+    <foreign-key id="116" parent="53" name="fk_recipe_equipment_relation_recipe_id_refs_recipe">
       <ObjectId>16755</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
@@ -1490,7 +1514,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="113" parent="51" name="fk_recipe_equipment_relation_equipment_id_refs_equipment">
+    <foreign-key id="117" parent="53" name="fk_recipe_equipment_relation_equipment_id_refs_equipment">
       <ObjectId>16760</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>equipment_id</ColNames>
@@ -1501,7 +1525,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="114" parent="52" name="id">
+    <column id="118" parent="54" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1509,59 +1533,59 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;recipe_ingredient_relation_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="115" parent="52" name="created_at">
+    <column id="119" parent="54" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="116" parent="52" name="updated_at">
+    <column id="120" parent="54" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="117" parent="52" name="recipe_id">
+    <column id="121" parent="54" name="recipe_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="118" parent="52" name="ingredient_id">
+    <column id="122" parent="54" name="ingredient_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="119" parent="52" name="recipe_ingredient_relation_pkey">
+    <index id="123" parent="54" name="recipe_ingredient_relation_pkey">
       <ObjectId>16651</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="120" parent="52" name="recipe_ingredient_relation_recipe_id">
+    <index id="124" parent="54" name="recipe_ingredient_relation_recipe_id">
       <ObjectId>16815</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
     </index>
-    <index id="121" parent="52" name="recipe_ingredient_relation_ingredient_id">
+    <index id="125" parent="54" name="recipe_ingredient_relation_ingredient_id">
       <ObjectId>16814</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>ingredient_id</ColNames>
     </index>
-    <key id="122" parent="52" name="recipe_ingredient_relation_pkey">
+    <key id="126" parent="54" name="recipe_ingredient_relation_pkey">
       <ObjectId>16652</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>recipe_ingredient_relation_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="123" parent="52" name="fk_recipe_ingredient_relation_recipe_id_refs_recipe">
+    <foreign-key id="127" parent="54" name="fk_recipe_ingredient_relation_recipe_id_refs_recipe">
       <ObjectId>16765</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
@@ -1572,7 +1596,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="124" parent="52" name="fk_recipe_ingredient_relation_ingredient_id_refs_ingredient">
+    <foreign-key id="128" parent="54" name="fk_recipe_ingredient_relation_ingredient_id_refs_ingredient">
       <ObjectId>16770</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>ingredient_id</ColNames>
@@ -1583,7 +1607,89 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="125" parent="53" name="id">
+    <column id="129" parent="55" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <DefaultExpression>nextval(&apos;recipe_tag_relation_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="130" parent="55" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="131" parent="55" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="132" parent="55" name="recipe_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="133" parent="55" name="tag_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="134" parent="55" name="recipe_tag_relation_pkey">
+      <ObjectId>16837</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <index id="135" parent="55" name="recipe_tag_relation_recipe_id">
+      <ObjectId>16850</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>recipe_id</ColNames>
+    </index>
+    <index id="136" parent="55" name="recipe_tag_relation_tag_id">
+      <ObjectId>16849</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>tag_id</ColNames>
+    </index>
+    <key id="137" parent="55" name="recipe_tag_relation_pkey">
+      <ObjectId>16838</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>recipe_tag_relation_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="138" parent="55" name="fk_recipe_tag_relation_recipe_id_refs_recipe">
+      <ObjectId>16839</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>recipe_id</ColNames>
+      <RefTableId>16655</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>recipe</RefTableName>
+      <RefKeyName>recipe_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="139" parent="55" name="fk_recipe_tag_relation_tag_id_refs_tag">
+      <ObjectId>16844</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>tag_id</ColNames>
+      <RefTableId>16825</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>tag</RefTableName>
+      <RefKeyName>tag_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="140" parent="56" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1591,61 +1697,61 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;step_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="126" parent="53" name="created_at">
+    <column id="141" parent="56" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="127" parent="53" name="updated_at">
+    <column id="142" parent="56" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="128" parent="53" name="no">
+    <column id="143" parent="56" name="no">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="129" parent="53" name="text">
+    <column id="144" parent="56" name="text">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="130" parent="53" name="recipe_id">
+    <column id="145" parent="56" name="recipe_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="131" parent="53" name="step_pkey">
+    <index id="146" parent="56" name="step_pkey">
       <ObjectId>16643</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="132" parent="53" name="step_recipe_id">
+    <index id="147" parent="56" name="step_recipe_id">
       <ObjectId>16809</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
     </index>
-    <key id="133" parent="53" name="step_pkey">
+    <key id="148" parent="56" name="step_pkey">
       <ObjectId>16644</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>step_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="134" parent="53" name="fk_step_recipe_id_refs_recipe">
+    <foreign-key id="149" parent="56" name="fk_step_recipe_id_refs_recipe">
       <ObjectId>16740</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>recipe_id</ColNames>
@@ -1656,7 +1762,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="135" parent="54" name="id">
+    <column id="150" parent="57" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1664,59 +1770,59 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;step_equipment_relation_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="136" parent="54" name="created_at">
+    <column id="151" parent="57" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="137" parent="54" name="updated_at">
+    <column id="152" parent="57" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="138" parent="54" name="step_id">
+    <column id="153" parent="57" name="step_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="139" parent="54" name="equipment_id">
+    <column id="154" parent="57" name="equipment_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="140" parent="54" name="step_equipment_relation_pkey">
+    <index id="155" parent="57" name="step_equipment_relation_pkey">
       <ObjectId>16699</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="141" parent="54" name="step_equipment_relation_step_id">
+    <index id="156" parent="57" name="step_equipment_relation_step_id">
       <ObjectId>16816</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>step_id</ColNames>
     </index>
-    <index id="142" parent="54" name="step_equipment_relation_equipment_id">
+    <index id="157" parent="57" name="step_equipment_relation_equipment_id">
       <ObjectId>16817</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>equipment_id</ColNames>
     </index>
-    <key id="143" parent="54" name="step_equipment_relation_pkey">
+    <key id="158" parent="57" name="step_equipment_relation_pkey">
       <ObjectId>16700</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>step_equipment_relation_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="144" parent="54" name="fk_step_equipment_relation_step_id_refs_step">
+    <foreign-key id="159" parent="57" name="fk_step_equipment_relation_step_id_refs_step">
       <ObjectId>16775</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>step_id</ColNames>
@@ -1727,7 +1833,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="145" parent="54" name="fk_step_equipment_relation_equipment_id_refs_equipment">
+    <foreign-key id="160" parent="57" name="fk_step_equipment_relation_equipment_id_refs_equipment">
       <ObjectId>16780</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>equipment_id</ColNames>
@@ -1738,7 +1844,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="146" parent="55" name="id">
+    <column id="161" parent="58" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1746,59 +1852,59 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;step_ingredient_relation_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="147" parent="55" name="created_at">
+    <column id="162" parent="58" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="148" parent="55" name="updated_at">
+    <column id="163" parent="58" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="149" parent="55" name="step_id">
+    <column id="164" parent="58" name="step_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="150" parent="55" name="ingredient_id">
+    <column id="165" parent="58" name="ingredient_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="151" parent="55" name="step_ingredient_relation_pkey">
+    <index id="166" parent="58" name="step_ingredient_relation_pkey">
       <ObjectId>16683</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="152" parent="55" name="step_ingredient_relation_step_id">
+    <index id="167" parent="58" name="step_ingredient_relation_step_id">
       <ObjectId>16818</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>step_id</ColNames>
     </index>
-    <index id="153" parent="55" name="step_ingredient_relation_ingredient_id">
+    <index id="168" parent="58" name="step_ingredient_relation_ingredient_id">
       <ObjectId>16819</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>ingredient_id</ColNames>
     </index>
-    <key id="154" parent="55" name="step_ingredient_relation_pkey">
+    <key id="169" parent="58" name="step_ingredient_relation_pkey">
       <ObjectId>16684</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>step_ingredient_relation_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="155" parent="55" name="fk_step_ingredient_relation_step_id_refs_step">
+    <foreign-key id="170" parent="58" name="fk_step_ingredient_relation_step_id_refs_step">
       <ObjectId>16785</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>step_id</ColNames>
@@ -1809,7 +1915,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="156" parent="55" name="fk_step_ingredient_relation_ingredient_id_refs_ingredient">
+    <foreign-key id="171" parent="58" name="fk_step_ingredient_relation_ingredient_id_refs_ingredient">
       <ObjectId>16790</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>ingredient_id</ColNames>
@@ -1820,7 +1926,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="157" parent="56" name="id">
+    <column id="172" parent="59" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1828,59 +1934,59 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;subscription_relation_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="158" parent="56" name="created_at">
+    <column id="173" parent="59" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="159" parent="56" name="updated_at">
+    <column id="174" parent="59" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="160" parent="56" name="from_user_id">
+    <column id="175" parent="59" name="from_user_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="161" parent="56" name="to_user_id">
+    <column id="176" parent="59" name="to_user_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="162" parent="56" name="subscription_relation_pkey">
+    <index id="177" parent="59" name="subscription_relation_pkey">
       <ObjectId>16723</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="163" parent="56" name="subscription_relation_from_user_id">
+    <index id="178" parent="59" name="subscription_relation_from_user_id">
       <ObjectId>16820</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>from_user_id</ColNames>
     </index>
-    <index id="164" parent="56" name="subscription_relation_to_user_id">
+    <index id="179" parent="59" name="subscription_relation_to_user_id">
       <ObjectId>16821</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>to_user_id</ColNames>
     </index>
-    <key id="165" parent="56" name="subscription_relation_pkey">
+    <key id="180" parent="59" name="subscription_relation_pkey">
       <ObjectId>16724</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>subscription_relation_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="166" parent="56" name="fk_subscription_relation_from_user_id_refs_user">
+    <foreign-key id="181" parent="59" name="fk_subscription_relation_from_user_id_refs_user">
       <ObjectId>16795</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>from_user_id</ColNames>
@@ -1891,7 +1997,7 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="167" parent="56" name="fk_subscription_relation_to_user_id_refs_user">
+    <foreign-key id="182" parent="59" name="fk_subscription_relation_to_user_id_refs_user">
       <ObjectId>16800</ObjectId>
       <StateNumber>728</StateNumber>
       <ColNames>to_user_id</ColNames>
@@ -1902,7 +2008,50 @@ sequence|table|16701|16703|1
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="168" parent="57" name="id">
+    <column id="183" parent="60" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <DefaultExpression>nextval(&apos;tag_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="184" parent="60" name="created_at">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="185" parent="60" name="updated_at">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="186" parent="60" name="text">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>736</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="187" parent="60" name="tag_pkey">
+      <ObjectId>16829</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="188" parent="60" name="tag_pkey">
+      <ObjectId>16830</ObjectId>
+      <StateNumber>736</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>tag_pkey</UnderlyingIndexName>
+    </key>
+    <column id="189" parent="61" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -1910,68 +2059,68 @@ sequence|table|16701|16703|1
       <DefaultExpression>nextval(&apos;user_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="169" parent="57" name="created_at">
+    <column id="190" parent="61" name="created_at">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="170" parent="57" name="updated_at">
+    <column id="191" parent="61" name="updated_at">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="171" parent="57" name="name">
+    <column id="192" parent="61" name="name">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="172" parent="57" name="email">
+    <column id="193" parent="61" name="email">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="173" parent="57" name="pw_hash">
+    <column id="194" parent="61" name="pw_hash">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>690</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="174" parent="57" name="userId">
+    <column id="195" parent="61" name="userId">
       <Position>8</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>728</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="175" parent="57" name="user_pkey">
+    <index id="196" parent="61" name="user_pkey">
       <ObjectId>16632</ObjectId>
       <StateNumber>690</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="176" parent="57" name="user_email">
+    <index id="197" parent="61" name="user_email">
       <ObjectId>16634</ObjectId>
       <StateNumber>690</StateNumber>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="177" parent="57" name="user_userId">
+    <index id="198" parent="61" name="user_userId">
       <ObjectId>16636</ObjectId>
       <StateNumber>716</StateNumber>
       <ColNames>userId</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="178" parent="57" name="user_pkey">
+    <key id="199" parent="61" name="user_pkey">
       <ObjectId>16633</ObjectId>
       <StateNumber>690</StateNumber>
       <ColNames>id</ColNames>

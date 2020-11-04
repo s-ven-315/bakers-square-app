@@ -6,4 +6,7 @@ class Tag(BaseModel):
     text = pw.CharField(null=False)
 
     def as_dict(self):
-        return dict()
+        return dict(
+            id=self.id,
+            text=self.text
+        )
