@@ -8,7 +8,7 @@ def api_post(keywords=None):
     def inner(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            if not flask.request.json:
+            if flask.request.json is None and flask.request.json != {}:
                 return flask.abort(400)
 
             if not all([k in flask.request.json for k in keywords]):

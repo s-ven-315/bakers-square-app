@@ -2,8 +2,8 @@ import flask
 from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash
 
-from .utils.decorators import api_post
-from models.model_users import User
+from flask_api.blueprints.utils.decorators import api_post
+from models.model_user import User
 
 auth_api_blueprint = flask.Blueprint('auth_api', __name__)
 

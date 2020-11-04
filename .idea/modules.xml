@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/back-end/.idea/back-end.iml" filepath="$PROJECT_DIR$/back-end/.idea/back-end.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/bake-app.iml" filepath="$PROJECT_DIR$/.idea/bake-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bakers-square-app.iml" filepath="$PROJECT_DIR$/.idea/bakers-square-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/front-end/.idea/front-end.iml" filepath="$PROJECT_DIR$/front-end/.idea/front-end.iml" />
     </modules>
   </component>
