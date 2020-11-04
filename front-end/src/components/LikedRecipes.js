@@ -51,15 +51,15 @@ export default function LikedRecipes() {
                 </a>
                 <div className="recipe-details-container">
                     <div className="recipe-name">Red Velvet Cake</div>
-                    <div className="recipe-id">by anonymous</div>
+                    <div className="recipe-baker">by anonymous</div>
                     <div className="recipe-following-container">
                         <Button color="inherit" onClick={handleLikeOpen}>3 Likes</Button>
                         <FollowerDialog open={likeOpen} onClose={handleLikeClose} />
                         <Button color="inherit">5 Comments</Button>
                     </div>
                 </div>
-                <div className="profile-button-container">
-                    <a className="profile-button" href="#">Start Baking</a>
+                <div className="recipe-button-container">
+                    <a className="recipe-button" href="#">Start Baking</a>
                 </div>
             </div>
             <div className="recipe-container">
@@ -68,15 +68,15 @@ export default function LikedRecipes() {
                 </a>
                 <div className="recipe-details-container">
                     <div className="recipe-name">Red Velvet Cake</div>
-                    <div className="recipe-id">by anonymous</div>
+                    <div className="recipe-baker">by anonymous</div>
                     <div className="recipe-following-container">
                         <Button color="inherit" onClick={handleLikeOpen}>3 Likes</Button>
                         <FollowerDialog open={likeOpen} onClose={handleLikeClose} />
                         <Button color="inherit">5 Comments</Button>
                     </div>
                 </div>
-                <div className="profile-button-container">
-                    <a className="profile-button" href="#">Start Baking</a>
+                <div className="recipe-button-container">
+                    <a className="recipe-button" href="#">Start Baking</a>
                 </div>
             </div>
         </>
