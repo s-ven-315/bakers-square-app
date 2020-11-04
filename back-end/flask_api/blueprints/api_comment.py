@@ -35,14 +35,14 @@ def get_comments():
 
     comments = [c for c in query]
     comment_dicts = [c.as_dict() for c in comments]
-    return flask.jsonify(comment_dicts), 200
+    return flask.jsonify({'msg': 'Success', 'data': comment_dicts}), 200
 
 
 @comments_api_blueprint.route('/<commentId>', methods=['GET'])
 @commentExists
 def get_comment(commentId: str):
     comment = Comment.get_by_id(commentId)
-    return flask.jsonify(comment.as_dict()), 200
+    return flask.jsonify({'msg': 'Success', 'data': comment.as_dict()}), 200
 
 
 @comments_api_blueprint.route('/', methods=['POST'])
