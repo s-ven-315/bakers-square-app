@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import RecipeIngredients from './RecipeIngredients'
+import RecipeTools from './RecipeTools'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -53,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 export default function RecipeDetails() {
+    const [ingrList, setIngrList] = useState(['flour', 'sugar', 'chocolate', 'strawberry', 'milk', 'butter', 'eggs'])
+    const [toolList, setToolList] = useState(['Oven', 'Rolling Pin', '12-inch Baking Mold', 'Mixer', 'Blender'])
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -90,25 +94,11 @@ export default function RecipeDetails() {
 
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <ul>
-                        <li>Flour</li>
-                        <li>Sugar</li>
-                        <li>Eggs</li>
-                        <li>Chocolate Chips</li>
-                        <li>Strawberry</li>
-                        <li>Milk</li>
-                        <li>Butter</li>
-                    </ul>
-
-
+                    <RecipeIngredients ingrList={ingrList} setIngrList={setIngrList} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <ul>
-                        <li>Oven</li>
-                        <li>Rolling pin</li>
-                        <li>Blender</li>
-                        <li>Mixer</li>
-                    </ul>
+                    <RecipeTools toolList={toolList} setToolList={setToolList} />
+
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     <ol>
