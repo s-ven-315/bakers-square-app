@@ -12,6 +12,7 @@ import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
 import { red } from '@material-ui/core/colors'
 
 
@@ -33,6 +34,18 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    buttonDiv: {
+        display: "flex",
+        justifyContent: "space-between"
+    },
+    button: {
+        width: "100%",
+    },
+    buttonClose: {
+        width: "100%",
+        backgroundColor: red[500],
+        color: "white"
+    }
 
 }));
 
@@ -40,28 +53,35 @@ function EditList(props) {
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
     const { onClose, open, ingrList, setIngrList } = props;
+    const [tempList, setTempList] = useState(ingrList)
 
-    const handleClose = () => {
-        onClose();
-    };
+
     const handleRemove = (idx) => {
-        let clonedList = [...ingrList]
+        let clonedList = [...tempList]
         clonedList.splice(idx, 1)
-        setIngrList(clonedList)
+        setTempList(clonedList)
     }
     const handleInput = (e) => {
         setNewItem(e.target.value)
     }
-    const addItem = () => {
+    const handleAdd = () => {
         console.log(newItem)
         setNewItem("")
-        setIngrList([...ingrList, newItem])
+        setTempList([...tempList, newItem])
+    }
+    const handleClose = () => {
+        setTempList(ingrList)
+        onClose();
+    };
+    const handleSave = () => {
+        setIngrList(tempList)
+        handleClose()
     }
     return (
         <Dialog onClose={handleClose} aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Edit Ingredients List</DialogTitle>
             <List>
-                {ingrList.map((ingr, idx) => (
+                {tempList.map((ingr, idx) => (
                     <ListItem key={idx}>
                         <Avatar button className={classes.avatarSmall} onClick={() => handleRemove(idx)}>
                             <RemoveIcon />
@@ -77,13 +97,18 @@ function EditList(props) {
                             </form>
                         </Grid>
                         <Grid item >
-                            <Avatar className={classes.avatar} onClick={addItem} >
+                            <Avatar className={classes.avatar} onClick={handleAdd} >
                                 <AddIcon />
                             </Avatar>
                         </Grid>
                     </Grid>
                 </ListItem>
             </List>
+            <Divider />
+            <div className={classes.buttonDiv}>
+                <Button variant="contained" color="primary" className={classes.button} onClick={handleSave}>Save</Button>
+                <Button variant="contained" className={classes.buttonClose} onClick={handleClose}>Close</Button>
+            </div>
         </Dialog>
     );
 }

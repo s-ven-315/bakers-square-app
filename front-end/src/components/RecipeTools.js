@@ -11,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { red } from '@material-ui/core/colors'
 
@@ -33,6 +34,18 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    buttonDiv: {
+        display: "flex",
+        justifyContent: "space-between"
+    },
+    button: {
+        width: "100%",
+    },
+    buttonClose: {
+        width: "100%",
+        backgroundColor: red[500],
+        color: "white"
+    }
 
 }));
 
@@ -40,10 +53,9 @@ function EditList(props) {
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
     const { onClose, open, toolList, setToolList } = props;
+    const [tempList, setTempList] = useState(toolList)
 
-    const handleClose = () => {
-        onClose();
-    };
+
     const handleRemove = (idx) => {
         let clonedList = [...toolList]
         clonedList.splice(idx, 1)
@@ -52,11 +64,20 @@ function EditList(props) {
     const handleInput = (e) => {
         setNewItem(e.target.value)
     }
-    const addItem = () => {
+    const handleAdd = () => {
         console.log(newItem)
         setNewItem("")
-        setToolList([...toolList, newItem])
+        setTempList([...tempList, newItem])
     }
+    const handleClose = () => {
+        setTempList(toolList)
+        onClose();
+    }
+    const handleSave = () => {
+        setToolList(tempList)
+        handleClose()
+    }
+
     return (
         <Dialog onClose={handleClose} aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Edit Equipments List</DialogTitle>
@@ -77,13 +98,18 @@ function EditList(props) {
                             </form>
                         </Grid>
                         <Grid item >
-                            <Avatar className={classes.avatar} onClick={addItem} >
+                            <Avatar className={classes.avatar} onClick={handleAdd} >
                                 <AddIcon />
                             </Avatar>
                         </Grid>
                     </Grid>
                 </ListItem>
             </List>
+            <Divider />
+            <div className={classes.buttonDiv}>
+                <Button variant="contained" color="primary" className={classes.button} onClick={handleSave}>Save</Button>
+                <Button variant="contained" className={classes.buttonClose} onClick={handleClose}>Close</Button>
+            </div>
         </Dialog>
     );
 }
