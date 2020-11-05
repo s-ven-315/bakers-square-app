@@ -9,8 +9,9 @@ class Comment(BaseModel):
     user = pw.ForeignKeyField(User, backref='comments', on_delete="CASCADE")
     recipe = pw.ForeignKeyField(Recipe, backref='comments', on_delete="CASCADE")
 
-    def as_dict(self):
+    def as_dict(self, basic=False):
         return dict(
+            type='Comment',
             id=self.id,
             user=dict(userId=self.user.userId, name=self.user.name),
             recipe=dict(id=self.recipe.id, name=self.recipe.name),

@@ -23,7 +23,7 @@ class BaseModel(pw.Model):
         print(f"Warning validation method not implemented for {str(type(self))}")
         return True
 
-    def as_dict(self):
+    def as_dict(self, full=False):
         raise NotImplementedError
 
     class Meta:

@@ -7,5 +7,8 @@ class SubscriptionRelation(BaseModel):
     from_user = pw.ForeignKeyField(User, on_delete="CASCADE")
     to_user = pw.ForeignKeyField(User, on_delete="CASCADE")
 
-    def as_dict(self):
-        return dict()
+    def as_dict(self, full=False):
+        return dict(
+            type='SubscriptionRelation',
+            id=self.id,
+        )

@@ -16,24 +16,18 @@ def parse_data(fromUserId):
     toUserId = json_data.get('userId')
     to_user = User.get_or_none(User.userId == toUserId)
 
-    subscriptionRelation = Subs.get_or_none(Subs.from_user == from_user, Subs.to_user == to_user)
-    return from_user, to_user, subscriptionRelation
+    return from_user, to_user
 
 
 @users_api_blueprint.route('/<userId>/subscribe', methods=['POST'])
 @api_post(['userId'])
 @userExists
 def set_subscription(userId: str):
-    from_user, to_user, subscriptionRelation = parse_data(userId)
-    if not from_user:
-        return flask.jsonify({'msg': 'Must provide valid userId (from_user)'}), 400
+    from_user, to_user = parse_data(userId)
     if not to_user:
         return flask.jsonify({'msg': 'Must provide valid userId (to_user)'}), 400
-    if not subscriptionRelation:
-        subscriptionRelation = Subs(from_user=from_user, to_user=to_user)
-        if not subscriptionRelation.save():
-            return flask.jsonify({'msg': 'Error in saving data'}), 400
-
+    if not from_user.subscribe(to_user):
+        return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
 
 
@@ -41,12 +35,9 @@ def set_subscription(userId: str):
 @api_post(['userId'])
 @userExists
 def unset_subscription(userId: str):
-    from_user, to_user, subscriptionRelation = parse_data(userId)
-    if not from_user:
-        return flask.jsonify({'msg': 'Must provide valid userId (from_user)'}), 400
+    from_user, to_user = parse_data(userId)
     if not to_user:
         return flask.jsonify({'msg': 'Must provide valid userId (to_user)'}), 400
-    if subscriptionRelation:
-        if not subscriptionRelation.delete_instance():
-            return flask.jsonify({'msg': 'Error in deleting data'}), 400
+    if not from_user.unsubscribe(to_user):
+        return flask.jsonify({'msg': 'Error in deleting data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200

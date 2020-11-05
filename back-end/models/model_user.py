@@ -1,10 +1,10 @@
+import peewee as pw
 from flask_login import UserMixin
 from playhouse.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 
 from models.base_model import BaseModel
-import peewee as pw
 
 
 class User(BaseModel, UserMixin):
@@ -44,9 +44,77 @@ class User(BaseModel, UserMixin):
             if len(self.pw_hash) == 0:
                 self.errors.append('Password is not provided')
 
-    def as_dict(self):
-        return dict(
-            userId=self.userId,
-            name=self.name,
-            email=self.email,
+    def as_dict(self, basic=False):
+        if not basic:
+            return dict(
+                type='User',
+                userId=self.userId,
+                name=self.name,
+                email=self.email,
+
+                recipes=[d.as_dict() for d in self.recipes],
+                liked_recipes=[d.as_dict() for d in self.liked_recipes],
+                followers=[d.as_dict(basic=True) for d in self.followers],
+                following=[d.as_dict(basic=True) for d in self.following],
+            )
+        else:
+            return dict(
+                type='User',
+                userId=self.userId,
+                name=self.name,
+                email=self.email
+            )
+
+    @hybrid_property
+    def liked_recipes(self):
+        from models.model_recipe import Recipe
+        from models.relation_like import LikeRelation
+        return Recipe.select().join(LikeRelation, pw.JOIN.LEFT_OUTER).where(LikeRelation.user == self)
+
+    @hybrid_property
+    def followers(self):
+        from models.relation_subscription import SubscriptionRelation
+        return (
+            User.select()
+                .join(SubscriptionRelation, pw.JOIN.LEFT_OUTER, on=SubscriptionRelation.from_user)
+                .where(SubscriptionRelation.to_user == self)
         )
+
+    @hybrid_property
+    def following(self):
+        from models.relation_subscription import SubscriptionRelation
+        return (
+            User.select()
+                .join(SubscriptionRelation, pw.JOIN.LEFT_OUTER, on=SubscriptionRelation.to_user)
+                .where(SubscriptionRelation.from_user == self)
+        )
+
+    def like(self, recipe):
+        from models.relation_like import LikeRelation
+        likeRelation = LikeRelation.get_or_none(LikeRelation.user == self, LikeRelation.recipe == recipe)
+        if not likeRelation:
+            likeRelation = LikeRelation(user=self, recipe=recipe)
+            return likeRelation.save()
+        return True
+
+    def unlike(self, recipe):
+        from models.relation_like import LikeRelation
+        likeRelation = LikeRelation.get_or_none(LikeRelation.user == self, LikeRelation.recipe == recipe)
+        if likeRelation:
+            return likeRelation.delete_instance()
+        return True
+
+    def subscribe(self, user):
+        from models.relation_subscription import SubscriptionRelation as Subs
+        subscriptionRelation = Subs.get_or_none(Subs.from_user == self, Subs.to_user == user)
+        if not subscriptionRelation:
+            subscriptionRelation = Subs(from_user=self, to_user=user)
+            return subscriptionRelation.save()
+        return True
+
+    def unsubscribe(self, user):
+        from models.relation_subscription import SubscriptionRelation as Subs
+        subscriptionRelation = Subs.get_or_none(Subs.from_user == self, Subs.to_user == user)
+        if subscriptionRelation:
+            return subscriptionRelation.delete_instance()
+        return True

@@ -6,8 +6,9 @@ from models.model_user import User
 class Ingredient(BaseModel):
     name = pw.CharField(unique=True, null=False)
 
-    def as_dict(self):
+    def as_dict(self, basic=False):
         return dict(
+            type='Ingredient',
             id=self.id,
             name=self.name,
         )
