@@ -23,17 +23,7 @@ def set_ingredient(stepId: str):
     if code == 400:
         return flask.jsonify({'msg': msg}), code
 
-    # Find toAddRelation
-    toAdd = []
-    for ingredientId in ingredientIds:
-        ingredient = Ingredient.get_by_id(ingredientId)
-        existingRelation = Relation.get_or_none(Relation.step == step, Relation.ingredient == ingredientId)
-        if not existingRelation:
-            toAdd.append(dict(step=step, ingredient=ingredient))
-
-    # Adding & Delete
-    if len(toAdd) > 0:
-        Relation.insert_many(toAdd).execute()
-    toDel = Relation.delete().where(Relation.step == step, Relation.ingredient.not_in(ingredientIds))
-    toDel.execute()
+    # Action
+    if not step.set_ingredients(ingredientIds):
+        return flask.jsonify({'msg': 'Error in setting ingredients'}), 200
     return flask.jsonify({'msg': 'Success'}), 200

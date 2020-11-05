@@ -23,17 +23,7 @@ def set_tag(recipeId: str):
     if code == 400:
         return flask.jsonify({'msg': msg}), code
 
-    # Find toAddRelation
-    toAdd = []
-    for tagId in tagIds:
-        tag = Tag.get_by_id(tagId)
-        existingRelation = Relation.get_or_none(Relation.recipe == recipe, Relation.tag == tagId)
-        if not existingRelation:
-            toAdd.append(dict(recipe=recipe, tag=tag))
-
-    # Adding & Delete
-    if len(toAdd) > 0:
-        Relation.insert_many(toAdd).execute()
-    toDel = Relation.delete().where(Relation.recipe == recipe, Relation.tag.not_in(tagIds))
-    toDel.execute()
+    # Action
+    if not recipe.set_tags(tagIds):
+        return flask.jsonify({'msg': 'Error in setting tags'}), 200
     return flask.jsonify({'msg': 'Success'}), 200

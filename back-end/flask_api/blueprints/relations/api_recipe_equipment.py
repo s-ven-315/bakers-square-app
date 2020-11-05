@@ -23,17 +23,9 @@ def set_equipment(recipeId: str):
     if code == 400:
         return flask.jsonify({'msg': msg}), code
 
-    # Find toAddRelation
-    toAdd = []
-    for equipmentId in equipmentIds:
-        equipment = Equipment.get_by_id(equipmentId)
-        existingRelation = Relation.get_or_none(Relation.recipe == recipe, Relation.equipment == equipmentId)
-        if not existingRelation:
-            toAdd.append(dict(recipe=recipe, equipment=equipment))
-
-    # Adding & Delete
-    if len(toAdd) > 0:
-        Relation.insert_many(toAdd).execute()
-    toDel = Relation.delete().where(Relation.recipe == recipe, Relation.equipment.not_in(equipmentIds))
-    toDel.execute()
+    # Action
+    if not recipe.set_equipment(equipmentIds):
+        return flask.jsonify({'msg': 'Error in setting equipment'}), 200
     return flask.jsonify({'msg': 'Success'}), 200
+
+

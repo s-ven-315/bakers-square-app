@@ -1,6 +1,7 @@
 import peewee as pw
 from playhouse.hybrid import hybrid_property
 
+from flask_api.blueprints.utils.helpers import Helper
 from models.base_model import BaseModel
 from models.model_user import User
 
@@ -73,12 +74,17 @@ class Recipe(BaseModel):
         from models.model_comment import Comment
         return Comment.select().where(Comment.recipe == self).order_by(Comment.updated_at)
 
-    def set_ingredients(self, ingredientIds):
-        pass
+    def set_ingredients(self, idList):
+        from models.model_ingredient import Ingredient as Class
+        from models.relation_recipe_ingredient import RecipeIngredientRelation as Relation
+        return Helper.set_id_list(self, idList, Class, Relation, 'recipe', Relation.recipe, 'ingredient', Relation.ingredient)
 
-    def set_equipment(self, equipmentIds):
-        pass
+    def set_equipment(self, idList):
+        from models.model_equipment import Equipment as Class
+        from models.relation_recipe_equipment import RecipeEquipmentRelation as Relation
+        return Helper.set_id_list(self, idList, Class, Relation, 'recipe', Relation.recipe, 'equipment', Relation.equipment)
 
-    def set_tags(self, tagIds):
-        pass
-
+    def set_tags(self, idList):
+        from models.model_tag import Tag as Class
+        from models.relation_recipe_tag import RecipeTagRelation as Relation
+        return Helper.set_id_list(self, idList, Class, Relation, 'recipe', Relation.recipe, 'tag', Relation.tag)
