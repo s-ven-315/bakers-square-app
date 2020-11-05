@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import RecipeIngredients from './RecipeIngredients'
 import RecipeTools from './RecipeTools'
+import RecipeSteps from './RecipeSteps'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeDetails() {
     const [ingrList, setIngrList] = useState(['flour', 'sugar', 'chocolate', 'strawberry', 'milk', 'butter', 'eggs'])
     const [toolList, setToolList] = useState(['Oven', 'Rolling Pin', '12-inch Baking Mold', 'Mixer', 'Blender'])
+    const [steps, setSteps] = useState(['Blend the chocolate', 'Cut strawberries', 'Break the eggs', 'Mix the mixture', 'Make Dough', 'Put in Oven', 'Wait!'])
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -101,15 +103,7 @@ export default function RecipeDetails() {
 
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <ol>
-                        <li>Blend the chocolate</li>
-                        <li>Cut strawberries</li>
-                        <li>Break the eggs</li>
-                        <li>Mix the mixture</li>
-                        <li>Make Dough</li>
-                        <li>Put in Oven</li>
-                        <li>Wait!</li>
-                    </ol>
+                    <RecipeSteps steps={steps} setSteps={setSteps} />
                 </TabPanel>
 
             </div>
