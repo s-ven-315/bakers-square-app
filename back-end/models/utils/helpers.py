@@ -67,4 +67,3 @@ class Helper:
             return True
         except Exception as e:
             raise e
-            return False

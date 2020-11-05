@@ -30,17 +30,17 @@ class Helper:
             return 'Data <%s> must be a list / array.' % (className), 400
         for i, item in enumerate(arr):
             if type(item) != dict:
-                return '%s (item #%d) must be a dictionary / object' % (className, i), 400
+                return '%s item #%d must be a dictionary / object' % (className, i), 400
             if any([key not in item for key in ['id', 'qty', 'unit']]):
-                return '%s (item #%d) must has the required keys (\'id\', \'qty\', \'unit\')' % (className + 's', i), 400
+                return '%s item #%d must has the required keys (\'id\', \'qty\', \'unit\')' % (className + 's', i), 400
             if not item['id']:
-                return '%s (item #%d) has an empty id' % (className, i), 400
+                return '%s item #%d has an empty id' % (className, i), 400
             if not item['qty']:
-                return '%s (item #%d) has an empty qty' % (className, i), 400
+                return '%s item #%d has an empty qty' % (className, i), 400
             if not item['unit']:
-                return '%s (item #%d) has an empty unit' % (className, i), 400
+                return '%s item #%d has an empty unit' % (className, i), 400
             if item['unit'] not in ALLOWED_QTY:
-                return '%s (item #%d, %s) must be one of %s' % (className, i, item['unit'], ALLOWED_QTY), 400
+                return '%s item #%d: \'%s\' must be one of %s' % (className, i, item['unit'], ALLOWED_QTY), 400
 
         for item in arr:
             item = Class.get_or_none(Class.id == item['id'])
