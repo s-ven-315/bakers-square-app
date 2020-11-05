@@ -1071,6 +1071,7 @@ sequence|table|16701|16703|1
     </table>
     <table id="53" parent="21" name="recipe_equipment_relation">
       <ObjectId>16663</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>

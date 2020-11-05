@@ -4,7 +4,7 @@ from playhouse.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 
-from models.base_model import BaseModel
+from models.utils.base_model import BaseModel
 
 
 class User(BaseModel, UserMixin):

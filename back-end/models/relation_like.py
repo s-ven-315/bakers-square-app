@@ -1,7 +1,6 @@
 import peewee as pw
-from playhouse.hybrid import hybrid_property
 
-from models.base_model import BaseModel
+from models.utils.base_model import BaseModel
 from models.model_recipe import Recipe
 from models.model_user import User
 

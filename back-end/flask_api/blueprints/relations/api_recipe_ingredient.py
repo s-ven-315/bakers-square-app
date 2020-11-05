@@ -10,7 +10,7 @@ from ..utils.helpers import Helper
 
 
 @recipes_api_blueprint.route('/<recipeId>/ingredients', methods=['POST'])
-@api_post(['ingredientIds'])
+@api_post(['ingredientList'])
 @recipeExists
 def set_ingredient(recipeId: str):
     # recipe
@@ -18,12 +18,12 @@ def set_ingredient(recipeId: str):
 
     # ingredientIds
     json_data = flask.request.json
-    ingredientIds = json_data.get('ingredientIds')
-    msg, code = Helper.assert_id_list(ingredientIds, Ingredient, 'ingredientId')
+    ingredientList = json_data.get('ingredientList')
+    msg, code = Helper.assert_id_list_with_qty(ingredientList, Ingredient, 'ingredientList')
     if code == 400:
         return flask.jsonify({'msg': msg}), code
 
     # Action
-    if not recipe.set_ingredients(ingredientIds):
+    if not recipe.set_ingredients(ingredientList):
         return flask.jsonify({'msg': 'Error in setting ingredients'}), 200
     return flask.jsonify({'msg': 'Success'}), 200

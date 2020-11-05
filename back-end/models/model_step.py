@@ -1,8 +1,7 @@
 import peewee as pw
 from playhouse.hybrid import hybrid_property
 
-from flask_api.blueprints.utils.helpers import Helper
-from models.base_model import BaseModel
+from models.utils import BaseModel, Helper
 from models.model_recipe import Recipe
 
 
@@ -36,9 +35,9 @@ class Step(BaseModel):
     def set_ingredients(self, idList):
         from models.model_ingredient import Ingredient as Class
         from models.relation_step_ingredient import StepIngredientRelation as Relation
-        return Helper.set_id_list(self, idList, Class, Relation, 'step', Relation.step, 'ingredient', Relation.ingredient)
+        return Helper.set_id_list_with_qty(self, idList, Class, Relation, 'step', Relation.step, 'ingredient', Relation.ingredient)
 
     def set_equipment(self, idList):
         from models.model_equipment import Equipment as Class
         from models.relation_step_equipment import StepEquipmentRelation as Relation
-        return Helper.set_id_list(self, idList, Class, Relation, 'step', Relation.step, 'equipment', Relation.ingredient)
+        return Helper.set_id_list_with_qty(self, idList, Class, Relation, 'step', Relation.step, 'equipment', Relation.ingredient)

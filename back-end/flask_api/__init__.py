@@ -2,13 +2,13 @@ from app import app
 from flask_cors import CORS
 
 from flask_api.blueprints.api_auth import auth_api_blueprint
+from flask_api.blueprints.api_user import users_api_blueprint
+from flask_api.blueprints.api_recipe import recipes_api_blueprint
 from flask_api.blueprints.api_comment import comments_api_blueprint
 from flask_api.blueprints.api_equipment import equipments_api_blueprint
 from flask_api.blueprints.api_ingredient import ingredients_api_blueprint
-from flask_api.blueprints.api_recipe import recipes_api_blueprint
 from flask_api.blueprints.api_step import steps_api_blueprint
 from flask_api.blueprints.api_tag import tags_api_blueprint
-from flask_api.blueprints.api_user import users_api_blueprint
 
 import flask_api.blueprints.relations.api_like
 import flask_api.blueprints.relations.api_recipe_equipment

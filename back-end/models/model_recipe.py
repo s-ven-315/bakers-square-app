@@ -1,10 +1,9 @@
-from typing import List, Dict
+from typing import List
 
 import peewee as pw
 from playhouse.hybrid import hybrid_property
 
-from flask_api.blueprints.utils.helpers import Helper
-from models.base_model import BaseModel
+from models.utils import BaseModel, Helper
 from models.model_user import User
 
 
@@ -79,12 +78,12 @@ class Recipe(BaseModel):
     def set_ingredients(self, idList: List[str]):
         from models.model_ingredient import Ingredient as Class
         from models.relation_recipe_ingredient import RecipeIngredientRelation as Relation
-        return Helper.set_id_list(self, idList, Class, Relation, 'recipe', Relation.recipe, 'ingredient', Relation.ingredient)
+        return Helper.set_id_list_with_qty(self, idList, Class, Relation, 'recipe', Relation.recipe, 'ingredient', Relation.ingredient)
 
     def set_equipment(self, idList: List[str]):
         from models.model_equipment import Equipment as Class
         from models.relation_recipe_equipment import RecipeEquipmentRelation as Relation
-        return Helper.set_id_list(self, idList, Class, Relation, 'recipe', Relation.recipe, 'equipment', Relation.equipment)
+        return Helper.set_id_list_with_qty(self, idList, Class, Relation, 'recipe', Relation.recipe, 'equipment', Relation.equipment)
 
     def set_tags(self, idList: List[str]):
         from models.model_tag import Tag as Class

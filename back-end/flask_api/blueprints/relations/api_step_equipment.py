@@ -10,20 +10,20 @@ from ..utils.helpers import Helper
 
 
 @steps_api_blueprint.route('/<stepId>/equipment', methods=['POST'])
-@api_post(['equipmentIds'])
+@api_post(['equipmentList'])
 @stepExists
 def set_equipment(stepId: str):
     # step
     step = Step.get_by_id(stepId)
 
-    # equipmentIds
+    # equipmentList
     json_data = flask.request.json
-    equipmentIds = json_data.get('equipmentIds')
-    msg, code = Helper.assert_id_list(equipmentIds, Equipment, 'equipmentId')
+    equipmentList = json_data.get('equipmentList')
+    msg, code = Helper.assert_id_list_with_qty(equipmentList, Equipment, 'equipmentList')
     if code == 400:
         return flask.jsonify({'msg': msg}), code
 
     # Action
-    if not step.set_equipment(equipmentIds):
+    if not step.set_equipment(equipmentList):
         return flask.jsonify({'msg': 'Error in setting equipment'}), 200
     return flask.jsonify({'msg': 'Success'}), 200
