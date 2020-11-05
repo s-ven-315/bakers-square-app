@@ -6,8 +6,9 @@ from models.model_user import User
 class Equipment(BaseModel):
     name = pw.CharField(unique=True, null=False)
 
-    def as_dict(self):
+    def as_dict(self, basic=False):
         return dict(
+            type='Equipment',
             id=self.id,
             name=self.name,
         )

@@ -8,5 +8,8 @@ class StepIngredientRelation(BaseModel):
     step = pw.ForeignKeyField(Step, on_delete="CASCADE")
     ingredient = pw.ForeignKeyField(Ingredient, on_delete="CASCADE")
 
-    def as_dict(self):
-        return dict()
+    def as_dict(self, full=False):
+        return dict(
+            type='StepIngredientRelation',
+            id=self.id,
+        )

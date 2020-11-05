@@ -44,12 +44,26 @@ class User(BaseModel, UserMixin):
             if len(self.pw_hash) == 0:
                 self.errors.append('Password is not provided')
 
-    def as_dict(self):
-        return dict(
-            userId=self.userId,
-            name=self.name,
-            email=self.email,
-        )
+    def as_dict(self, basic=False):
+        if not basic:
+            return dict(
+                type='User',
+                userId=self.userId,
+                name=self.name,
+                email=self.email,
+
+                recipes=[d.as_dict() for d in self.recipes],
+                liked_recipes=[d.as_dict() for d in self.liked_recipes],
+                followers=[d.as_dict(basic=True) for d in self.followers],
+                following=[d.as_dict(basic=True) for d in self.following],
+            )
+        else:
+            return dict(
+                type='User',
+                userId=self.userId,
+                name=self.name,
+                email=self.email
+            )
 
     @hybrid_property
     def liked_recipes(self):
@@ -104,4 +118,3 @@ class User(BaseModel, UserMixin):
         if subscriptionRelation:
             return subscriptionRelation.delete_instance()
         return True
-

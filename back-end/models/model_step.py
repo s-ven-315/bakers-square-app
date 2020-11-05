@@ -8,8 +8,9 @@ class Step(BaseModel):
     text = pw.CharField(null=False)
     recipe = pw.ForeignKeyField(Recipe, on_delete="CASCADE")
 
-    def as_dict(self):
+    def as_dict(self, basic=False):
         return dict(
+            type='Step',
             id=self.id,
             no=self.no,
             text=self.text,
