@@ -56,6 +56,7 @@ class User(BaseModel, UserMixin):
                 liked_recipes=[d.as_dict() for d in self.liked_recipes],
                 followers=[d.as_dict(basic=True) for d in self.followers],
                 following=[d.as_dict(basic=True) for d in self.following],
+                comments=[d.as_dict(basic=True) for d in self.comments]
             )
         else:
             return dict(
@@ -89,6 +90,11 @@ class User(BaseModel, UserMixin):
                 .where(SubscriptionRelation.from_user == self)
         )
 
+    @hybrid_property
+    def comments(self):
+        from models.model_comment import Comment
+        return Comment.select().where(Comment.user == self).order_by(Comment.updated_at)
+
     def like(self, recipe):
         from models.relation_like import LikeRelation
         likeRelation = LikeRelation.get_or_none(LikeRelation.user == self, LikeRelation.recipe == recipe)
@@ -118,3 +124,4 @@ class User(BaseModel, UserMixin):
         if subscriptionRelation:
             return subscriptionRelation.delete_instance()
         return True
+
