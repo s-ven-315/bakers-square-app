@@ -37,12 +37,6 @@ def get_users():
 @userExists
 def get_user(userId: str):
     user = User.get_or_none(User.userId == userId)
-
-    user_recipes = list(user.recipes)
-    user_liked_recipes =  list(user.liked_recipes)
-    user_followers =  list(user.followers)
-    user_following =  list(user.following)
-
     return flask.jsonify({'msg': 'Success', 'data': user.as_dict()}), 200
 
 

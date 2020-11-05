@@ -25,7 +25,7 @@ class Recipe(BaseModel):
                 tags=[d.as_dict() for d in self.tags],
 
                 likes=[d.as_dict(basic=True) for d in self.likes],
-                comments=[d.as_dict() for d in self.comments],
+                comments=[d.as_dict(basic=True) for d in self.comments],
             )
         else:
             return dict(
