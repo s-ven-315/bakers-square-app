@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: theme.palette.primary.main,
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginRight: 10
     },
     list: {
         textTransform: "capitalize"
@@ -45,14 +46,16 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         backgroundColor: red[500],
         color: "white"
+    },
+    form: {
+        width: '30rem'
     }
-
 }));
 
 function EditList(props) {
+    const { onClose, open, ingrList, setIngrList } = props;
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
-    const { onClose, open, ingrList, setIngrList } = props;
     const [tempList, setTempList] = useState(ingrList)
 
 
@@ -64,7 +67,8 @@ function EditList(props) {
     const handleInput = (e) => {
         setNewItem(e.target.value)
     }
-    const handleAdd = () => {
+    const handleAdd = (e) => {
+        e.preventDefault()
         console.log(newItem)
         setNewItem("")
         setTempList([...tempList, newItem])
@@ -78,7 +82,7 @@ function EditList(props) {
         handleClose()
     }
     return (
-        <Dialog onClose={handleClose} aria-labelledby="edit-list-dialog" open={open}>
+        <Dialog onClose={handleClose} fullwidth='true' aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Edit Ingredients List</DialogTitle>
             <List>
                 {tempList.map((ingr, idx) => (
@@ -92,8 +96,8 @@ function EditList(props) {
                 <ListItem>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
-                            <form>
-                                <TextField autoComplete='off' id="input-with-icon-grid" label="Add Ingredient" value={newItem} onChange={handleInput} />
+                            <form onSubmit={handleAdd}>
+                                <TextField className={classes.form} autoComplete='off' id="input-with-icon-grid" label="Add Ingredient" value={newItem} onChange={handleInput} />
                             </form>
                         </Grid>
                         <Grid item >

@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: theme.palette.primary.main,
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginRight: 10,
     },
     list: {
         textTransform: "capitalize"
@@ -45,26 +46,29 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         backgroundColor: red[500],
         color: "white"
+    },
+    form: {
+        width: '30rem'
     }
-
 }));
 
 function EditList(props) {
+    const { onClose, open, toolList, setToolList } = props;
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
-    const { onClose, open, toolList, setToolList } = props;
     const [tempList, setTempList] = useState(toolList)
 
 
     const handleRemove = (idx) => {
-        let clonedList = [...toolList]
+        let clonedList = [...tempList]
         clonedList.splice(idx, 1)
-        setToolList(clonedList)
+        setTempList(clonedList)
     }
     const handleInput = (e) => {
         setNewItem(e.target.value)
     }
-    const handleAdd = () => {
+    const handleAdd = (e) => {
+        e.preventDefault()
         console.log(newItem)
         setNewItem("")
         setTempList([...tempList, newItem])
@@ -79,10 +83,10 @@ function EditList(props) {
     }
 
     return (
-        <Dialog onClose={handleClose} aria-labelledby="edit-list-dialog" open={open}>
+        <Dialog onClose={handleClose} fullwidth='true' aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Edit Equipments List</DialogTitle>
             <List>
-                {toolList.map((tool, idx) => (
+                {tempList.map((tool, idx) => (
                     <ListItem key={idx}>
                         <Avatar button className={classes.avatarSmall} onClick={() => handleRemove(idx)}>
                             <RemoveIcon />
@@ -93,8 +97,8 @@ function EditList(props) {
                 <ListItem>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
-                            <form>
-                                <TextField autoComplete='off' id="input-with-icon-grid" label="Add Equipment" value={newItem} onChange={handleInput} />
+                            <form onSubmit={handleAdd}>
+                                <TextField className={classes.form} autoComplete='off' id="input-with-icon-grid" label="Add Equipment" value={newItem} onChange={handleInput} />
                             </form>
                         </Grid>
                         <Grid item >
