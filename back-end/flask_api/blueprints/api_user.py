@@ -2,8 +2,13 @@ from functools import wraps
 
 import flask
 from flask_jwt_extended import jwt_required
+from peewee import JOIN
+
 from flask_api.blueprints.utils.decorators import api_post
 from models.model_user import User
+from models.model_recipe import Recipe
+from models.relation_like import LikeRelation
+from models.relation_subscription import SubscriptionRelation
 
 users_api_blueprint = flask.Blueprint('users_api', __name__)
 
@@ -33,12 +38,10 @@ def get_users():
 def get_user(userId: str):
     user = User.get_or_none(User.userId == userId)
 
-    required_data = {
-        'recipes': [],
-        'likedRecipes': [],
-        'followers': [],
-        'following': [],
-    }
+    user_recipes = list(user.recipes)
+    user_liked_recipes =  list(user.liked_recipes)
+    user_followers =  list(user.followers)
+    user_following =  list(user.following)
 
     return flask.jsonify({'msg': 'Success', 'data': user.as_dict()}), 200
 

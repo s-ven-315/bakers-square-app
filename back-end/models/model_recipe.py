@@ -10,6 +10,7 @@ class Recipe(BaseModel):
     def as_dict(self):
         return dict(
             id=self.id,
+            name=self.name,
             user=dict(
                 userId=self.user.id,
                 name=self.user.name,
