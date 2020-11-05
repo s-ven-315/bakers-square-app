@@ -16,16 +16,23 @@ def parse_data(userId):
     recipeId = json_data.get('recipeId')
     recipe = Recipe.get_or_none(Recipe.id == recipeId)
 
-    return user, recipe
+    msg = "Success"
+    code = 200
+
+    if not recipe:
+        msg = 'RecipeId \'%s\' does not exists' % recipeId
+        code = 400
+
+    return (user, recipe), msg, code
 
 
 @users_api_blueprint.route('/<userId>/like', methods=['POST'])
 @api_post(['recipeId'])
 @userExists
 def set_like(userId: str):
-    user, recipe = parse_data(userId)
-    if not recipe:
-        return flask.jsonify({'msg': 'Must provide valid recipeId'}), 400
+    (user, recipe), msg, code = parse_data(userId)
+    if code == 400:
+        return flask.jsonify({'msg': msg}), 400
 
     if not user.like(recipe):
         return flask.jsonify({'msg': 'Error in saving data'}), 400
@@ -36,9 +43,9 @@ def set_like(userId: str):
 @api_post(['recipeId'])
 @userExists
 def unset_like(userId: str):
-    user, recipe = parse_data(userId)
-    if not recipe:
-        return flask.jsonify({'msg': 'Must provide valid recipeId'}), 400
+    (user, recipe), msg, code = parse_data(userId)
+    if code == 400:
+        return flask.jsonify({'msg': msg}), 400
 
     if not user.unlike(recipe):
         return flask.jsonify({'msg': 'Error in deleting data'}), 400
