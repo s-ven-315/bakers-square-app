@@ -10,6 +10,10 @@ from models.model_user import User
 class Recipe(BaseModel):
     user = pw.ForeignKeyField(User, backref='recipes', on_delete="CASCADE")
     name = pw.CharField(null=False)
+    serving = pw.IntegerField(null=True)  # in pax
+    preparation_time = pw.IntegerField(null=True)  # in minute
+    cooking_time = pw.IntegerField(null=True)  # in minute
+    description = pw.CharField(null=True)
 
     def as_dict(self, basic=False):
         if not basic:
@@ -18,7 +22,7 @@ class Recipe(BaseModel):
                 id=self.id,
                 name=self.name,
                 user=dict(
-                    userId=self.user.id,
+                    userId=self.user.userId,
                     name=self.user.name,
                 ),
                 ingredients=[d.as_dict() for d in self.ingredients],
