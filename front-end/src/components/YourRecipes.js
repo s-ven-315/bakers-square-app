@@ -57,6 +57,8 @@ export default function YourRecipes({ loggedIn, user }) {
     // create new recipe
     const [createOpen, setCreateOpen] = useState(false);
     const [input, setInput] = useState("")
+    const [like, setLike] = useState(false)
+    const [unlike, setUnlike] = useState(false)
 
     const handleInput = (e) => {
         setInput(e.target.value)
@@ -95,7 +97,7 @@ export default function YourRecipes({ loggedIn, user }) {
                                         />
                                     </DialogContent>
                                     <DialogActions>
-                                        <Button onClick={() => AddNewRecipe(loggedIn, userId, input, setCreateOpen)} color="primary">
+                                        <Button onClick={() => AddNewRecipe(loggedIn, userId, input, setCreateOpen, history)} color="primary">
                                             Create
                     </Button>
                                         <Button onClick={handleCreateClose} color="primary">
@@ -143,8 +145,8 @@ export default function YourRecipes({ loggedIn, user }) {
                                         <a className="recipe-button" href="#">Start Baking</a>
                                         {
                                             recipe.likes.find(e => e.userId === loggedIn.userId) ?
-                                                <a className="recipe-button" onClick={() => Unlike(recipeId, loggedIn)}>Liked</a> :
-                                                <a className="recipe-button" onClick={() => Like(recipeId, loggedIn)}>Like</a>
+                                                <a className="recipe-button" onClick={() => Unlike(recipeId, loggedIn, like, setLike)}>Liked</a> :
+                                                <a className="recipe-button" onClick={() => Like(recipeId, loggedIn, unlike, setUnlike)}>Like</a>
                                         }
                                     </div>
                                 </div>
