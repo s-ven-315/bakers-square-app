@@ -22,7 +22,7 @@ function App() {
         <Route exact path="/signup"><SignUp loggedIn={loggedIn} setLogged={setLogged} /></Route>
         <Route exact path="/login"><Login loggedIn={loggedIn} setLogged={setLogged} /></Route>
         <Route exact path="/users/:userId"><Profile loggedIn={loggedIn} /></Route>
-        <Route exact path="/recipes/:id"><Recipe /></Route>
+        <Route exact path="/recipes/:recipeId"><Recipe loggedIn={loggedIn} /></Route>
         <Redirect to="/" />
       </Switch>
     </div>
