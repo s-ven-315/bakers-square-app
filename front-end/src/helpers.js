@@ -38,4 +38,23 @@ export const Unlike = (recipeId, loggedIn) => {
         })
 }
 
-export default { Like, Unlike }
+export const EditRecipeName = (loggedIn, recipeId, input) => {
+    axios({
+        method: 'POST',
+        url: `http://localhost:5000/api/recipes/${recipeId}/edit`,
+        headers: {
+            Authorization: "Bearer " + loggedIn.access_token
+        },
+        data: {
+            'name': input
+        }
+    })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.error(error.response)
+        })
+}
+
+export default { Like, Unlike, EditRecipeName }
