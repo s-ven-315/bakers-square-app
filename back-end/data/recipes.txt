@@ -1,0 +1,40 @@
+	Name	Serving	Preparation	Cooking	Description		Qty	Unit	Name	Remark	 	Text	 	Tag
+1	Strawberry Layer Cake	8	30	30	This classic layer cake is given the start treatment with a luxurious filling of preserves, softly whipped cream, and fresh strawberries. Just perfect for a summer afternoon coffee break.	1	1+1/3	cup	flour, all-purpose		1	Preheat the oven to 350F. Grease two 8-inch cake pans and line with parchment paper.	1	Cake
+						2	2+2/3	tsp	baking powder		2	Sift the flour and baking powder into a bowl.
+						3	1+1/2	stick	butter, salted	softened	3	Add the butter, sugar and eggs into the bowl. Mix together, then beat well until smooth.
+						4	1	cup	sugar, superfine		4	Divide the batter evenly between the prepared pans and smooth the surfaces.
+						5	3	pc	eggs	beaten	5	Bake in the preheated oven for 25 - 30 minutes, or until well risen and golden brown, and the cakes feel springy when lightly pressed.
+						6			sugar, confectionery	for dusting	6	Let cool in the pans for 5 minutes, then invert and peel off the parchment paper.
+						7	3	tbsp	raspberry preserves		7	Transfer to wire racks to cool completely.
+						8	1+1/4	cup	heavy cream	whipped	8	Sandwich the cakes together with the raspberry preserves, whipped cream, and strawberry halves.
+						9	16	pc	strawberries	halved	9	Dust with confectioners' sugar.
+
+2	Frosted Berry Cupcakes	12	25	20	These summer cupcakes are scented with orange flower water and topped with a creamy mascarpone frosting	1	1	stick	butter, salted	softened	1	Preheat the oven to 350F. Place 12 muffin cups in a muffin pan.	1	Cupcake/Muffins
+						2	1/2	cup	sugar, superfine		2	Place the butter, superfine sugar and orange flower water in a large bowl and beat together until light and fluffy.
+						3	2	tsp	orange flower water		3	Gradually beat in the eggs.
+						4	2	pc	Egg	Extra large	4	Stir in the flour and baking powder and, using a metal spoon, fold in gently with the milk
+						5	1/2	cup	Ground almonds		5	Divide the batter evenely among the muffin cups.
+						6	1	cup	flour, all-purpose		6	Bake in the preheated oven for 15-20 minutes, or until risen, golden and firm to the touch. Transfer to a wire rack and let cool.
+						7	1+1/2	tsp	Baking powder		7	To make the frosting, put the mascarpone, superfine sugar and orange juice in a bowl and beat together until smooth.
+						8	2	tbsp	Milk		8	Swirl the frosting over the top of the cupcakes.
+						9	2+1/2	cup	Mixed berries	for topping	9	Brush the berries and mint leaves with egg white, then roll in the sugar to coat.
+						10			Mint Leaves	for topping	10	Decorate the cupcakes with the frosted berries and leaves.
+						11			Egg White	for topping
+						12	1+1/4	cup	Mascarpone Chesse	for frosting
+						13	1/3	cup	Sugar, superfine	for frosting
+						14	1/4	cup	Orange juice	for frosting
+
+3	Classic Oatmeal Cookies	30	15	15	These simple cookies are made from pantry ingredients and take minutes to make and bake.	1	1+1/2	stick	butter, salted	softened	1	Preheat the oven to 350F. Grease 2 large baking sheets.	1	Cookies
+						2	1+1/3	cup	sugar, demerara		2	Place the butter and sugar in a large bowl. Beat together until pale and creamy.	2	Healthy
+						3	1		egg	beaten	3	Beat in the egg, water and vanilla extract until the mixture is smooth.
+						4	1+1/4	cup	water		4	Mix together the oats, flour, salt and baking soda in a separate bowl.
+						5	1	tsp	vanilla extract		5	Gradually stir the oat mixture into the creamed mixture until thoroughly combined.
+						6	4	cup	rolled oats		6	Place tablespoonfuls of the dough on the prepared baking sheets, spaced well apart.
+						7	1	cup	flour, all-purpose		7	Bake in the preheated oven for 15 minutes, or until golden brown.
+						8	1	tsp	salt		8	Transfer to a wire rack to cool completely.
+						9	1/2	tsp	baking soda
+
+
+
+
+

@@ -48,7 +48,7 @@ class Helper:
                 if not existingRelation:
                     toAdd.append({attr1: main, attr2: item, 'qty': a['qty'], 'unit': a['unit']})
                 elif a['qty'] != existingRelation.qty or a['unit'] != existingRelation.unit:
-                    existingRelation.qty = int(a['qty'])
+                    existingRelation.qty = str(a['qty'])
                     existingRelation.unit = str(a['unit'])
                     toUpdate.append(existingRelation)
 

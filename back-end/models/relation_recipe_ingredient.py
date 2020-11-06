@@ -7,8 +7,9 @@ from models.model_recipe import Recipe
 class RecipeIngredientRelation(BaseModel):
     recipe = pw.ForeignKeyField(Recipe, on_delete="CASCADE")
     ingredient = pw.ForeignKeyField(Ingredient, on_delete="CASCADE")
-    qty = pw.IntegerField(null=True)
+    qty = pw.CharField(null=True)
     unit = pw.CharField(null=True)
+    remark = pw.CharField(null=True)
 
     def as_dict(self, full=False):
         return dict(
