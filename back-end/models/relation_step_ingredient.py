@@ -7,7 +7,7 @@ from models.model_step import Step
 class StepIngredientRelation(BaseModel):
     step = pw.ForeignKeyField(Step, on_delete="CASCADE")
     ingredient = pw.ForeignKeyField(Ingredient, on_delete="CASCADE")
-    qty = pw.IntegerField(null=True)
+    qty = pw.CharField(null=True)
     unit = pw.CharField(null=True)
 
     def as_dict(self, full=False):

@@ -7,7 +7,7 @@ from models.model_recipe import Recipe
 class RecipeEquipmentRelation(BaseModel):
     recipe = pw.ForeignKeyField(Recipe, on_delete="CASCADE")
     equipment = pw.ForeignKeyField(Equipment, on_delete="CASCADE")
-    qty = pw.IntegerField(null=True)
+    qty = pw.CharField(null=True)
     unit = pw.CharField(null=True)
 
     def as_dict(self, full=False):

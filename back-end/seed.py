@@ -1,5 +1,6 @@
 import random
-
+from pathlib import Path
+from difflib import get_close_matches
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 
@@ -43,19 +44,86 @@ User.bulk_create(users)
 # Step 3: Tags
 tags_df = pd.read_csv("data/tags.csv", sep=';')
 tags = []
+tag_names = []
 for tag_id, tag in tags_df.iterrows():
     tags.append(Tag(id=tag_id, text=tag['text'].strip()))
+    tag_names.append(tag['text'].strip().lower().replace(' ', ''))
+Tag.bulk_create(tags)
 
 # Step 4: Ingredients
 ingredients_df = pd.read_csv("data/ingredients.csv", sep=';')
 ingredients = []
+ingredient_names = []
 for ingredient_id, ingredient in ingredients_df.iterrows():
     ingredients.append(Ingredient(id=ingredient_id, name=ingredient['name'].strip()))
+    ingredient_names.append(ingredient['name'].strip().lower().replace(' ', ''))
 
 Ingredient.bulk_create(ingredients)
 
+# Step 5: Recipes
+with Path("data/recipes.txt").open('r') as f:
+    lines = f.readlines()
 
-# Step 5: Subscriptions
+recipes = []
+recipe_ingredients = []
+steps = []
+recipe_tags = []
+recipe_id = 0
+step_no = 1
+for line in lines[1:]:
+    d = line.split('\t')
+    if len(d) <= 1:
+        continue
+    recipe_name = d[1].strip()
+    ingredient_name = d[9].strip()
+    step = d[12].strip() if len(d) > 12 else ''
+    tag_name = d[14].strip() if len(d) > 14 else ''
+
+    if recipe_name:
+        recipe_serving = int(d[2]) if d[2] else 0
+        recipe_prep_time = int(d[3])
+        recipe_cook_time = int(d[4])
+        recipe_desc = str(d[5]).strip()
+        recipes.append(
+            Recipe(id=len(recipes), user=users[0], name=recipe_name, serving=recipe_serving,
+                   preparation_time=recipe_prep_time, cooking_time=recipe_cook_time, description=recipe_desc))
+        step_no = 1
+
+    if ingredient_name:
+        ingredient_name_parsed = ingredient_name.strip().lower().replace(' ', '')
+        ingredient_searchs = get_close_matches(word=ingredient_name_parsed, possibilities=ingredient_names, cutoff=0.6)
+        assert len(ingredient_searchs) > 0
+
+        ingredient = ingredients[ingredient_names.index(ingredient_searchs[0])]
+
+        ingredient_qty = d[7]
+        ingredient_unit = d[8].strip()
+        ingredient_remark = d[10].strip() if len(d) > 10 else ''
+
+        recipe_ingredients.append(
+            RecipeIngredientRelation(id=len(recipe_ingredients), recipe=recipes[-1], ingredient=ingredient,
+                                     qty=ingredient_qty, unit=ingredient_unit, remark=ingredient_remark)
+        )
+
+    if step:
+        steps.append(Step(id=len(steps), no=step_no, text=step, recipe=recipes[-1]))
+        step_no += 1
+        
+    if tag_name:
+        tag_name_parsed = tag_name.strip().lower().replace(' ', '')
+        tag_searchs = get_close_matches(word=tag_name_parsed, possibilities=tag_names, cutoff=0.6)
+        assert len(tag_searchs) > 0
+
+        tag = tags[tag_names.index(tag_searchs[0])]
+        recipe_tags.append(RecipeTagRelation(id=len(recipe_tags), recipe=recipes[-1], tag=tag))
+        step_no += 1
+
+Recipe.bulk_create(recipes)
+RecipeIngredientRelation.bulk_create(recipe_ingredients)
+Step.bulk_create(steps)
+RecipeTagRelation.bulk_create(recipe_tags)
+
+# Step 6: Subscriptions
 subscriptions = []
 random.seed(1993)
 subscription_id = 0
@@ -80,16 +148,48 @@ for toUserId in range(len(users)):
 
 SubscriptionRelation.bulk_create(subscriptions)
 
-# Step 6: Recipes
-ingredients_df = pd.read_csv("data/ingredients.csv", sep=';')
-ingredients = []
-for ingredient_id, ingredient in ingredients_df.iterrows():
-    ingredients.append(Ingredient(id=ingredient_id, name=ingredient['name'].strip()))
+# Step 7: Likes
+likes = []
+random.seed(1993)
+for fromUserId in range(len(users)):
+    random.seed(1993+fromUserId)
+    numLikeRecipe = random.randint(0, len(recipes)-1)
+    random.seed(1993+fromUserId+10)
+    likeRecipes = random.sample(range(len(recipes)), numLikeRecipe)
 
-Ingredient.bulk_create(ingredients)
+    for likeRecipe in likeRecipes:
+        likes.append(LikeRelation(id=len(likes), user=fromUserId, recipe=likeRecipe))
+
+LikeRelation.bulk_create(likes)
 
 
+# Step 8: Comments
+with Path('data/comments.txt').open('r') as f:
+    comment_texts = f.readlines()
+    comment_texts = [c.strip() for c in comment_texts if c.strip()]
+
+comment_now_texts = comment_texts
+comments = []
+for fromUserId in range(len(users)):
+    for recipeId in range(len(recipes)):
+        random.seed(1993 + fromUserId + recipeId)
+        haveComment = random.randint(0, 10)
+        if haveComment > 8:
+            random.seed(2993 + fromUserId)
+            numCommentTexts = random.randint(1, 3)
+            random.seed(5993 + fromUserId)
+            if numCommentTexts > len(comment_now_texts):
+                comment_now_texts = comment_texts
+
+            comment_selected_idxs = random.sample(range(len(comment_now_texts)), numCommentTexts)
+            for c in comment_selected_idxs:
+                comments.append(Comment(id=len(comments), user=fromUserId, recipe=recipeId, text=comment_texts[c]))
+                comment_now_texts.remove(comment_texts[c])
+
+
+Comment.bulk_create(comments)
 
 # Closing Step: Resetting
 for M in all_models:
     M._meta.auto_increment = True
+
