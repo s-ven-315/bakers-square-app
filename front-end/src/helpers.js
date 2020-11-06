@@ -1,11 +1,8 @@
-import React from "react"
 import axios from "axios"
-import { useHistory, Redirect } from "react-router-dom"
-import { useState } from "react"
 
 
 
-export const Like = (recipeId, loggedIn) => {
+export const Like = (recipeId, loggedIn, like, setLike) => {
     axios({
         method: 'POST',
         url: `http://localhost:5000/api/users/${loggedIn.userId}/like`,
@@ -18,13 +15,14 @@ export const Like = (recipeId, loggedIn) => {
     })
         .then(response => {
             console.log(response)
+            setLike(true)
         })
         .catch(error => {
             console.error(error.response)
         })
 }
 
-export const Unlike = (recipeId, loggedIn) => {
+export const Unlike = (recipeId, loggedIn, unlike, setUnlike) => {
     axios({
         method: 'POST',
         url: `http://localhost:5000/api/users/${loggedIn.userId}/unlike`,
@@ -37,13 +35,14 @@ export const Unlike = (recipeId, loggedIn) => {
     })
         .then(response => {
             console.log(response)
+            setUnlike(true)
         })
         .catch(error => {
             console.error(error.response)
         })
 }
 
-export const EditRecipeName = (loggedIn, recipeId, input) => {
+export const EditRecipeName = (loggedIn, recipeId, input, setRecipe, recipe, setEditOpen) => {
     axios({
         method: 'POST',
         url: `http://localhost:5000/api/recipes/${recipeId}/edit`,
@@ -56,12 +55,15 @@ export const EditRecipeName = (loggedIn, recipeId, input) => {
     })
         .then(response => {
             console.log(response)
+            recipe.name = input
+            setRecipe(recipe)
+            setEditOpen(false)
         })
         .catch(error => {
             console.error(error.response)
         })
 }
-export const Follow = (userId, loggedIn) => {
+export const Follow = (userId, loggedIn, followers, setFollowers) => {
     axios({
         method: 'POST',
         url: `http://localhost:5000/api/users/${loggedIn.userId}/subscribe`,
@@ -74,13 +76,14 @@ export const Follow = (userId, loggedIn) => {
     })
         .then(response => {
             console.log(response)
+            setFollowers(followers)
         })
         .catch(error => {
             console.error(error.response)
         })
 }
 
-export const Unfollow = (userId, loggedIn) => {
+export const Unfollow = (userId, loggedIn, followers, setFollowers) => {
     axios({
         method: 'POST',
         url: `http://localhost:5000/api/users/${loggedIn.userId}/unsubscribe`,
@@ -93,6 +96,7 @@ export const Unfollow = (userId, loggedIn) => {
     })
         .then(response => {
             console.log(response)
+            setFollowers(followers)
         })
         .catch(error => {
             console.error(error.response)
@@ -116,7 +120,23 @@ export const EditProfileName = (loggedIn, userId, input) => {
             console.error(error.response)
         })
 }
-export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen) => {
+export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) => {
+    const goToRecipePage = (recipeId) => {
+        history.push(`/recipes/${recipeId}`)
+    }
+
+    const getLastRecipeId = () => {
+        axios.get("http://localhost:5000/api/users/" + userId, {
+            headers: {
+                Authorization: "Bearer " + loggedIn.access_token
+            }
+        })
+            .then((response) => {
+                console.log(response)
+                let recipeId = response.data.data.recipes[response.data.data.recipes.length - 1].id
+                goToRecipePage(recipeId)
+            })
+    }
 
     axios({
         method: 'POST',
@@ -132,6 +152,7 @@ export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen) => {
         .then(response => {
             console.log(response)
             setCreateOpen(false)
+            getLastRecipeId()
         })
         .catch(error => {
             console.error(error.response)
