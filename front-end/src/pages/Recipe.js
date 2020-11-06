@@ -121,6 +121,7 @@ export default function Profile({ loggedIn }) {
         setValue(newValue);
     };
 
+    // axios get recipe
     useEffect(() => {
         axios.get("http://localhost:5000/api/recipes/" + recipeId, {
             headers: {
@@ -140,7 +141,7 @@ export default function Profile({ loggedIn }) {
 
     return (
         <>
-            {error !== null ?
+            {error !== null || recipe == {} ?
                 <h1>Recipe not found</h1> :
                 <>
                     <div className="recipe-header-container">
@@ -168,7 +169,7 @@ export default function Profile({ loggedIn }) {
                                                 />
                                             </DialogContent>
                                             <DialogActions>
-                                                <Button onClick={() => EditRecipeName(loggedIn, recipeId, input)} color="primary">
+                                                <Button onClick={() => EditRecipeName(loggedIn, recipeId, input, setRecipe, recipe, setEditOpen)} color="primary">
                                                     Save
                                             </Button>
                                                 <Button onClick={handleEditClose} color="primary">
@@ -207,7 +208,7 @@ export default function Profile({ loggedIn }) {
                         <Tab label="Comments" />
                     </Tabs>
                     <TabPanel value={value} index={0}>
-                        <RecipeDetails />
+                        <RecipeDetails ingr={recipe.ingredients} />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                     </TabPanel>
