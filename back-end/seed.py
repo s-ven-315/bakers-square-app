@@ -13,6 +13,7 @@ if not os.getenv('FLASK_ENV') == 'production':
     from difflib import get_close_matches
     from werkzeug.security import generate_password_hash
     from werkzeug.utils import secure_filename
+    from services.database import db
 
     from models.model_comment import Comment
     from models.model_equipment import Equipment
@@ -35,18 +36,17 @@ if not os.getenv('FLASK_ENV') == 'production':
                   StepEquipmentRelation, StepIngredientRelation]
 
     # Step 1: Delete all existing data
-    for M in all_models:
-        M.delete().execute()
-        M._meta.auto_increment = False
-
+    db.drop_tables(all_models)
+    db.create_tables(all_models)
 
     # Step 2: User
     password = 'Test1234'
     users_df = pd.read_csv("data/users.csv", sep=';')
     users = []
     for user_id, user in users_df.iterrows():
+        random.seed(1992+user_id)
         userId = secure_filename(user['name'].strip()).lower().replace("_", "") + ("%02d" % random.randint(0, 99))
-        users.append(User(id=user_id, userId=userId, name=user['name'].strip(), email=user['email'].strip(),
+        users.append(User(userId=userId, name=user['name'].strip(), email=user['email'].strip(),
                           pw_hash=generate_password_hash(password)))
 
     User.bulk_create(users)
@@ -56,7 +56,7 @@ if not os.getenv('FLASK_ENV') == 'production':
     tags = []
     tag_names = []
     for tag_id, tag in tags_df.iterrows():
-        tags.append(Tag(id=tag_id, text=tag['text'].strip()))
+        tags.append(Tag(text=tag['text'].strip()))
         tag_names.append(tag['text'].strip().lower().replace(' ', ''))
     Tag.bulk_create(tags)
 
@@ -65,7 +65,7 @@ if not os.getenv('FLASK_ENV') == 'production':
     ingredients = []
     ingredient_names = []
     for ingredient_id, ingredient in ingredients_df.iterrows():
-        ingredients.append(Ingredient(id=ingredient_id, name=ingredient['name'].strip()))
+        ingredients.append(Ingredient(name=ingredient['name'].strip()))
         ingredient_names.append(ingredient['name'].strip().lower().replace(' ', ''))
 
     Ingredient.bulk_create(ingredients)
@@ -95,7 +95,7 @@ if not os.getenv('FLASK_ENV') == 'production':
             recipe_cook_time = int(d[4])
             recipe_desc = str(d[5]).strip()
             recipes.append(
-                Recipe(id=len(recipes), user=users[0], name=recipe_name, serving=recipe_serving,
+                Recipe(user=users[0], name=recipe_name, serving=recipe_serving,
                        preparation_time=recipe_prep_time, cooking_time=recipe_cook_time, description=recipe_desc))
             step_no = 1
 
@@ -111,12 +111,12 @@ if not os.getenv('FLASK_ENV') == 'production':
             ingredient_remark = d[10].strip() if len(d) > 10 else ''
 
             recipe_ingredients.append(
-                RecipeIngredientRelation(id=len(recipe_ingredients), recipe=recipes[-1], ingredient=ingredient,
+                RecipeIngredientRelation(recipe=len(recipes), ingredient=ingredient,
                                          qty=ingredient_qty, unit=ingredient_unit, remark=ingredient_remark)
             )
 
         if step:
-            steps.append(Step(id=len(steps), no=step_no, text=step, recipe=recipes[-1]))
+            steps.append(Step(no=step_no, text=step, recipe=len(recipes)))
             step_no += 1
 
         if tag_name:
@@ -125,7 +125,7 @@ if not os.getenv('FLASK_ENV') == 'production':
             assert len(tag_searchs) > 0
 
             tag = tags[tag_names.index(tag_searchs[0])]
-            recipe_tags.append(RecipeTagRelation(id=len(recipe_tags), recipe=recipes[-1], tag=tag))
+            recipe_tags.append(RecipeTagRelation(recipe=len(recipes), tag=tag))
             step_no += 1
 
     Recipe.bulk_create(recipes)
@@ -153,7 +153,7 @@ if not os.getenv('FLASK_ENV') == 'production':
             fromUserIds.remove(toUserId)
 
         for fromUserId in fromUserIds:
-            subscriptions.append(SubscriptionRelation(id=subscription_id, from_user=fromUserId, to_user=toUserId))
+            subscriptions.append(SubscriptionRelation(from_user=fromUserId+1, to_user=toUserId+1))
             subscription_id += 1
 
     SubscriptionRelation.bulk_create(subscriptions)
@@ -168,10 +168,9 @@ if not os.getenv('FLASK_ENV') == 'production':
         likeRecipes = random.sample(range(len(recipes)), numLikeRecipe)
 
         for likeRecipe in likeRecipes:
-            likes.append(LikeRelation(id=len(likes), user=fromUserId, recipe=likeRecipe))
+            likes.append(LikeRelation(user=fromUserId+1, recipe=likeRecipe+1))
 
     LikeRelation.bulk_create(likes)
-
 
     # Step 8: Comments
     with Path('data/comments.txt').open('r') as f:
@@ -193,13 +192,10 @@ if not os.getenv('FLASK_ENV') == 'production':
 
                 comment_selected_idxs = random.sample(range(len(comment_now_texts)), numCommentTexts)
                 for c in comment_selected_idxs:
-                    comments.append(Comment(id=len(comments), user=fromUserId, recipe=recipeId, text=comment_texts[c]))
+                    comments.append(Comment(user=fromUserId+1, recipe=recipeId+1, text=comment_texts[c]))
                     comment_now_texts.remove(comment_texts[c])
-
 
     Comment.bulk_create(comments)
 
-    # Closing Step: Resetting
-    for M in all_models:
-        M._meta.auto_increment = True
+
 
