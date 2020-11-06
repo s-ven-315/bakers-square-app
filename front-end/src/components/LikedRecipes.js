@@ -47,7 +47,7 @@ export default function LikedRecipes({ user, loggedIn }) {
                 <>
 
                     { user.liked_recipes.length != 0 ?
-                        user.liked_recipes.map(recipe => {
+                        user.liked_recipes.slice(0).reverse().map(recipe => {
 
                             const handleLikeOpen = () => {
                                 setLikeOpen(true);
