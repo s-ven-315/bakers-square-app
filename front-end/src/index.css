@@ -134,10 +134,11 @@ body {
   margin-top: 1.5rem;
   display: flex;
   justify-content: center;
+  cursor: pointer
+
 }
 .profile-following-container>div:not(:first-child) {
   border-left: 1px solid #c6783c;
-  cursor: pointer
 }
 
 .profile-following-container>div {
