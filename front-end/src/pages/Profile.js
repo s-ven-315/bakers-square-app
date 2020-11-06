@@ -105,6 +105,50 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+//follow user
+const follow = (userId, loggedIn) => {
+    console.log(userId)
+    console.log(loggedIn)
+    axios({
+        method: 'POST',
+        url: `http://localhost:5000/api/users/${loggedIn.userId}/subscribe`,
+        headers: {
+            Authorization: "Bearer " + loggedIn.access_token
+        },
+        data: {
+            'userId': userId
+        }
+    })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.error(error.response)
+        })
+}
+
+//unfollow user
+const unfollow = (userId, loggedIn) => {
+    console.log(userId)
+    console.log(loggedIn)
+    axios({
+        method: 'POST',
+        url: `http://localhost:5000/api/users/${loggedIn.userId}/unsubscribe`,
+        headers: {
+            Authorization: "Bearer " + loggedIn.access_token
+        },
+        data: {
+            'userId': userId
+        }
+    })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.error(error.response)
+        })
+}
+
 export default function Profile({ loggedIn }) {
     const [user, setUser] = useState({})
     const [error, setError] = useState(null)
@@ -155,7 +199,7 @@ export default function Profile({ loggedIn }) {
                 console.log(error)
                 setError(error)
             })
-    }, [])
+    }, [userId])
 
     if (!loggedIn) {
         return <Redirect to="/" />
@@ -179,18 +223,18 @@ export default function Profile({ loggedIn }) {
                                     <div className="profile-id">@{user.userId}</div>
                                     <div class="profile-following-container">
                                         <div>
-                                            <span>2</span> Recipes
+                                            {user.recipes ? user.recipes.length == 1 ? <><span>1</span>Recipe</> : <><span>{user.recipes.length}</span>Recipes</> : <><span>0</span>Recipes</>}
                                         </div>
                                         <div>
                                             <div onClick={handleFollowerOpen}>
-                                                <span>2</span>Followers
+                                                {user.followers ? user.followers.length == 1 ? <><span>1</span>Follower</> : <><span>{user.followers.length}</span>Followers</> : <><span>0</span>Followers</>}
                                             </div>
 
                                             <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
                                         </div>
                                         <div>
                                             <div onClick={handleFollowingOpen}>
-                                                <span>2</span>Following
+                                                <span>{user.following ? user.following.length : "0"}</span>Following
                                             </div>
 
                                             <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
@@ -198,8 +242,12 @@ export default function Profile({ loggedIn }) {
                                     </div>
                                     <div className="profile-button-container">
                                         {user.name !== loggedIn.name ?
-                                            <Button variant="contained" color="primary" className="profile-button" href="#">Follow</Button> :
-                                            null
+                                            user.followers ?
+                                                user.followers.find(e => e.userId === loggedIn.userId) ?
+                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => unfollow(userId, loggedIn)} >Unfollow</Button>
+                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => follow(userId, loggedIn)} >Follow</Button>
+                                                : null
+                                            : null
                                         }
                                     </div>
                                 </div>
