@@ -21,6 +21,8 @@ class Recipe(BaseModel):
                 type='Recipe',
                 id=self.id,
                 name=self.name,
+                created_at=self.created_at,
+                edited_at=self.edited_at,
                 user=dict(
                     userId=self.user.userId,
                     name=self.user.name,
