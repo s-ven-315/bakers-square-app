@@ -55,6 +55,41 @@ for ingredient_id, ingredient in ingredients_df.iterrows():
 Ingredient.bulk_create(ingredients)
 
 
+# Step 5: Subscriptions
+subscriptions = []
+random.seed(1993)
+subscription_id = 0
+for toUserId in range(len(users)):
+    if toUserId == 20:
+        fromUserIds = [i for i in range(len(users)) if i != 20]
+    else:
+        random.seed(1993+toUserId)
+        numFromUserId = random.randint(0, len(users)-1)
+        random.seed(1993+toUserId+10)
+        fromUserIds = random.sample(range(len(users)), numFromUserId)
+
+    if 0 not in fromUserIds:
+        fromUserIds.append(0)
+
+    if toUserId in fromUserIds:
+        fromUserIds.remove(toUserId)
+
+    for fromUserId in fromUserIds:
+        subscriptions.append(SubscriptionRelation(id=subscription_id, from_user=fromUserId, to_user=toUserId))
+        subscription_id += 1
+
+SubscriptionRelation.bulk_create(subscriptions)
+
+# Step 6: Recipes
+ingredients_df = pd.read_csv("data/ingredients.csv", sep=';')
+ingredients = []
+for ingredient_id, ingredient in ingredients_df.iterrows():
+    ingredients.append(Ingredient(id=ingredient_id, name=ingredient['name'].strip()))
+
+Ingredient.bulk_create(ingredients)
+
+
+
 # Closing Step: Resetting
 for M in all_models:
     M._meta.auto_increment = True
