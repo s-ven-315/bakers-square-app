@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useParams, Redirect } from "react-router-dom";
+import { useParams, Redirect, useHistory } from "react-router-dom";
 import axios from "axios"
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
@@ -19,9 +18,10 @@ import LikedRecipes from '../components/LikedRecipes';
 import ProfileImg from '../assets/images/profile-placeholder.png'
 import EditIcon from '@material-ui/icons/Edit';
 
+
 function FollowerDialog(props) {
-    const followers = ['test100', 'test101'];
-    const { onClose, selectedValue, open } = props;
+    const history = useHistory()
+    const { onClose, selectedValue, followers, open } = props;
 
     const handleClose = () => {
         onClose();
@@ -35,19 +35,20 @@ function FollowerDialog(props) {
         <Dialog onClick={handleClose} aria-labelledby="followers-dialog-title" open={open}>
             <DialogTitle id="followers-dialog-title">Followers</DialogTitle>
             <List>
-                {followers.map((follower) => (
-                    <ListItem button onClick={() => handleListItemClick(follower)} key={follower}>
-                        <ListItemText primary={follower} />
-                    </ListItem>
-                ))}
+                {followers ?
+                    followers.map((follower) => (
+                        <ListItem button onClick={() => history.push(`/users/${follower.userId}`)} key={follower}>
+                            <ListItemText primary={follower.userId} />
+                        </ListItem>
+                    )) : null}
             </List>
         </Dialog>
     );
 }
 
 function FollowingDialog(props) {
-    const following = ['test100', 'test101'];
-    const { onClose, selectedValue, open } = props;
+    const history = useHistory()
+    const { onClose, selectedValue, following, open } = props;
 
     const handleClose = () => {
         onClose();
@@ -61,11 +62,12 @@ function FollowingDialog(props) {
         <Dialog onClick={handleClose} aria-labelledby="following-dialog-title" open={open}>
             <DialogTitle id="following-dialog-title">Following</DialogTitle>
             <List>
-                {following.map((follow) => (
-                    <ListItem button onClick={() => handleListItemClick(follow)} key={follow}>
-                        <ListItemText primary={follow} />
-                    </ListItem>
-                ))}
+                {following ?
+                    following.map((f) => (
+                        <ListItem button onClick={() => history.push(`/users/${f.userId}`)} key={f}>
+                            <ListItemText primary={f.userId} />
+                        </ListItem>
+                    )) : null}
             </List>
         </Dialog>
     );
@@ -230,14 +232,14 @@ export default function Profile({ loggedIn }) {
                                                 {user.followers ? user.followers.length == 1 ? <><span>1</span>Follower</> : <><span>{user.followers.length}</span>Followers</> : <><span>0</span>Followers</>}
                                             </div>
 
-                                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} />
+                                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} followers={user.followers} />
                                         </div>
                                         <div>
                                             <div onClick={handleFollowingOpen}>
                                                 <span>{user.following ? user.following.length : "0"}</span>Following
                                             </div>
 
-                                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} />
+                                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} following={user.following} />
                                         </div>
                                     </div>
                                     <div className="profile-button-container">
@@ -270,7 +272,7 @@ export default function Profile({ loggedIn }) {
                                     <YourRecipes user={user} loggedIn={loggedIn} />
                                 </TabPanel>
                                 <TabPanel value={value} index={1}>
-                                    <LikedRecipes />
+                                    <LikedRecipes user={user} loggedIn={loggedIn} />
                                 </TabPanel>
                             </div>
                         </div>
