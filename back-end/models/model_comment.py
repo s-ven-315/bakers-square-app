@@ -5,6 +5,7 @@ from models.model_user import User
 
 
 class Comment(BaseModel):
+    id = pw.AutoField()
     text = pw.CharField(null=False)
     user = pw.ForeignKeyField(User, backref='comments', on_delete="CASCADE")
     recipe = pw.ForeignKeyField(Recipe, backref='comments', on_delete="CASCADE")

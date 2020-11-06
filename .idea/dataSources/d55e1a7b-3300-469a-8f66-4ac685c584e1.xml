@@ -1046,21 +1046,25 @@ sequence|table|16701|16703|1
     </sequence>
     <table id="48" parent="21" name="comment">
       <ObjectId>16703</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
     <table id="49" parent="21" name="equipment">
       <ObjectId>16687</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
     <table id="50" parent="21" name="ingredient">
       <ObjectId>16711</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
     <table id="51" parent="21" name="like_relation">
       <ObjectId>16671</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
@@ -1106,16 +1110,19 @@ sequence|table|16701|16703|1
     </table>
     <table id="59" parent="21" name="subscription_relation">
       <ObjectId>16719</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
     <table id="60" parent="21" name="tag">
       <ObjectId>16825</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>736</StateNumber>
     </table>
     <table id="61" parent="21" name="user">
       <ObjectId>16625</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
