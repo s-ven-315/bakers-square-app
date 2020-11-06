@@ -1,5 +1,4 @@
-import React from "react"
-import axios from "axios"
+import React, { useState } from "react"
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,8 +9,10 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom"
-import { Like, Unlike } from '../helpers'
-
+import { Like, Unlike, AddNewRecipe } from '../helpers'
+import TextField from '@material-ui/core/TextField';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 const useStyles = makeStyles({
     span: {
         marginLeft: 5,
@@ -21,7 +22,9 @@ const useStyles = makeStyles({
     }
 });
 
-function FollowerDialog(props) {
+function LikesDialog(props) {
+    const history = useHistory()
+
     const { onClose, selectedValue, open, recipe } = props;
 
     const handleClose = () => {
@@ -35,12 +38,13 @@ function FollowerDialog(props) {
         <Dialog onClick={handleClose} aria-labelledby="likes-dialog-title" open={open}>
             <DialogTitle id="followers-dialog-title">Likes</DialogTitle>
             <List>
-                This is {recipe.id}
-                {recipe.likes.map((like) => (
-                    <>
-                        {like.name}
-                    </>
-                ))}
+
+                {recipe ?
+                    recipe.map((r) => (
+                        <ListItem button onClick={() => history.push(`/users/${r.userId}`)} key={r}>
+                            <ListItemText primary={r.userId} />
+                        </ListItem>
+                    )) : null}
             </List>
         </Dialog>
     );
@@ -50,19 +54,60 @@ export default function YourRecipes({ loggedIn, user }) {
     const classes = useStyles();
     const [likeOpen, setLikeOpen] = React.useState(false);
     const history = useHistory()
-    // like dialog
+    // create new recipe
+    const [createOpen, setCreateOpen] = useState(false);
+    const [input, setInput] = useState("")
 
+    const handleInput = (e) => {
+        setInput(e.target.value)
+    }
+    const handleCreate = () => {
+        setCreateOpen(true);
+    };
+    const handleCreateClose = () => {
+        setCreateOpen(false);
+    };
+    const userId = user.userId
     return (
         <>
             {user.recipes ?
                 <>
                     <div className='add-new-recipe-button'>
                         {user.name === loggedIn.name ?
-                            <Button className={classes.button} variant="contained" color="primary"><AddCircleOutlineOutlinedIcon /> <span className={classes.span} >Add New Recipe</span></Button> : null
+                            <>
+                                <Button className={classes.button} variant="contained" color="primary" onClick={handleCreate}>
+                                    <AddCircleOutlineOutlinedIcon />
+                                    <span className={classes.span} >Add New Recipe</span>
+                                </Button>
+                                <Dialog fullwidth='true' open={createOpen} onClose={handleCreateClose} aria-labelledby="form-dialog-title">
+                                    <DialogTitle id="form-dialog-title">Add New Recipe</DialogTitle>
+                                    <DialogContent>
+
+                                        <TextField
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="New Recipe Name"
+                                            type="email"
+                                            onChange={handleInput}
+                                            fullWidth='true'
+                                            autoComplete='off'
+                                        />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={() => AddNewRecipe(loggedIn, userId, input, setCreateOpen)} color="primary">
+                                            Create
+                    </Button>
+                                        <Button onClick={handleCreateClose} color="primary">
+                                            Cancel
+                    </Button>
+                                    </DialogActions>
+                                </Dialog> </>
+                            : null
                         }
                     </div>
                     { user.recipes.length != 0 ?
-                        user.recipes.map(recipe => {
+                        user.recipes.slice(0).reverse().map(recipe => {
 
                             const handleLikeOpen = () => {
                                 setLikeOpen(true);
@@ -84,7 +129,7 @@ export default function YourRecipes({ loggedIn, user }) {
                                         <div className="recipe-baker">by {user.name}</div>
                                         <div className="recipe-following-container">
                                             <Button color="inherit" onClick={() => handleLikeOpen()}>{recipe.likes.length} Likes</Button>
-                                            <FollowerDialog open={likeOpen} recipe={recipe} onClose={handleLikeClose} />
+                                            <LikesDialog open={likeOpen} recipe={recipe.likes} onClose={handleLikeClose} />
                                             <Button color="inherit">{recipe.comments.length} Comments</Button>
                                         </div>
                                     </div>
