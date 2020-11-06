@@ -17,7 +17,10 @@ import YourRecipes from '../components/YourRecipes';
 import LikedRecipes from '../components/LikedRecipes';
 import ProfileImg from '../assets/images/profile-placeholder.png'
 import EditIcon from '@material-ui/icons/Edit';
-
+import { Follow, Unfollow, EditProfileName } from '../helpers'
+import TextField from '@material-ui/core/TextField';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 
 function FollowerDialog(props) {
     const history = useHistory()
@@ -107,56 +110,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-//follow user
-const follow = (userId, loggedIn) => {
-    console.log(userId)
-    console.log(loggedIn)
-    axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/users/${loggedIn.userId}/subscribe`,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'userId': userId
-        }
-    })
-        .then(response => {
-            console.log(response)
-        })
-        .catch(error => {
-            console.error(error.response)
-        })
-}
-
-//unfollow user
-const unfollow = (userId, loggedIn) => {
-    console.log(userId)
-    console.log(loggedIn)
-    axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/users/${loggedIn.userId}/unsubscribe`,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'userId': userId
-        }
-    })
-        .then(response => {
-            console.log(response)
-        })
-        .catch(error => {
-            console.error(error.response)
-        })
-}
 
 export default function Profile({ loggedIn }) {
     const [user, setUser] = useState({})
     const [error, setError] = useState(null)
     const classes = useStyles();
     const { userId } = useParams()
+    const [recipesNum, setRecipesNum] = useState(0)
+    const [likedRecipesNum, setLikedRecipesNum] = useState(0)
 
+    // edit profile name
+    const [editOpen, setEditOpen] = useState(false);
+    const [input, setInput] = useState("")
+
+    const handleInput = (e) => {
+        setInput(e.target.value)
+    }
+    const handleEdit = () => {
+        setEditOpen(true);
+    };
+    const handleEditClose = () => {
+        setEditOpen(false);
+    };
 
     // change tab
     const [value, setValue] = useState(0);
@@ -196,6 +171,8 @@ export default function Profile({ loggedIn }) {
             .then((response) => {
                 console.log(response)
                 setUser(response.data.data)
+                setRecipesNum(response.data.data.recipes.length)
+                setLikedRecipesNum(response.data.data.liked_recipes.length)
             })
             .catch((error) => {
                 console.log(error)
@@ -219,14 +196,37 @@ export default function Profile({ loggedIn }) {
                                 <div class="profile-details">
                                     <div className="profile-name">{user.name}
                                         {user.name === loggedIn.name ?
-                                            <EditIcon color="primary" /> : null
+                                            <>
+                                                <EditIcon color="primary" onClick={handleEdit} />
+                                                <Dialog fullwidth='true' open={editOpen} onClose={handleEditClose} aria-labelledby="form-dialog-title">
+                                                    <DialogTitle id="form-dialog-title">Change Profile Name</DialogTitle>
+                                                    <DialogContent>
+
+                                                        <TextField
+                                                            autoFocus
+                                                            margin="dense"
+                                                            id="name"
+                                                            label="New Profile Name"
+                                                            type="email"
+                                                            onChange={handleInput}
+                                                            fullWidth='true'
+                                                            autoComplete='off'
+                                                        />
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                        <Button onClick={() => EditProfileName(loggedIn, userId, input)} color="primary">
+                                                            Save
+                                            </Button>
+                                                        <Button onClick={handleEditClose} color="primary">
+                                                            Cancel
+                                            </Button>
+                                                    </DialogActions>
+                                                </Dialog> </> : null
                                         }
                                     </div>
                                     <div className="profile-id">@{user.userId}</div>
                                     <div class="profile-following-container">
-                                        <div>
-                                            {user.recipes ? user.recipes.length == 1 ? <><span>1</span>Recipe</> : <><span>{user.recipes.length}</span>Recipes</> : <><span>0</span>Recipes</>}
-                                        </div>
+
                                         <div>
                                             <div onClick={handleFollowerOpen}>
                                                 {user.followers ? user.followers.length == 1 ? <><span>1</span>Follower</> : <><span>{user.followers.length}</span>Followers</> : <><span>0</span>Followers</>}
@@ -246,8 +246,8 @@ export default function Profile({ loggedIn }) {
                                         {user.name !== loggedIn.name ?
                                             user.followers ?
                                                 user.followers.find(e => e.userId === loggedIn.userId) ?
-                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => unfollow(userId, loggedIn)} >Unfollow</Button>
-                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => follow(userId, loggedIn)} >Follow</Button>
+                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Unfollow(userId, loggedIn)} >Unfollow</Button>
+                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn)} >Follow</Button>
                                                 : null
                                             : null
                                         }
@@ -263,8 +263,8 @@ export default function Profile({ loggedIn }) {
                                     indicatorColor="primary"
                                     centered
                                 >
-                                    <Tab label={`${user.name}'s Recipes`} />
-                                    <Tab label={`${user.name}'s Liked Recipes`} />
+                                    <Tab label={`${user.name}'s Recipes (${recipesNum})`} />
+                                    <Tab label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
                                 </Tabs>
                             </div>
                             <div class="tab-panel-container">
