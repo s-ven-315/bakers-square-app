@@ -1094,11 +1094,13 @@ sequence|table|16701|16703|1
     </table>
     <table id="57" parent="21" name="step_equipment_relation">
       <ObjectId>16695</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
     <table id="58" parent="21" name="step_ingredient_relation">
       <ObjectId>16679</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>728</StateNumber>
     </table>
