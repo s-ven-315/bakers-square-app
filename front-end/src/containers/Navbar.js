@@ -8,6 +8,7 @@ import MenuList from '@material-ui/core/MenuList';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu'
+import { useHistory } from "react-router-dom"
 
 const Navbar = ({ loggedIn, setLogged }) => {
     const handleLogout = () => {
@@ -31,7 +32,8 @@ const Navbar = ({ loggedIn, setLogged }) => {
             setOpen(false);
         }
     }
-    const goToProfilePage = `/users/${loggedIn.userId}`
+    const history = useHistory()
+
 
     return (
         <>
@@ -69,9 +71,9 @@ const Navbar = ({ loggedIn, setLogged }) => {
                                         <Paper>
                                             <ClickAwayListener onClickAway={handleClose}>
                                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                    <ListItemText /><Button href={goToProfilePage}>Profile Page</Button>
-                                                    <ListItemText /><Button href="/signup">Start Baking</Button>
-                                                    <ListItemText /><Button href="/login">Ingredient Checklist</Button>
+                                                    <ListItemText /><Button onClick={() => history.push(`/users/${loggedIn.userId}`)}>Profile Page</Button>
+                                                    <ListItemText /><Button onClick={() => history.push('/signup')}>Start Baking</Button>
+                                                    <ListItemText /><Button onClick={() => history.push('/')}>Ingredient Checklist</Button>
                                                     <ListItemText /><Button onClick={handleLogout}>Logout</Button>
                                                 </MenuList>
                                             </ClickAwayListener>
