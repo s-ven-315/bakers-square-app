@@ -42,8 +42,8 @@ class Recipe(BaseModel):
                     userId=self.user.id,
                     name=self.user.name,
                 ),
-                likes=[d.as_dict() for d in self.likes],
-                comments=[d.as_dict() for d in self.comments],
+                likes=self.likes_dict(False),
+                comments=self.comments_dict(False),
             )
 
     @hybrid_property
@@ -78,6 +78,12 @@ class Recipe(BaseModel):
     def comments(self):
         from models.model_comment import Comment
         return Comment.select().where(Comment.recipe == self).order_by(Comment.updated_at)
+
+    def likes_dict(self, basic):
+        return [d.as_dict(basic) for d in self.likes]
+
+    def comments_dict(self, basic):
+        return [d.as_dict(basic) for d in self.comments]
 
     def set_ingredients(self, idList: List[str]):
         from models.model_ingredient import Ingredient as Class

@@ -54,8 +54,8 @@ class User(BaseModel, UserMixin):
 
                 recipes=[d.as_dict() for d in self.recipes],
                 liked_recipes=[d.as_dict() for d in self.liked_recipes],
-                followers=[d.as_dict(basic=True) for d in self.followers],
-                following=[d.as_dict(basic=True) for d in self.following],
+                followers=self.followers_dict(basic=True),
+                following=self.following_dict(basic=True),
                 comments=[d.as_dict(basic=True) for d in self.comments]
             )
         else:
@@ -94,6 +94,12 @@ class User(BaseModel, UserMixin):
     def comments(self):
         from models.model_comment import Comment
         return Comment.select().where(Comment.user == self).order_by(Comment.updated_at)
+
+    def following_dict(self, basic):
+        return [d.as_dict(basic=basic) for d in self.following]
+
+    def followers_dict(self, basic):
+        return [d.as_dict(basic=basic) for d in self.followers]
 
     def like(self, recipe):
         from models.relation_like import LikeRelation

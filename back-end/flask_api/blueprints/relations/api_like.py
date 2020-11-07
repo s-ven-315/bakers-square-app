@@ -36,7 +36,9 @@ def set_like(userId: str):
 
     if not user.like(recipe):
         return flask.jsonify({'msg': 'Error in saving data'}), 400
-    return flask.jsonify({'msg': 'Success'}), 200
+    return flask.jsonify({'msg': 'Success', 'data': {
+        'likes': recipe.likes_dict(basic=True)
+    }}), 200
 
 
 @users_api_blueprint.route('/<userId>/unlike', methods=['POST'])
@@ -49,4 +51,6 @@ def unset_like(userId: str):
 
     if not user.unlike(recipe):
         return flask.jsonify({'msg': 'Error in deleting data'}), 400
-    return flask.jsonify({'msg': 'Success'}), 200
+    return flask.jsonify({'msg': 'Success', 'data': {
+        'likes': recipe.likes_dict(basic=True)
+    }}), 200

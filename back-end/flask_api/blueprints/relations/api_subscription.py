@@ -34,7 +34,9 @@ def set_subscription(userId: str):
         return flask.jsonify({'msg': msg}), 400
     if not from_user.subscribe(to_user):
         return flask.jsonify({'msg': 'Error in saving data'}), 400
-    return flask.jsonify({'msg': 'Success'}), 200
+    return flask.jsonify({'msg': 'Success', 'data': {
+        'followers': to_user.followers_dict(basic=True)
+    }}), 200
 
 
 @users_api_blueprint.route('/<userId>/unsubscribe', methods=['POST'])
@@ -46,4 +48,6 @@ def unset_subscription(userId: str):
         return flask.jsonify({'msg': msg}), 400
     if not from_user.unsubscribe(to_user):
         return flask.jsonify({'msg': 'Error in deleting data'}), 400
-    return flask.jsonify({'msg': 'Success'}), 200
+    return flask.jsonify({'msg': 'Success', 'data': {
+        'followers': to_user.followers_dict(basic=True)
+    }}), 200
