@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../containers/styles'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import RecipeIngredients from './RecipeIngredients'
-import RecipeTools from './RecipeTools'
 import RecipeSteps from './RecipeSteps'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -41,24 +40,8 @@ function a11yProps(index) {
     };
 }
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '76vw',
-        margin: 'auto',
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-        display: 'flex',
-        height: 224,
-        textAlign: 'left'
-    },
-    tabs: {
-        borderRight: `1px solid ${theme.palette.divider}`,
-    },
-}));
-export default function RecipeDetails() {
-    const [ingrList, setIngrList] = useState(['flour', 'sugar', 'chocolate', 'strawberry', 'milk', 'butter', 'eggs'])
-    const [toolList, setToolList] = useState(['Oven', 'Rolling Pin', '12-inch Baking Mold', 'Mixer', 'Blender'])
-    const [steps, setSteps] = useState(['Blend the chocolate', 'Cut strawberries', 'Break the eggs', 'Mix the mixture', 'Make Dough', 'Put in Oven', 'Wait!'])
+export default function RecipeDetails({ recipeId, loggedIn, baker }) {
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -81,29 +64,25 @@ export default function RecipeDetails() {
                 <div className='component-title'>Ingredients</div>
                 <div classname='component-body'></div>
             </div> */}
-            <div className={classes.root}>
+            <div className={classes.recipeDetailsRoot}>
                 <Tabs
                     orientation="vertical"
                     variant="scrollable"
                     value={value}
                     onChange={handleChange}
                     aria-label="Vertical tabs example"
-                    className={classes.tabs}
+                    className={classes.recipeDetailsTabs}
                 >
                     <Tab label="Ingredients" {...a11yProps(0)} />
-                    <Tab label="Tools & Equipments" {...a11yProps(1)} />
-                    <Tab label="Recipe Steps" {...a11yProps(2)} />
+                    <Tab label="Recipe Steps" {...a11yProps(1)} />
 
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <RecipeIngredients ingrList={ingrList} setIngrList={setIngrList} />
+                    < RecipeIngredients recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
                 </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <RecipeTools toolList={toolList} setToolList={setToolList} />
 
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <RecipeSteps steps={steps} setSteps={setSteps} />
+                <TabPanel value={value} index={1}>
+                    <RecipeSteps recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
                 </TabPanel>
 
             </div>
