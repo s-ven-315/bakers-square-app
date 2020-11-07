@@ -21,6 +21,7 @@ import { Follow, Unfollow, EditProfileName } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import { useStyles } from '../containers/styles'
 
 function FollowerDialog(props) {
     const history = useHistory()
@@ -102,13 +103,7 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: "#fff",
-        border: theme.palette.secondary.main,
-    },
-}));
+
 
 
 export default function Profile({ loggedIn }) {
@@ -118,10 +113,12 @@ export default function Profile({ loggedIn }) {
     const { userId } = useParams()
     const [recipesNum, setRecipesNum] = useState(0)
     const [likedRecipesNum, setLikedRecipesNum] = useState(0)
+    const [followers, setFollowers] = useState([])
 
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
     const [input, setInput] = useState("")
+    const [nameChanged, setNameChanged] = useState(false)
 
     const handleInput = (e) => {
         setInput(e.target.value)
@@ -173,12 +170,13 @@ export default function Profile({ loggedIn }) {
                 setUser(response.data.data)
                 setRecipesNum(response.data.data.recipes.length)
                 setLikedRecipesNum(response.data.data.liked_recipes.length)
+                setFollowers(response.data.data.followers)
             })
             .catch((error) => {
                 console.log(error)
                 setError(error)
             })
-    }, [userId])
+    }, [userId, nameChanged])
 
     if (!loggedIn) {
         return <Redirect to="/" />
@@ -186,7 +184,7 @@ export default function Profile({ loggedIn }) {
 
     return (
         <>
-            {error !== null ?
+            {user == {} ?
                 <h1>User not found</h1> :
                 <>
                     <div class="profile-page-container">
@@ -195,6 +193,7 @@ export default function Profile({ loggedIn }) {
                                 <div class="profile-img"><img src={ProfileImg} /></div>
                                 <div class="profile-details">
                                     <div className="profile-name">{user.name}
+                                        {console.log(followers)}
                                         {user.name === loggedIn.name ?
                                             <>
                                                 <EditIcon color="primary" onClick={handleEdit} />
@@ -214,7 +213,7 @@ export default function Profile({ loggedIn }) {
                                                         />
                                                     </DialogContent>
                                                     <DialogActions>
-                                                        <Button onClick={() => EditProfileName(loggedIn, userId, input)} color="primary">
+                                                        <Button onClick={() => EditProfileName(loggedIn, userId, input, setEditOpen, setNameChanged)} color="primary">
                                                             Save
                                             </Button>
                                                         <Button onClick={handleEditClose} color="primary">
@@ -229,7 +228,9 @@ export default function Profile({ loggedIn }) {
 
                                         <div>
                                             <div onClick={handleFollowerOpen}>
-                                                {user.followers ? user.followers.length == 1 ? <><span>1</span>Follower</> : <><span>{user.followers.length}</span>Followers</> : <><span>0</span>Followers</>}
+                                                {console.log(followers)}
+                                                {console.log(followers.length)}
+                                                {followers ? followers.length == 1 ? <><span>1</span>Follower</> : <><span>{followers.length}</span>Followers</> : <><span>0</span>Followers</>}
                                             </div>
 
                                             <FollowerDialog open={followerOpen} onClose={handleFollowerClose} followers={user.followers} />
@@ -244,10 +245,10 @@ export default function Profile({ loggedIn }) {
                                     </div>
                                     <div className="profile-button-container">
                                         {user.name !== loggedIn.name ?
-                                            user.followers ?
-                                                user.followers.find(e => e.userId === loggedIn.userId) ?
-                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Unfollow(userId, loggedIn)} >Unfollow</Button>
-                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn)} >Follow</Button>
+                                            followers ?
+                                                followers.find(e => e.userId === loggedIn.userId) ?
+                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Unfollow(userId, loggedIn, followers, setFollowers)} >Unfollow</Button>
+                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn, followers, setFollowers)} >Follow</Button>
                                                 : null
                                             : null
                                         }
