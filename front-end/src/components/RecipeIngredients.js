@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react";
+import axios from "axios"
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../containers/styles'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,47 +14,11 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
-import { red } from '@material-ui/core/colors'
 
 
-const useStyles = makeStyles((theme) => ({
-    avatarSmall: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
-        backgroundColor: red[500],
-        marginRight: 10,
-        cursor: 'pointer'
-    },
-    avatar: {
-        backgroundColor: theme.palette.primary.main,
-        cursor: 'pointer',
-        marginRight: 10
-    },
-    list: {
-        textTransform: "capitalize"
-    },
-    margin: {
-        margin: theme.spacing(1),
-    },
-    buttonDiv: {
-        display: "flex",
-        justifyContent: "space-between"
-    },
-    button: {
-        width: "100%",
-    },
-    buttonClose: {
-        width: "100%",
-        backgroundColor: red[500],
-        color: "white"
-    },
-    form: {
-        width: '30rem'
-    }
-}));
 
 function EditList(props) {
-    const { onClose, open, ingrList, setIngrList } = props;
+    const { onClose, open, ingrList, setIngrList, setSubmitted } = props;
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
     const [tempList, setTempList] = useState(ingrList)
@@ -70,8 +35,8 @@ function EditList(props) {
     const handleAdd = (e) => {
         e.preventDefault()
         console.log(newItem)
-        setNewItem("")
         setTempList([...tempList, newItem])
+        setNewItem("")
     }
     const handleClose = () => {
         setTempList(ingrList)
@@ -85,23 +50,24 @@ function EditList(props) {
         <Dialog onClose={handleClose} fullwidth='true' aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Edit Ingredients List</DialogTitle>
             <List>
-                {tempList.map((ingr, idx) => (
+                {console.log(tempList)}
+                {tempList ? tempList.map((ingr, idx) => (
                     <ListItem key={idx}>
-                        <Avatar button className={classes.avatarSmall} onClick={() => handleRemove(idx)}>
+                        <Avatar button="true" className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
                             <RemoveIcon />
                         </Avatar>
-                        <ListItemText className={classes.list} primary={ingr} />
+                        <ListItemText className={classes.rList} primary={ingr.name} />
                     </ListItem>
-                ))}
+                )) : null}
                 <ListItem>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>
                             <form onSubmit={handleAdd}>
-                                <TextField className={classes.form} autoComplete='off' id="input-with-icon-grid" label="Add Ingredient" value={newItem} onChange={handleInput} />
+                                <TextField className={classes.rForm} autoComplete='off' id="input-with-icon-grid" label="Add Ingredient" value={newItem} onChange={handleInput} />
                             </form>
                         </Grid>
                         <Grid item >
-                            <Avatar className={classes.avatar} onClick={handleAdd} >
+                            <Avatar className={classes.rAvatar} onClick={handleAdd} >
                                 <AddIcon />
                             </Avatar>
                         </Grid>
@@ -109,9 +75,9 @@ function EditList(props) {
                 </ListItem>
             </List>
             <Divider />
-            <div className={classes.buttonDiv}>
-                <Button variant="contained" color="primary" className={classes.button} onClick={handleSave}>Save</Button>
-                <Button variant="contained" className={classes.buttonClose} onClick={handleClose}>Close</Button>
+            <div className={classes.rButtonDiv}>
+                <Button variant="contained" color="primary" className={classes.rButton} onClick={handleSave}>Save</Button>
+                <Button variant="contained" className={classes.rButtonClose} onClick={handleClose}>Close</Button>
             </div>
         </Dialog>
     );
@@ -121,9 +87,12 @@ EditList.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
 };
-export default function RecipeIngredients({ ingrList, setIngrList }) {
-    const [open, setOpen] = React.useState(false);
+export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
+    const [open, setOpen] = useState(false);
     const classes = useStyles();
+    const [ingrList, setIngrList] = useState([])
+    const [submitted, setSubmitted] = useState(false)
+    console.log(ingrList)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -132,20 +101,43 @@ export default function RecipeIngredients({ ingrList, setIngrList }) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/recipes/" + recipeId, {
+            headers: {
+                Authorization: "Bearer " + loggedIn.access_token
+            }
+        })
+            .then((response) => {
+                console.log(response)
+                setIngrList(response.data.data.ingredients)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
+
     return (
         <>
-            <ul className={classes.list}>
-                {ingrList.map((ingr) => {
-                    return (
-                        <li>{ingr}</li>
-                    )
-                })}
+            <ul className={classes.rList}>
+                {ingrList == [] ? null :
+
+                    ingrList.map((ingr) => {
+                        return (
+                            <li>{ingr.name}</li>
+                        )
+                    })
+                }
+
             </ul>
             <div>
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Edit
-      </Button>
-                <EditList ingrList={ingrList} setIngrList={setIngrList} open={open} onClose={handleClose} />
+                {loggedIn.userId == baker.userId ?
+                    <>
+                        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                            Edit
+                </Button>
+                        <EditList ingrList={ingrList} setIngrList={setIngrList} open={open} onClose={handleClose} setSubmitted={setSubmitted} />
+                    </> : null}
             </div>
         </>
     )
