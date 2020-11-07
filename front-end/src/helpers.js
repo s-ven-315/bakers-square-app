@@ -75,8 +75,9 @@ export const Follow = (userId, loggedIn, followers, setFollowers) => {
         }
     })
         .then(response => {
-            console.log(response)
-            setFollowers(followers)
+            console.log(response.data.data.followers)
+            followers = response.data.data.followers
+            setFollowers([...followers])
         })
         .catch(error => {
             console.error(error.response)
@@ -95,14 +96,17 @@ export const Unfollow = (userId, loggedIn, followers, setFollowers) => {
         }
     })
         .then(response => {
-            console.log(response)
-            setFollowers(followers)
+            console.log(followers)
+            console.log(response.data.data.followers)
+            followers = response.data.data.followers
+            setFollowers([...followers])
         })
         .catch(error => {
             console.error(error.response)
         })
 }
-export const EditProfileName = (loggedIn, userId, input) => {
+export const EditProfileName = (loggedIn, userId, input, setEditOpen, setNameChanged) => {
+    console.log(input)
     axios({
         method: 'POST',
         url: `http://localhost:5000/api/users/${userId}/edit`,
@@ -110,15 +114,18 @@ export const EditProfileName = (loggedIn, userId, input) => {
             Authorization: "Bearer " + loggedIn.access_token
         },
         data: {
-            'name': input
+            'name': input,
+            'email': loggedIn.email
         }
     })
         .then(response => {
             console.log(response)
+            setEditOpen(false)
         })
         .catch(error => {
             console.error(error.response)
         })
+    setNameChanged(true)
 }
 export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) => {
     const goToRecipePage = (recipeId) => {
