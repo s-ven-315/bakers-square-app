@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import axios from "axios"
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../containers/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
@@ -12,61 +13,12 @@ import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
-import Divider from '@material-ui/core/Divider';
-import { red } from '@material-ui/core/colors';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
-const useStyles = makeStyles((theme) => ({
-    avatarSmall: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
-        backgroundColor: red[500],
-        marginRight: 10,
-        cursor: 'pointer'
-    },
-    dialog: {
-        width: '65%',
-        maxWidth: 'auto'
-    },
-    arrow: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
-        backgroundColor: theme.palette.secondary.main,
-        marginRight: 10,
-        cursor: 'pointer'
-    },
-    avatar: {
-        backgroundColor: theme.palette.primary.main,
-        cursor: 'pointer',
-        marginRight: 10
-    },
-    list: {
-        textTransform: "capitalize"
-    },
-    margin: {
-        margin: theme.spacing(1),
-    },
-    buttonDiv: {
-        display: "flex",
-        justifyContent: "space-between"
-    },
-    button: {
-        width: "100%",
-    },
-    buttonClose: {
-        width: "100%",
-        backgroundColor: red[500],
-        color: "white"
-    },
-    form: {
-        width: '30rem'
-    }
-}));
-
 function EditList(props) {
-    const { onClose, open, steps, setSteps } = props;
+    const { onClose, open, steps, setSteps, setSubmitted } = props;
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
     const [tempList, setTempList] = useState(steps)
@@ -78,8 +30,8 @@ function EditList(props) {
     const handleAdd = (e) => {
         e.preventDefault()
         console.log(newItem)
-        setNewItem("")
         setTempList([...tempList, newItem])
+        setNewItem("")
     }
     const handleRemove = (idx) => {
         console.log(idx)
@@ -122,14 +74,14 @@ function EditList(props) {
             <List>
                 {tempList.map((step, idx) => (
                     <ListItem key={idx}>
-                        <Avatar button className={classes.avatarSmall} onClick={() => handleRemove(idx)}>
+                        <Avatar button className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
                             <RemoveIcon />
                         </Avatar>
-                        <ListItemText className={classes.list} primary={step} />
-                        <Avatar button className={classes.arrow} onClick={() => handleMove(step, idx, UP)}>
+                        <ListItemText className={classes.rList} primary={step.text} />
+                        <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, UP)}>
                             <ExpandLessIcon />
                         </Avatar>
-                        <Avatar button className={classes.arrow} onClick={() => handleMove(step, idx, DOWN)}>
+                        <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, DOWN)}>
                             <ExpandMoreIcon />
                         </Avatar>
                     </ListItem>
@@ -138,20 +90,20 @@ function EditList(props) {
                     <Grid container spacing={1} alignItems="flex-end" justify="space-between">
                         <Grid item>
                             <form onSubmit={handleAdd}>
-                                <TextField className={classes.form} autoComplete='off' size='medium' id="input-with-icon-grid" label="Add Step" value={newItem} onChange={handleInput} />
+                                <TextField className={classes.rForm} autoComplete='off' size='medium' id="input-with-icon-grid" label="Add Step" value={newItem} onChange={handleInput} />
                             </form>
                         </Grid>
                         <Grid item >
-                            <Avatar className={classes.avatar} onClick={handleAdd} >
+                            <Avatar className={classes.rAvatar} onClick={handleAdd} >
                                 <AddIcon />
                             </Avatar>
                         </Grid>
                     </Grid>
                 </ListItem>
             </List>
-            <div className={classes.buttonDiv}>
-                <Button variant="contained" color="primary" className={classes.button} onClick={handleSave}>Save</Button>
-                <Button variant="contained" className={classes.buttonClose} onClick={handleClose}>Close</Button>
+            <div className={classes.rButtonDiv}>
+                <Button variant="contained" color="primary" className={classes.rButton} onClick={handleSave}>Save</Button>
+                <Button variant="contained" className={classes.rButtonClose} onClick={handleClose}>Close</Button>
             </div>
         </Dialog>
     );
@@ -161,9 +113,11 @@ EditList.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
 };
-export default function RecipeIngredients({ steps, setSteps }) {
+export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
+    const [steps, setSteps] = useState([])
+    const [submitted, setSubmitted] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -172,20 +126,36 @@ export default function RecipeIngredients({ steps, setSteps }) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/recipes/" + recipeId, {
+            headers: {
+                Authorization: "Bearer " + loggedIn.access_token
+            }
+        })
+            .then((response) => {
+                console.log(response)
+                setSteps(response.data.data.steps)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
     return (
         <>
-            <ol className={classes.list}>
+            <ol className={classes.rList}>
                 {steps.map((step) => {
                     return (
-                        <li>{step}</li>
+                        <li>{step.text}</li>
                     )
                 })}
             </ol>
             <div>
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Edit
+                {loggedIn.userId == baker.userId ? <>
+                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                        Edit
       </Button>
-                <EditList steps={steps} setSteps={setSteps} open={open} onClose={handleClose} />
+                    <EditList steps={steps} setSteps={setSteps} open={open} onClose={handleClose} setSubmitted={setSubmitted} /> </> : null}
             </div>
         </>
     )
