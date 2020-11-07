@@ -7,7 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
@@ -19,7 +18,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-
+import Comments from "../components/Comments"
+import { useStyles } from "../containers/styles"
 
 function LikesDialog(props) {
     const history = useHistory()
@@ -75,23 +75,17 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-const useStyles = makeStyles({
-    root: {
-        flexGrow: 1,
-    },
-    edit: {
-        marginLeft: 10,
-        cursor: 'pointer'
-    }
-});
 
 export default function Profile({ loggedIn }) {
     const [recipe, setRecipe] = useState({})
     const [error, setError] = useState(null)
     const [baker, setBaker] = useState({})
     const { recipeId } = useParams()
+    const [ingrList, setIngrList] = useState([])
+    const [steps, setSteps] = useState([])
 
     const classes = useStyles();
+    console.log(classes.recipe)
 
     // edit recipe name dialog
     const [editOpen, setEditOpen] = React.useState(false);
@@ -132,6 +126,8 @@ export default function Profile({ loggedIn }) {
                 console.log(response)
                 setRecipe(response.data.data)
                 setBaker(response.data.data.user)
+                setIngrList(response.data.data.ingredients)
+                setSteps(response.data.data.steps)
             })
             .catch((error) => {
                 console.log(error)
@@ -152,7 +148,7 @@ export default function Profile({ loggedIn }) {
                             <div className="recipe-name">{recipe.name}
                                 {baker.name === loggedIn.name ?
                                     <>
-                                        <EditIcon className={classes.edit} onClick={handleEdit} />
+                                        <EditIcon className={classes.recipeEdit} onClick={handleEdit} />
                                         <Dialog fullwidth='true' open={editOpen} onClose={handleEditClose} aria-labelledby="form-dialog-title">
                                             <DialogTitle id="form-dialog-title">Change Recipe's Name</DialogTitle>
                                             <DialogContent>
@@ -208,9 +204,11 @@ export default function Profile({ loggedIn }) {
                         <Tab label="Comments" />
                     </Tabs>
                     <TabPanel value={value} index={0}>
-                        <RecipeDetails ingr={recipe.ingredients} />
+
+                        <RecipeDetails loggedIn={loggedIn} baker={baker} recipeId={recipeId} />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
+                        <Comments loggedIn={loggedIn} recipeId={recipeId} />
                     </TabPanel>
                 </>
             }
