@@ -6,21 +6,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../containers/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom"
 import { Like, Unlike, AddNewRecipe } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-const useStyles = makeStyles({
-    span: {
-        marginLeft: 5,
-    },
-    button: {
-        marginTop: '1rem',
-    }
-});
+
 
 function LikesDialog(props) {
     const history = useHistory()
@@ -77,9 +70,9 @@ export default function YourRecipes({ loggedIn, user }) {
                     <div className='add-new-recipe-button'>
                         {user.name === loggedIn.name ?
                             <>
-                                <Button className={classes.button} variant="contained" color="primary" onClick={handleCreate}>
+                                <Button className={classes.yRButton} variant="contained" color="primary" onClick={handleCreate}>
                                     <AddCircleOutlineOutlinedIcon />
-                                    <span className={classes.span} >Add New Recipe</span>
+                                    <span className={classes.yRSpan} >Add New Recipe</span>
                                 </Button>
                                 <Dialog fullwidth='true' open={createOpen} onClose={handleCreateClose} aria-labelledby="form-dialog-title">
                                     <DialogTitle id="form-dialog-title">Add New Recipe</DialogTitle>
