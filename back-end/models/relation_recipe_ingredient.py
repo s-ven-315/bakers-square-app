@@ -14,5 +14,9 @@ class RecipeIngredientRelation(BaseModel):
     def as_dict(self, full=False):
         return dict(
             type='RecipeIngredientRelation',
-            id=self.id,
+            id=self.ingredient.id,
+            name=self.ingredient.name,
+            qty=self.qty,
+            unit=self.unit,
+            remark=self.remark
         )

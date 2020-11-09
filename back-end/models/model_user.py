@@ -1,3 +1,4 @@
+import random
 import peewee as pw
 from flask_login import UserMixin
 from playhouse.hybrid import hybrid_property
@@ -12,22 +13,25 @@ class User(BaseModel, UserMixin):
     name = pw.CharField(unique=False, null=False)
     email = pw.CharField(unique=True, null=False)
     pw_hash = pw.CharField(unique=False, null=False)
+    pw = ''
 
     def validate(self):
         duplicate_user = User.get_or_none(User.email == self.email)
-        if duplicate_user:
+        if duplicate_user and not self.pw_hash:
             self.errors.append('This email has been registered! Try another email!')
             return
 
-        idx = 0
-        userIdText = secure_filename(self.name).lower().replace("_", "")
-        otherUserIds = [int(u.userId[-2:]) for u in User.select(User.userId).where(User.userId.startswith(userIdText))]
-        if otherUserIds:
-            idx = max(otherUserIds) + 1
+        if self.userId == '':
+            idx = random.randint(0, 99)
+            userIdText = secure_filename(self.name).lower().replace("_", "")
+            otherUserIds = [int(u.userId[-2:]) for u in User.select(User.userId).where(User.userId.startswith(userIdText))]
+            if otherUserIds:
+                while idx in otherUserIds:
+                    idx = random.randint(0, 99)
 
-        self.userId = userIdText + ("%02d" % idx)
+            self.userId = userIdText + ("%02d" % idx)
 
-        if hasattr(self, 'pw'):
+        if self.pw:
             rules = [lambda s: any(x.isupper() for x in s),  # must have at least one uppercase
                      lambda s: any(x.islower() for x in s),  # must have at least one lowercase
                      lambda s: any(x.isdigit() for x in s),  # must have at least one digit

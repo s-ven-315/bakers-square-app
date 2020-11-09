@@ -50,7 +50,7 @@ class Recipe(BaseModel):
     def ingredients(self):
         from models.model_ingredient import Ingredient
         from models.relation_recipe_ingredient import RecipeIngredientRelation
-        return Ingredient.select().join(RecipeIngredientRelation, pw.JOIN.LEFT_OUTER).where(RecipeIngredientRelation.recipe == self)
+        return RecipeIngredientRelation.select().where(RecipeIngredientRelation.recipe == self)
 
     @hybrid_property
     def equipment(self):

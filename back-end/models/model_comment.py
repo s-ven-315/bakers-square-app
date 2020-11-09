@@ -24,5 +24,6 @@ class Comment(BaseModel):
                 type='Comment',
                 id=self.id,
                 text=self.text,
+                user=dict(userId=self.user.userId, name=self.user.name),
                 recipe=dict(id=self.recipe.id, name=self.recipe.name),
             )

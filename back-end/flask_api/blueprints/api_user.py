@@ -46,16 +46,23 @@ def get_user(userId: str):
 def edit_user(userId: str):
     json_data = flask.request.json
     user = User.get(User.userId == userId)
+    isEdited = False
 
     # name
     name = json_data.get('name')
     if name:
-        user.name = name
+        if user.name != name:
+            isEdited = True
+            user.name = name
 
     # email
     email = json_data.get('email')
     if email:
-        user.email = email
+        if user.email != email:
+            isEdited = True
+            user.email = email
 
-    if not user.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
+    if isEdited:
+        if not user.save():
+            return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
