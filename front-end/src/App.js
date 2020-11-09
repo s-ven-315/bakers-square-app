@@ -6,7 +6,7 @@ import SignUp from "./pages/SignUp"
 import Login from "./pages/Login"
 import Profile from "./pages/Profile"
 import Recipe from "./pages/Recipe"
-import { Profiler, useState } from "react"
+import { useState } from "react"
 import React from 'react'
 
 function App() {

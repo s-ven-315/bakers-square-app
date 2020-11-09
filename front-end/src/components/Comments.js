@@ -49,10 +49,10 @@ export default function Comments({ loggedIn, recipeId }) {
             .catch((error) => {
                 console.log(error)
             })
-    }, [submitted])
+    }, [submitted, recipeId, loggedIn])
     return (
         <>
-            {comments == [] ? null :
+            {comments === [] ? null :
                 comments.map(comment => {
                     return (
                         <li>{comment.text}</li>

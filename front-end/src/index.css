@@ -282,12 +282,15 @@ body {
   text-decoration: none;
 
   min-width: 50px;
+  outline: none;
 }
 
 .recipe-button:hover {
   border: 1px solid rgba(219,219,219, 1);
   background-color: #fafafa;
+  outline: none;
 }
+
 
 .recipe-header-container {
   display: flex;

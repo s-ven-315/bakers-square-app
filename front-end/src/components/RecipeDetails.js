@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
+
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -78,7 +80,7 @@ export default function RecipeDetails({ recipeId, loggedIn, baker }) {
 
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    < RecipeIngredients recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
+                    <RecipeIngredients recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>

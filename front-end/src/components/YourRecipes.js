@@ -77,7 +77,6 @@ export default function YourRecipes({ loggedIn, user }) {
                                 <Dialog fullwidth='true' open={createOpen} onClose={handleCreateClose} aria-labelledby="form-dialog-title">
                                     <DialogTitle id="form-dialog-title">Add New Recipe</DialogTitle>
                                     <DialogContent>
-
                                         <TextField
                                             autoFocus
                                             margin="dense"
@@ -92,18 +91,17 @@ export default function YourRecipes({ loggedIn, user }) {
                                     <DialogActions>
                                         <Button onClick={() => AddNewRecipe(loggedIn, userId, input, setCreateOpen, history)} color="primary">
                                             Create
-                    </Button>
+                                        </Button>
                                         <Button onClick={handleCreateClose} color="primary">
                                             Cancel
-                    </Button>
+                                        </Button>
                                     </DialogActions>
                                 </Dialog> </>
                             : null
                         }
                     </div>
-                    { user.recipes.length != 0 ?
+                    { user.recipes.length !== 0 ?
                         user.recipes.slice(0).reverse().map(recipe => {
-
                             const handleLikeOpen = () => {
                                 setLikeOpen(true);
                             };
@@ -115,10 +113,8 @@ export default function YourRecipes({ loggedIn, user }) {
                             const recipeId = recipe.id
 
                             return (
-                                <div className="recipe-container">
-                                    <a href="">
-                                        <img className='recipe-img' src="#" alt="" />
-                                    </a>
+                                <div className="recipe-container" key={recipe.id}>
+                                    <img className='recipe-img' src="#" alt="" />
                                     <div className="recipe-details-container">
                                         <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
                                         <div className="recipe-baker">by {user.name}</div>
@@ -130,16 +126,13 @@ export default function YourRecipes({ loggedIn, user }) {
                                     </div>
                                     <div className="recipe-button-container">
                                         {user.name === loggedIn.name ?
-                                            <>
-                                                <a className="recipe-button" href="#"><EditIcon /></a>
-                                            </> :
-                                            null
+                                            <button className="recipe-button"><EditIcon /></button> : null
                                         }
-                                        <a className="recipe-button" href="#">Start Baking</a>
+                                        <button className="recipe-button">Start Baking</button>
                                         {
                                             recipe.likes.find(e => e.userId === loggedIn.userId) ?
-                                                <a className="recipe-button" onClick={() => Unlike(recipeId, loggedIn, like, setLike)}>Liked</a> :
-                                                <a className="recipe-button" onClick={() => Like(recipeId, loggedIn, unlike, setUnlike)}>Like</a>
+                                                <button className="recipe-button" onClick={() => Unlike(recipeId, loggedIn, like, setLike)}>Liked</button> :
+                                                <button className="recipe-button" onClick={() => Like(recipeId, loggedIn, unlike, setUnlike)}>Like</button>
                                         }
                                     </div>
                                 </div>

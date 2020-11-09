@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useStyles } from '../containers/styles'
+import {UserListDialog} from "../containers/dialogs/UserListDialog";
 
 function FollowerDialog(props) {
     const history = useHistory()
@@ -75,6 +76,24 @@ function FollowingDialog(props) {
             </List>
         </Dialog>
     );
+}
+
+function EditProfileDialog(props) {
+    const {editOpen, handleEditClose, handleInput, loggedIn, userId, input, setEditOpen, setNameChanged} = props;
+    return (
+        <Dialog fullwidth='true' open={editOpen} onClose={handleEditClose} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Change Profile Name</DialogTitle>
+            <DialogContent>
+                <TextField autoFocus margin="dense" id="name" label="New Profile Name" type="text"
+                           onChange={handleInput} fullWidth='true' autoComplete='off'/>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => EditProfileName(loggedIn, userId, input, setEditOpen, setNameChanged)}
+                        color="primary">Save</Button>
+                <Button onClick={handleEditClose} color="primary">Cancel</Button>
+            </DialogActions>
+        </Dialog>
+    )
 }
 
 function TabPanel(props) {
@@ -136,27 +155,9 @@ export default function Profile({ loggedIn }) {
         setValue(newValue);
     };
 
-    // followers dialog
+    // followers / following dialog
     const [followerOpen, setFollowerOpen] = useState(false);
-
-    const handleFollowerOpen = () => {
-        setFollowerOpen(true);
-    };
-
-    const handleFollowerClose = (value) => {
-        setFollowerOpen(false);
-    };
-
-    // following dialog
     const [followingOpen, setFollowingOpen] = useState(false);
-
-    const handleFollowingOpen = () => {
-        setFollowingOpen(true);
-    };
-
-    const handleFollowingClose = (value) => {
-        setFollowingOpen(false);
-    };
 
     // axios get
     useEffect(() => {
@@ -184,63 +185,47 @@ export default function Profile({ loggedIn }) {
 
     return (
         <>
-            {user == {} ?
+            <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen}/>
+            <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen}/>
+
+            {(user === {})?
                 <h1>User not found</h1> :
                 <>
-                    <div class="profile-page-container">
-                        <div class="profile-container">
-                            <div class="profile-container-inner">
-                                <div class="profile-img"><img src={ProfileImg} /></div>
-                                <div class="profile-details">
+                    <div className="profile-page-container">
+                        <div className="profile-container">
+                            <div className="profile-container-inner">
+                                <div className="profile-img">
+                                    <img src={ProfileImg} />
+                                </div>
+                                <div className="profile-details">
                                     <div className="profile-name">{user.name}
-                                        {console.log(followers)}
+                                        {/*{console.log(followers)}*/}
                                         {user.name === loggedIn.name ?
                                             <>
                                                 <EditIcon color="primary" onClick={handleEdit} />
-                                                <Dialog fullwidth='true' open={editOpen} onClose={handleEditClose} aria-labelledby="form-dialog-title">
-                                                    <DialogTitle id="form-dialog-title">Change Profile Name</DialogTitle>
-                                                    <DialogContent>
-
-                                                        <TextField
-                                                            autoFocus
-                                                            margin="dense"
-                                                            id="name"
-                                                            label="New Profile Name"
-                                                            type="email"
-                                                            onChange={handleInput}
-                                                            fullWidth='true'
-                                                            autoComplete='off'
-                                                        />
-                                                    </DialogContent>
-                                                    <DialogActions>
-                                                        <Button onClick={() => EditProfileName(loggedIn, userId, input, setEditOpen, setNameChanged)} color="primary">
-                                                            Save
-                                            </Button>
-                                                        <Button onClick={handleEditClose} color="primary">
-                                                            Cancel
-                                            </Button>
-                                                    </DialogActions>
-                                                </Dialog> </> : null
+                                                <EditProfileDialog editOpen={editOpen}
+                                                                   handleEditClose={handleEditClose}
+                                                                   handleInput={handleInput}
+                                                                   loggedIn={loggedIn}
+                                                                   userId={userId}
+                                                                   input={input}
+                                                                   setEditOpen={setEditOpen}
+                                                                   setNameChanged={setNameChanged}
+                                                />
+                                            </> : null
                                         }
                                     </div>
                                     <div className="profile-id">@{user.userId}</div>
-                                    <div class="profile-following-container">
-
+                                    <div className="profile-following-container">
                                         <div>
-                                            <div onClick={handleFollowerOpen}>
-                                                {console.log(followers)}
-                                                {console.log(followers.length)}
-                                                {followers ? followers.length == 1 ? <><span>1</span>Follower</> : <><span>{followers.length}</span>Followers</> : <><span>0</span>Followers</>}
+                                            <div onClick={() => setFollowerOpen(true)}>
+                                                {user.followers ? user.followers.length === 1 ? <><span>1</span>Follower</> : <><span>{user.followers.length}</span>Followers</> : <><span>0</span>Followers</>}
                                             </div>
-
-                                            <FollowerDialog open={followerOpen} onClose={handleFollowerClose} followers={user.followers} />
                                         </div>
                                         <div>
-                                            <div onClick={handleFollowingOpen}>
+                                            <div onClick={() => setFollowingOpen(true)}>
                                                 <span>{user.following ? user.following.length : "0"}</span>Following
                                             </div>
-
-                                            <FollowingDialog open={followingOpen} onClose={handleFollowingClose} following={user.following} />
                                         </div>
                                     </div>
                                     <div className="profile-button-container">
@@ -256,8 +241,8 @@ export default function Profile({ loggedIn }) {
                                 </div>
                             </div>
                         </div>
-                        <div class="recipe-container-outer">
-                            <div class="tab-container">
+                        <div className="recipe-container-outer">
+                            <div className="tab-container">
                                 <Tabs
                                     value={value}
                                     onChange={handleChange}
@@ -268,7 +253,7 @@ export default function Profile({ loggedIn }) {
                                     <Tab label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
                                 </Tabs>
                             </div>
-                            <div class="tab-panel-container">
+                            <div className="tab-panel-container">
                                 <TabPanel value={value} index={0}>
                                     <YourRecipes user={user} loggedIn={loggedIn} />
                                 </TabPanel>
