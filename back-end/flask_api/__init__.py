@@ -17,6 +17,7 @@ import flask_api.blueprints.relations.api_recipe_tag
 import flask_api.blueprints.relations.api_step_equipment
 import flask_api.blueprints.relations.api_step_ingredient
 import flask_api.blueprints.relations.api_subscription
+import flask_api.blueprints.relations.api_recipe_step
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 

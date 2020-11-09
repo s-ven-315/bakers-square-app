@@ -99,3 +99,21 @@ class Recipe(BaseModel):
         from models.model_tag import Tag as Class
         from models.relation_recipe_tag import RecipeTagRelation as Relation
         return Helper.set_id_list(self, idList, Class, Relation, 'recipe', Relation.recipe, 'tag', Relation.tag)
+
+    def set_steps(self, stepList: List[str]):
+        from models.model_step import Step
+        try:
+            # Delete all existing steps
+            toDel = Step.delete().where(Step.recipe == self)
+            toDel.execute()
+
+            # Add new steps
+            toAdd = []
+            for no, step in enumerate(stepList):
+                toAdd.append({'no': no+1, "text": step, "recipe": self})
+            if len(toAdd) > 0:
+                Step.insert_many(toAdd).execute()
+
+            return True
+        except:
+            return False
