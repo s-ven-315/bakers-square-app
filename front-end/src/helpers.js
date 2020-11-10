@@ -2,10 +2,24 @@ import axios from "axios"
 
 
 
-export const Like = (recipeId, loggedIn, like, setLike) => {
+export const Like = (recipeId, loggedIn, setLikeTo, likes, setLikes) => {
+    const url = (setLikeTo)?
+        `http://localhost:5000/api/users/${loggedIn.userId}/like` :
+        `http://localhost:5000/api/users/${loggedIn.userId}/unlike`
+
+    const oldLikes = [...likes]
+    const newLikes = (setLikeTo) ? [{
+        email: loggedIn.email,
+        img_url: loggedIn.img_url,
+        name: loggedIn.name,
+        userId: loggedIn.userId,
+        type: "User",
+    }, ...likes] : likes.filter(l => l.userId !== loggedIn.userId)
+    setLikes(newLikes)
+
     axios({
         method: 'POST',
-        url: `http://localhost:5000/api/users/${loggedIn.userId}/like`,
+        url: url,
         headers: {
             Authorization: "Bearer " + loggedIn.access_token
         },
@@ -15,32 +29,13 @@ export const Like = (recipeId, loggedIn, like, setLike) => {
     })
         .then(response => {
             console.log(response)
-            setLike(true)
         })
         .catch(error => {
             console.error(error.response)
+            setLikes(oldLikes)
         })
 }
 
-export const Unlike = (recipeId, loggedIn, unlike, setUnlike) => {
-    axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/users/${loggedIn.userId}/unlike`,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'recipeId': recipeId
-        }
-    })
-        .then(response => {
-            console.log(response)
-            setUnlike(true)
-        })
-        .catch(error => {
-            console.error(error.response)
-        })
-}
 
 export const EditRecipeName = (loggedIn, recipeId, input, setRecipe, recipe, setEditOpen) => {
     axios({
@@ -165,4 +160,4 @@ export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) =>
             console.error(error.response)
         })
 }
-export default { Like, Unlike, EditRecipeName, Follow, Unfollow, EditProfileName, AddNewRecipe }
+export default { Like, EditRecipeName, Follow, Unfollow, EditProfileName, AddNewRecipe }

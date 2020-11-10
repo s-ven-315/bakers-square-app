@@ -1,58 +1,24 @@
 import React, { useState } from "react"
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { useStyles } from '../containers/styles';
-import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom"
-import { Like, Unlike, AddNewRecipe } from '../helpers'
+import { AddNewRecipe } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import {UserListDialog} from "../containers/dialogs/UserListDialog";
+import RecipeCard from "../containers/RecipeCard";
 
-
-function LikesDialog(props) {
-    const history = useHistory()
-
-    const { onClose, selectedValue, open, recipe } = props;
-
-    const handleClose = () => {
-        onClose();
-    };
-
-    const handleListItemClick = (value) => {
-        onClose(value);
-    };
-    return (
-        <Dialog onClick={handleClose} aria-labelledby="likes-dialog-title" open={open}>
-            <DialogTitle id="followers-dialog-title">Likes</DialogTitle>
-            <List>
-
-                {recipe ?
-                    recipe.map((r) => (
-                        <ListItem button onClick={() => history.push(`/users/${r.userId}`)} key={r}>
-                            <ListItemText primary={r.userId} />
-                        </ListItem>
-                    )) : null}
-            </List>
-        </Dialog>
-    );
-}
 
 export default function YourRecipes({ loggedIn, user }) {
     const classes = useStyles();
-    const [likeOpen, setLikeOpen] = React.useState(false);
     const history = useHistory()
+
     // create new recipe
     const [createOpen, setCreateOpen] = useState(false);
     const [input, setInput] = useState("")
-    const [like, setLike] = useState(false)
-    const [unlike, setUnlike] = useState(false)
 
     const handleInput = (e) => {
         setInput(e.target.value)
@@ -102,32 +68,8 @@ export default function YourRecipes({ loggedIn, user }) {
                         }
                     </div>
                     { user.recipes.length !== 0 ?
-                        user.recipes.slice(0).reverse().map(recipe => (
-                            <div className="recipe-container" key={recipe.id}>
-                                <UserListDialog title={"Likes"} users={recipe.likes} open={likeOpen} setOpen={setLikeOpen}/>
-                                <img className='recipe-img' src={recipe.img_url} alt="" />
-                                <div className="recipe-details-container">
-                                    <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
-                                    <div className="recipe-baker">by {user.name}</div>
-                                    <div className="recipe-following-container">
-                                        <Button color="inherit" onClick={() => setLikeOpen(true)}>{recipe.likes.length} Likes</Button>
-                                        <Button color="inherit">{recipe.comments.length} Comments</Button>
-                                    </div>
-                                </div>
-                                <div className="recipe-button-container">
-                                    {user.name === loggedIn.name ?
-                                        <button className="recipe-button"><EditIcon /></button> : null
-                                    }
-                                    <button className="recipe-button">Start Baking</button>
-                                    {
-                                        recipe.likes.find(e => e.userId === loggedIn.userId) ?
-                                            <button className="recipe-button" onClick={() => Unlike(recipe.id, loggedIn, like, setLike)}>Liked</button> :
-                                            <button className="recipe-button" onClick={() => Like(recipe.id, loggedIn, unlike, setUnlike)}>Like</button>
-                                    }
-                                </div>
-                            </div>
-                            )
-                        ) : <h2>This user has not published any recipes</h2>
+                        user.recipes.slice(0).reverse().map(recipe => <RecipeCard recipe={recipe} loggedIn={loggedIn} key={recipe.id}/>)
+                        : <h2>This user has not published any recipes</h2>
                     }
                 </>
                 :

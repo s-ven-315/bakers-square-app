@@ -207,6 +207,8 @@ body {
   width: 7.5rem;
   height: 7.5rem;
   margin-right: 5px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .recipe-details-container{
@@ -228,11 +230,13 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-align:left
+  text-align:left;
+  user-select: none;
+  cursor: pointer;
 }
 
 .recipe-baker {
-  font-size: 1.2 rem;
+  font-size: 1.2rem;
   margin-bottom: .2rem;
   font-weight: 400;
   color: black;
@@ -241,6 +245,8 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-align: start;
+  user-select: none;
+  cursor: pointer;
 }
 
 .recipe-following-container {
