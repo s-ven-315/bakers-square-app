@@ -13,7 +13,7 @@ import YourRecipes from '../components/YourRecipes';
 import LikedRecipes from '../components/LikedRecipes';
 import ProfileImg from '../assets/images/profile-placeholder.png'
 import EditIcon from '@material-ui/icons/Edit';
-import { Follow, Unfollow, EditProfileName } from '../helpers'
+import { Follow, EditProfileName } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -22,18 +22,22 @@ import {UserListDialog} from "../containers/dialogs/UserListDialog";
 
 
 function EditProfileDialog(props) {
-    const {editOpen, handleEditClose, handleInput, loggedIn, userId, input, setEditOpen, setNameChanged} = props;
+    const [name, setName] = useState("")
+    const {open, setOpen, loggedIn, user, setUser} = props;
+
+    const closeDialog = () => setOpen(false);
+
     return (
-        <Dialog fullwidth='true' open={editOpen} onClose={handleEditClose} aria-labelledby="form-dialog-title">
+        <Dialog fullwidth='true' open={open} onBackdropClick={closeDialog} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Change Profile Name</DialogTitle>
             <DialogContent>
                 <TextField autoFocus margin="dense" id="name" label="New Profile Name" type="text"
-                           onChange={handleInput} fullWidth='true' autoComplete='off'/>
+                           onChange={e => setName(e.target.value)} fullWidth='true' autoComplete='off'/>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => EditProfileName(loggedIn, userId, input, setEditOpen, setNameChanged)}
+                <Button onClick={() => EditProfileName(loggedIn, name, setName, user, setUser, setOpen)}
                         color="primary">Save</Button>
-                <Button onClick={handleEditClose} color="primary">Cancel</Button>
+                <Button onClick={closeDialog} color="primary">Cancel</Button>
             </DialogActions>
         </Dialog>
     )
@@ -66,30 +70,21 @@ TabPanel.propTypes = {
 };
 
 
-
-
 export default function Profile({ loggedIn }) {
     const [user, setUser] = useState({})
     const [error, setError] = useState(null)
     const classes = useStyles();
     const { userId } = useParams()
-    const [recipesNum, setRecipesNum] = useState(0)
-    const [likedRecipesNum, setLikedRecipesNum] = useState(0)
-    const [followers, setFollowers] = useState([])
     const [deleted, setDeleted] = useState(false)
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
-    const [input, setInput] = useState("")
-    const [nameChanged, setNameChanged] = useState(false)
 
-    const handleInput = (e) => {
-        setInput(e.target.value)
-    }
+    const recipesNum = (user.recipes) ? user.recipes.length : 0;
+    const likedRecipesNum = (user.liked_recipes) ? user.liked_recipes.length : 0;
+    const followers = (user.followers) ? user.followers : [];
+
     const handleEdit = () => {
         setEditOpen(true);
-    };
-    const handleEditClose = () => {
-        setEditOpen(false);
     };
 
     // change tab
@@ -112,15 +107,12 @@ export default function Profile({ loggedIn }) {
             .then((response) => {
                 console.log(response)
                 setUser(response.data.data)
-                setRecipesNum(response.data.data.recipes.length)
-                setLikedRecipesNum(response.data.data.liked_recipes.length)
-                setFollowers(response.data.data.followers)
             })
             .catch((error) => {
                 console.log(error)
                 setError(error)
             })
-    }, [userId, nameChanged, deleted])
+    }, [userId, deleted])
 
     if (!loggedIn) {
         return <Redirect to="/" />
@@ -143,17 +135,14 @@ export default function Profile({ loggedIn }) {
                                 <div className="profile-details">
                                     <div className="profile-name">{user.name}
                                         {/*{console.log(followers)}*/}
-                                        {user.name === loggedIn.name ?
+                                        {user.userId === loggedIn.userId ?
                                             <>
                                                 <EditIcon color="primary" onClick={handleEdit} />
-                                                <EditProfileDialog editOpen={editOpen}
-                                                                   handleEditClose={handleEditClose}
-                                                                   handleInput={handleInput}
+                                                <EditProfileDialog open={editOpen}
+                                                                   setOpen={setEditOpen}
                                                                    loggedIn={loggedIn}
-                                                                   userId={userId}
-                                                                   input={input}
-                                                                   setEditOpen={setEditOpen}
-                                                                   setNameChanged={setNameChanged}
+                                                                   user={user}
+                                                                   setUser={setUser}
                                                 />
                                             </> : null
                                         }
@@ -175,8 +164,8 @@ export default function Profile({ loggedIn }) {
                                         {user.name !== loggedIn.name ?
                                             followers ?
                                                 followers.find(e => e.userId === loggedIn.userId) ?
-                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Unfollow(userId, loggedIn, followers, setFollowers)} >Unfollow</Button>
-                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn, followers, setFollowers)} >Follow</Button>
+                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn, false, user, setUser)} >Unfollow</Button>
+                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn, true, user, setUser)} >Follow</Button>
                                                 : null
                                             : null
                                         }

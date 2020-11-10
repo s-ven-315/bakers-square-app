@@ -52,7 +52,7 @@ TabPanel.propTypes = {
 };
 
 
-export default function Profile({ loggedIn }) {
+export default function Recipe({ loggedIn }) {
     const history = useHistory()
     const [recipe, setRecipe] = useState({})
     const [error, setError] = useState(null)
