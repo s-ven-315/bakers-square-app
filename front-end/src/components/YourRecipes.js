@@ -9,10 +9,11 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import { useStyles } from '../containers/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom"
-import { Like, Unlike, AddNewRecipe } from '../helpers'
+import { Like, Unlike, AddNewRecipe, DeleteRecipe } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 function LikesDialog(props) {
@@ -43,7 +44,7 @@ function LikesDialog(props) {
     );
 }
 
-export default function YourRecipes({ loggedIn, user }) {
+export default function YourRecipes({ loggedIn, user, setDeleted }) {
     const classes = useStyles();
     const [likeOpen, setLikeOpen] = React.useState(false);
     const history = useHistory()
@@ -92,10 +93,10 @@ export default function YourRecipes({ loggedIn, user }) {
                                     <DialogActions>
                                         <Button onClick={() => AddNewRecipe(loggedIn, userId, input, setCreateOpen, history)} color="primary">
                                             Create
-                    </Button>
+                                        </Button>
                                         <Button onClick={handleCreateClose} color="primary">
                                             Cancel
-                    </Button>
+                                        </Button>
                                     </DialogActions>
                                 </Dialog> </>
                             : null
@@ -113,7 +114,7 @@ export default function YourRecipes({ loggedIn, user }) {
                             }
                             // temp recipeId
                             const recipeId = recipe.id
-
+                            console.log(recipeId)
                             return (
                                 <div className="recipe-container">
                                     <a href="">
@@ -121,7 +122,7 @@ export default function YourRecipes({ loggedIn, user }) {
                                     </a>
                                     <div className="recipe-details-container">
                                         <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
-                                        <div className="recipe-baker">by {user.name}</div>
+                                        <div className="recipe-baker">by {user.userId}</div>
                                         <div className="recipe-following-container">
                                             <Button color="inherit" onClick={() => handleLikeOpen()}>{recipe.likes.length} Likes</Button>
                                             <LikesDialog open={likeOpen} recipe={recipe.likes} onClose={handleLikeClose} />
@@ -130,9 +131,11 @@ export default function YourRecipes({ loggedIn, user }) {
                                     </div>
                                     <div className="recipe-button-container">
                                         {user.name === loggedIn.name ?
-                                            <>
-                                                <a className="recipe-button" href="#"><EditIcon /></a>
-                                            </> :
+                                            <div className="recipe-button-icon-container">
+                                                <a className="recipe-button recipe-button-icon" href="#"><EditIcon /></a>
+                                                <a className="recipe-button recipe-button-icon" onClick={() => DeleteRecipe(loggedIn, recipeId, setDeleted)}><DeleteIcon /></a>
+
+                                            </div> :
                                             null
                                         }
                                         <a className="recipe-button" href="#">Start Baking</a>
