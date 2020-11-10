@@ -60,9 +60,6 @@ body {
   margin: auto
 }
 
-.MuiList-root a{
-  display: block
-}
 /* Profile details */
 .profile-page-container {
   display:flex;
@@ -264,6 +261,11 @@ body {
   flex-flow: column nowrap;
   justify-content: center;
 }
+.recipe-button-icon-container{
+  display:flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
 
 .recipe-button {
   border: 1px solid rgba(219, 219, 219, 1);
@@ -280,13 +282,18 @@ body {
   transition: background-color .4s cubic-bezier(.25, .8, .25, 1);
   color: black;
   text-decoration: none;
-
+  cursor: pointer;
   min-width: 50px;
 }
 
 .recipe-button:hover {
-  border: 1px solid rgba(219,219,219, 1);
+  border: 1px solid rgb(207, 207, 207);
   background-color: #fafafa;
+}
+
+.recipe-button-icon {
+  padding: 5px 2px !important;
+  min-width: 40px
 }
 
 .recipe-header-container {
@@ -331,29 +338,57 @@ body {
   text-align: left
 }
 
-.component-container {
-  display: flex;
-  width: 70vw;
-  flex-flow: row nowrap;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 1.5rem;
-  border-radius: 5px;
-  margin: auto;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.06);
-  transition: background-color .4s cubic-bezier(.25, .8, .25, 1), box-shadow .4s cubic-bezier(.25, .8, .25, 1);
-  user-select: none;
-  text-decoration: none;
-  position: relative;
+/* RecipeIngredients.js */
+.ingredient-add-form {
+  display: flex
 }
 
-.component-title {
-  font-size: 1.5rem;
-  color: black;
-  text-decoration: none;
-  overflow: hidden;
-  text-align:left
+/* slides */
+.swiper-slide {
+  display: flex;
+  flex-direction: column;
+  height: 450px !important
+}
+.swiper-slide>div {
+  margin:auto
+}
+.swiper-slide .step-no {
+  font-size: 0.8rem
+}
+.swiper-slide .step-text {
+  font-size:1.5rem
+}
+.swiper-pagination-bullet {
+  width:20px !important;
+  height:20px !important;
+  color:white !important
+}
+
+.swiper-pagination-bullet-active{
+  background-color: #c6783c !important
+}
+.swiper-button-prev, .swiper-button-next {
+  color: #c6783c !important
+}
+
+/* comments */
+.comment-container-outer{
+  padding: 0 15%
+}
+.comment-inner {
+  display: flex
+}
+.comment-user{
+  font-weight: bold;
+  margin-right: 7px;
+}
+.comment-inner>p{
+  margin-top:5px;
+  margin-bottom:5px
+}
+.comment-textfield {
+  display:flex;
+  align-items:baseline
 }
 @media screen and (max-width: 475px) {
   .menu-wide {
