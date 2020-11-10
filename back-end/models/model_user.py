@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 
 from models.utils.base_model import BaseModel
+from services.storage import S3_LOCATION
 
 
 class User(BaseModel, UserMixin):
@@ -13,6 +14,7 @@ class User(BaseModel, UserMixin):
     name = pw.CharField(unique=False, null=False)
     email = pw.CharField(unique=True, null=False)
     pw_hash = pw.CharField(unique=False, null=False)
+    imgName = pw.CharField(null=True)
     pw = ''
 
     def validate(self):
@@ -24,7 +26,8 @@ class User(BaseModel, UserMixin):
         if self.userId == '':
             idx = random.randint(0, 99)
             userIdText = secure_filename(self.name).lower().replace("_", "")
-            otherUserIds = [int(u.userId[-2:]) for u in User.select(User.userId).where(User.userId.startswith(userIdText))]
+            otherUserIds = [int(u.userId[-2:]) for u in
+                            User.select(User.userId).where(User.userId.startswith(userIdText))]
             if otherUserIds:
                 while idx in otherUserIds:
                     idx = random.randint(0, 99)
@@ -55,6 +58,7 @@ class User(BaseModel, UserMixin):
                 userId=self.userId,
                 name=self.name,
                 email=self.email,
+                img_url=self.imgUrl,
 
                 recipes=[d.as_dict() for d in self.recipes],
                 liked_recipes=[d.as_dict() for d in self.liked_recipes],
@@ -67,8 +71,13 @@ class User(BaseModel, UserMixin):
                 type='User',
                 userId=self.userId,
                 name=self.name,
-                email=self.email
+                email=self.email,
+                img_url=self.imgUrl,
             )
+
+    @hybrid_property
+    def imgUrl(self):
+        return "{}{}".format(S3_LOCATION, self.imgName)
 
     @hybrid_property
     def liked_recipes(self):
@@ -134,4 +143,3 @@ class User(BaseModel, UserMixin):
         if subscriptionRelation:
             return subscriptionRelation.delete_instance()
         return True
-

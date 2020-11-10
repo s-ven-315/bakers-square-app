@@ -32,7 +32,8 @@ if not os.getenv('FLASK_ENV') == 'production':
     import pandas as pd
 
     all_models = [User, Recipe, Comment, Equipment, Ingredient, Step, Tag,
-                  LikeRelation, SubscriptionRelation, RecipeEquipmentRelation, RecipeIngredientRelation, RecipeTagRelation,
+                  LikeRelation, SubscriptionRelation, RecipeEquipmentRelation, RecipeIngredientRelation,
+                  RecipeTagRelation,
                   StepEquipmentRelation, StepIngredientRelation]
 
     # Step 1: Delete all existing data
@@ -44,10 +45,11 @@ if not os.getenv('FLASK_ENV') == 'production':
     users_df = pd.read_csv("data/users.csv", sep=';')
     users = []
     for user_id, user in users_df.iterrows():
-        random.seed(1992+user_id)
+        random.seed(1992 + user_id)
         userId = secure_filename(user['name'].strip()).lower().replace("_", "") + ("%02d" % random.randint(0, 99))
         users.append(User(userId=userId, name=user['name'].strip(), email=user['email'].strip(),
-                          pw_hash=generate_password_hash(password)))
+                          pw_hash=generate_password_hash(password), imgName="user-%s.png" % userId
+                          ))
 
     User.bulk_create(users)
 
@@ -96,12 +98,14 @@ if not os.getenv('FLASK_ENV') == 'production':
             recipe_desc = str(d[5]).strip()
             recipes.append(
                 Recipe(user=users[0], name=recipe_name, serving=recipe_serving,
-                       preparation_time=recipe_prep_time, cooking_time=recipe_cook_time, description=recipe_desc))
+                       preparation_time=recipe_prep_time, cooking_time=recipe_cook_time, description=recipe_desc,
+                       imgName="recipe-img.png"))
             step_no = 1
 
         if ingredient_name:
             ingredient_name_parsed = ingredient_name.strip().lower().replace(' ', '')
-            ingredient_searchs = get_close_matches(word=ingredient_name_parsed, possibilities=ingredient_names, cutoff=0.6)
+            ingredient_searchs = get_close_matches(word=ingredient_name_parsed, possibilities=ingredient_names,
+                                                   cutoff=0.6)
             assert len(ingredient_searchs) > 0
 
             ingredient = ingredients[ingredient_names.index(ingredient_searchs[0])]
@@ -141,9 +145,9 @@ if not os.getenv('FLASK_ENV') == 'production':
         if toUserId == 20:
             fromUserIds = [i for i in range(len(users)) if i != 20]
         else:
-            random.seed(1993+toUserId)
-            numFromUserId = random.randint(0, len(users)-1)
-            random.seed(1993+toUserId+10)
+            random.seed(1993 + toUserId)
+            numFromUserId = random.randint(0, len(users) - 1)
+            random.seed(1993 + toUserId + 10)
             fromUserIds = random.sample(range(len(users)), numFromUserId)
 
         if 0 not in fromUserIds:
@@ -153,7 +157,7 @@ if not os.getenv('FLASK_ENV') == 'production':
             fromUserIds.remove(toUserId)
 
         for fromUserId in fromUserIds:
-            subscriptions.append(SubscriptionRelation(from_user=fromUserId+1, to_user=toUserId+1))
+            subscriptions.append(SubscriptionRelation(from_user=fromUserId + 1, to_user=toUserId + 1))
             subscription_id += 1
 
     SubscriptionRelation.bulk_create(subscriptions)
@@ -162,13 +166,13 @@ if not os.getenv('FLASK_ENV') == 'production':
     likes = []
     random.seed(1993)
     for fromUserId in range(len(users)):
-        random.seed(1993+fromUserId)
-        numLikeRecipe = random.randint(0, len(recipes)-1)
-        random.seed(1993+fromUserId+10)
+        random.seed(1993 + fromUserId)
+        numLikeRecipe = random.randint(0, len(recipes) - 1)
+        random.seed(1993 + fromUserId + 10)
         likeRecipes = random.sample(range(len(recipes)), numLikeRecipe)
 
         for likeRecipe in likeRecipes:
-            likes.append(LikeRelation(user=fromUserId+1, recipe=likeRecipe+1))
+            likes.append(LikeRelation(user=fromUserId + 1, recipe=likeRecipe + 1))
 
     LikeRelation.bulk_create(likes)
 
@@ -192,10 +196,7 @@ if not os.getenv('FLASK_ENV') == 'production':
 
                 comment_selected_idxs = random.sample(range(len(comment_now_texts)), numCommentTexts)
                 for c in comment_selected_idxs:
-                    comments.append(Comment(user=fromUserId+1, recipe=recipeId+1, text=comment_texts[c]))
+                    comments.append(Comment(user=fromUserId + 1, recipe=recipeId + 1, text=comment_texts[c]))
                     comment_now_texts.remove(comment_texts[c])
 
     Comment.bulk_create(comments)
-
-
-

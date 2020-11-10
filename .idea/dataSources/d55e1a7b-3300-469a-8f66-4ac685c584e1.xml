@@ -1066,6 +1066,7 @@ sequence|table|21530|21532|1
     </table>
     <table id="52" parent="21" name="recipe">
       <ObjectId>21323</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>2591</StateNumber>
     </table>
@@ -1111,6 +1112,7 @@ sequence|table|21530|21532|1
     </table>
     <table id="61" parent="21" name="user">
       <ObjectId>21310</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>2591</StateNumber>
     </table>

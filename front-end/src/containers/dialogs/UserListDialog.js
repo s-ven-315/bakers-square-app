@@ -29,7 +29,7 @@ export function UserListDialog(props) {
                 {users ? users.map(user => (
                     <ListItem button onClick={() => onClick(user.userId)} key={user.userId}>
                         <ListItemAvatar>
-                            <Avatar alt={`${user.userId}`} src="https://randomuser.me/api/portraits/men/62.jpg" />
+                            <Avatar alt={`${user.userId}`} src={user.img_url} style={{backgroundColor: '#e6e6e6'}}/>
                         </ListItemAvatar>
                         <ListItemText primary={`${user.name}`} secondary={`@${user.userId}`} />
                     </ListItem>

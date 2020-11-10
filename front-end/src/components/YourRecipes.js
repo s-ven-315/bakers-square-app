@@ -114,7 +114,7 @@ export default function YourRecipes({ loggedIn, user }) {
 
                             return (
                                 <div className="recipe-container" key={recipe.id}>
-                                    <img className='recipe-img' src="#" alt="" />
+                                    <img className='recipe-img' src={recipe.img_url} alt="" />
                                     <div className="recipe-details-container">
                                         <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
                                         <div className="recipe-baker">by {user.name}</div>

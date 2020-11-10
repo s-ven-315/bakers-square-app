@@ -142,7 +142,7 @@ export default function Profile({ loggedIn }) {
                 <>
                     <div className="recipe-header-container">
                         <a href="">
-                            <img className='recipe-img' src="#" alt="" />
+                            <img className='recipe-img' src={recipe.img_url} alt="" />
                         </a>
                         <div className="recipe-details-container">
                             <div className="recipe-name">{recipe.name}

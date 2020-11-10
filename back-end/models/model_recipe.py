@@ -5,6 +5,7 @@ from playhouse.hybrid import hybrid_property
 
 from models.utils import BaseModel, Helper
 from models.model_user import User
+from services.storage import S3_LOCATION
 
 
 class Recipe(BaseModel):
@@ -14,6 +15,7 @@ class Recipe(BaseModel):
     preparation_time = pw.IntegerField(null=True)  # in minute
     cooking_time = pw.IntegerField(null=True)  # in minute
     description = pw.CharField(null=True)
+    imgName = pw.CharField(null=True)
 
     def as_dict(self, basic=False):
         if not basic:
@@ -32,6 +34,7 @@ class Recipe(BaseModel):
 
                 likes=[d.as_dict(basic=True) for d in self.likes],
                 comments=[d.as_dict(basic=True) for d in self.comments],
+                img_url=self.imgUrl,
             )
         else:
             return dict(
@@ -44,7 +47,12 @@ class Recipe(BaseModel):
                 ),
                 likes=self.likes_dict(False),
                 comments=self.comments_dict(False),
+                img_url=self.imgUrl,
             )
+
+    @hybrid_property
+    def imgUrl(self):
+        return "{}{}".format(S3_LOCATION, self.imgName)
 
     @hybrid_property
     def ingredients(self):

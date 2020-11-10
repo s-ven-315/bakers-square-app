@@ -6,3 +6,4 @@ flask_web/static/.webassets-cache
 flask_web/static/gen
 *credentials.json
 token.pickle
+data/images

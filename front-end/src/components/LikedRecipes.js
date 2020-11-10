@@ -62,7 +62,7 @@ export default function LikedRecipes({ user, loggedIn }) {
                             return (
                                 <div className="recipe-container">
                                     <a href="">
-                                        <img className='recipe-img' src="#" alt="" />
+                                        <img className='recipe-img' src={recipe.img_url} alt="" />
                                     </a>
                                     <div className="recipe-details-container">
                                         <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>

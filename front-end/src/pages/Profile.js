@@ -195,7 +195,7 @@ export default function Profile({ loggedIn }) {
                         <div className="profile-container">
                             <div className="profile-container-inner">
                                 <div className="profile-img">
-                                    <img src={ProfileImg} />
+                                    <img src={user.img_url} style={{backgroundColor: '#e6e6e6'}}/>
                                 </div>
                                 <div className="profile-details">
                                     <div className="profile-name">{user.name}

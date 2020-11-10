@@ -1,14 +1,10 @@
+import os
 from functools import wraps
 
 import flask
-from flask_jwt_extended import jwt_required
-from peewee import JOIN
-
 from flask_api.blueprints.utils.decorators import api_post
 from models.model_user import User
-from models.model_recipe import Recipe
-from models.relation_like import LikeRelation
-from models.relation_subscription import SubscriptionRelation
+import services.storage as storage
 
 users_api_blueprint = flask.Blueprint('users_api', __name__)
 
@@ -65,4 +61,24 @@ def edit_user(userId: str):
     if isEdited:
         if not user.save():
             return flask.jsonify({'msg': 'Error in saving data'}), 400
+    return flask.jsonify({'msg': 'Success'}), 200
+
+
+@users_api_blueprint.route('/<userId>/image', methods=['POST'])
+@api_post()
+@userExists
+def edit_image(userId):
+    if "img_url" not in flask.request.files:
+        return flask.jsonify({'msg': 'No \'img_url\' key in request.files'}), 400
+
+    file = flask.request.files['user_file']
+    if file.filename == '':
+        return flask.jsonify({'msg': 'No file is found in \'img_url\' in request.files'}), 400
+
+    if file and storage.allowed_file(file.filename):
+        file.filename = "user{}-profile{}".format(userId, os.path.splitext(file.filename)[1])
+        upload_error = storage.upload_file_to_s3(file)
+        if not upload_error:
+            User.update(img_url=file.filename).where(User.id == userId).execute()
+
     return flask.jsonify({'msg': 'Success'}), 200
