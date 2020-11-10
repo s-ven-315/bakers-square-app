@@ -9,8 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu'
 import { useHistory } from "react-router-dom"
+import { useStyles } from "./styles"
 
 const Navbar = ({ loggedIn, setLogged }) => {
+    const classes = useStyles()
     const handleLogout = () => {
         localStorage.removeItem("user")
         setLogged(null)
@@ -71,10 +73,10 @@ const Navbar = ({ loggedIn, setLogged }) => {
                                         <Paper>
                                             <ClickAwayListener onClickAway={handleClose}>
                                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                    <ListItemText /><Button onClick={() => history.push(`/users/${loggedIn.userId}`)}>Profile Page</Button>
-                                                    <ListItemText /><Button onClick={() => history.push('/signup')}>Start Baking</Button>
-                                                    <ListItemText /><Button onClick={() => history.push('/')}>Ingredient Checklist</Button>
-                                                    <ListItemText /><Button onClick={handleLogout}>Logout</Button>
+                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push(`/users/${loggedIn.userId}`)}>Profile Page</Button>
+                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push('/signup')}>Start Baking</Button>
+                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push('/')}>Ingredient Checklist</Button>
+                                                    <ListItemText /><Button className={classes.nButton} onClick={handleLogout}>Logout</Button>
                                                 </MenuList>
                                             </ClickAwayListener>
                                         </Paper>
