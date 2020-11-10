@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp"
 import Login from "./pages/Login"
 import Profile from "./pages/Profile"
 import Recipe from "./pages/Recipe"
+import Session from "./pages/Session"
 import { Profiler, useState } from "react"
 import React from 'react'
 
@@ -25,6 +26,7 @@ function App() {
           <>
             <Route exact path="/users/:userId"><Profile loggedIn={loggedIn} /></Route>
             <Route exact path="/recipes/:recipeId"><Recipe loggedIn={loggedIn} /></Route>
+            <Route exact path="/recipes/:recipeId/sessions"><Session loggedIn={loggedIn} /></Route>
           </>
           : null
         }
