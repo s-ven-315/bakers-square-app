@@ -3,13 +3,14 @@ import { useHistory } from "react-router-dom"
 
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import {UserListDialog} from "./dialogs/UserListDialog";
-import {Like} from "../helpers";
+import {DeleteRecipe, Like} from "../helpers";
 
 
 
-export default function RecipeCard({recipe, loggedIn}) {
+export default function RecipeCard({recipe, loggedIn, setDeleted}) {
     const [likeOpen, setLikeOpen] = useState(false)
     const history = useHistory()
 
@@ -35,7 +36,10 @@ export default function RecipeCard({recipe, loggedIn}) {
             </div>
             <div className="recipe-button-container">
                 {recipe.user.name === loggedIn.name ?
-                    <button className="recipe-button"><EditIcon/></button> : null
+                    <div className="recipe-button-icon-container">
+                        <button className="recipe-button recipe-button-icon"><EditIcon /></button>
+                        <button className="recipe-button recipe-button-icon" onClick={() => DeleteRecipe(loggedIn, recipe.id, setDeleted)}><DeleteIcon /></button>
+                    </div> : null
                 }
                 <button className="recipe-button">Start Baking</button>
                 {isLike ?

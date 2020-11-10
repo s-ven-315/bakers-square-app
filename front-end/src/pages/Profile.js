@@ -202,7 +202,7 @@ export default function Profile({ loggedIn }) {
                                     <YourRecipes user={user} loggedIn={loggedIn} setDeleted={setDeleted} />
                                 </TabPanel>
                                 <TabPanel className={classes.pTabs} value={value} index={1}>
-                                    <LikedRecipes user={user} loggedIn={loggedIn} />
+                                    <LikedRecipes user={user} loggedIn={loggedIn} setDeleted={setDeleted} />
                                 </TabPanel>
                             </div>
                         </div>

@@ -69,7 +69,7 @@ export default function YourRecipes({ loggedIn, user, setDeleted }) {
                         }
                     </div>
                     { user.recipes.length !== 0 ?
-                        user.recipes.slice(0).reverse().map(recipe => <RecipeCard recipe={recipe} loggedIn={loggedIn} key={recipe.id}/>)
+                        user.recipes.slice(0).reverse().map(recipe => <RecipeCard recipe={recipe} loggedIn={loggedIn} setDeleted={setDeleted} key={recipe.id}/>)
                         : <h2>This user has not published any recipes</h2>
                     }
                 </>
