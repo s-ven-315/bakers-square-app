@@ -13,6 +13,7 @@ import { Like, Unlike, AddNewRecipe } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import {UserListDialog} from "../containers/dialogs/UserListDialog";
 
 
 function LikesDialog(props) {
@@ -101,43 +102,32 @@ export default function YourRecipes({ loggedIn, user }) {
                         }
                     </div>
                     { user.recipes.length !== 0 ?
-                        user.recipes.slice(0).reverse().map(recipe => {
-                            const handleLikeOpen = () => {
-                                setLikeOpen(true);
-                            };
-
-                            const handleLikeClose = () => {
-                                setLikeOpen(false);
-                            }
-                            // temp recipeId
-                            const recipeId = recipe.id
-
-                            return (
-                                <div className="recipe-container" key={recipe.id}>
-                                    <img className='recipe-img' src={recipe.img_url} alt="" />
-                                    <div className="recipe-details-container">
-                                        <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
-                                        <div className="recipe-baker">by {user.name}</div>
-                                        <div className="recipe-following-container">
-                                            <Button color="inherit" onClick={() => handleLikeOpen()}>{recipe.likes.length} Likes</Button>
-                                            <LikesDialog open={likeOpen} recipe={recipe.likes} onClose={handleLikeClose} />
-                                            <Button color="inherit">{recipe.comments.length} Comments</Button>
-                                        </div>
-                                    </div>
-                                    <div className="recipe-button-container">
-                                        {user.name === loggedIn.name ?
-                                            <button className="recipe-button"><EditIcon /></button> : null
-                                        }
-                                        <button className="recipe-button">Start Baking</button>
-                                        {
-                                            recipe.likes.find(e => e.userId === loggedIn.userId) ?
-                                                <button className="recipe-button" onClick={() => Unlike(recipeId, loggedIn, like, setLike)}>Liked</button> :
-                                                <button className="recipe-button" onClick={() => Like(recipeId, loggedIn, unlike, setUnlike)}>Like</button>
-                                        }
+                        user.recipes.slice(0).reverse().map(recipe => (
+                            <div className="recipe-container" key={recipe.id}>
+                                <UserListDialog title={"Likes"} users={recipe.likes} open={likeOpen} setOpen={setLikeOpen}/>
+                                <img className='recipe-img' src={recipe.img_url} alt="" />
+                                <div className="recipe-details-container">
+                                    <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
+                                    <div className="recipe-baker">by {user.name}</div>
+                                    <div className="recipe-following-container">
+                                        <Button color="inherit" onClick={() => setLikeOpen(true)}>{recipe.likes.length} Likes</Button>
+                                        <Button color="inherit">{recipe.comments.length} Comments</Button>
                                     </div>
                                 </div>
+                                <div className="recipe-button-container">
+                                    {user.name === loggedIn.name ?
+                                        <button className="recipe-button"><EditIcon /></button> : null
+                                    }
+                                    <button className="recipe-button">Start Baking</button>
+                                    {
+                                        recipe.likes.find(e => e.userId === loggedIn.userId) ?
+                                            <button className="recipe-button" onClick={() => Unlike(recipe.id, loggedIn, like, setLike)}>Liked</button> :
+                                            <button className="recipe-button" onClick={() => Like(recipe.id, loggedIn, unlike, setUnlike)}>Like</button>
+                                    }
+                                </div>
+                            </div>
                             )
-                        }) : <h2>This user has not published any recipes</h2>
+                        ) : <h2>This user has not published any recipes</h2>
                     }
                 </>
                 :
