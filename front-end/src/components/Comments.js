@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
+import { useStyles } from "../containers/styles"
 
 
 export default function Comments({ loggedIn, recipeId }) {
+    const classes = useStyles()
     const userId = loggedIn.userId
     const [input, setInput] = useState("")
     const [submitted, setSubmitted] = useState(false)
@@ -51,16 +53,21 @@ export default function Comments({ loggedIn, recipeId }) {
             })
     }, [submitted])
     return (
-        <>
-            {comments == [] ? null :
+        <div className="comment-container-outer">
+            {comments === [] ? null :
                 comments.map(comment => {
                     return (
-                        <li>{comment.text}</li>
+                        <div className="comment-inner">
+                            <p className="comment-user">{comment.user.userId}</p>
+                            <p className="comment-text">{comment.text}</p>
+                        </div>
                     )
                 })
             }
-            <TextField id="standard-basic" label="Add Your Comment" onChange={handleInput} value={input} autoComplete="off" />
-            <Button onClick={() => sendComment(userId, recipeId, input)}>Send</Button>
-        </>
+            <div className="comment-textfield">
+                <TextField className={classes.cInput} id="standard-basic" label="Add Your Comment" onChange={handleInput} value={input} autoComplete="off" />
+                <Button variant="contained" color="primary" onClick={() => sendComment(userId, recipeId, input)}>Send</Button>
+            </div>
+        </div>
     )
 }
