@@ -7,7 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
@@ -114,7 +113,7 @@ export default function Profile({ loggedIn }) {
     const [recipesNum, setRecipesNum] = useState(0)
     const [likedRecipesNum, setLikedRecipesNum] = useState(0)
     const [followers, setFollowers] = useState([])
-
+    const [deleted, setDeleted] = useState(false)
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
     const [input, setInput] = useState("")
@@ -176,7 +175,7 @@ export default function Profile({ loggedIn }) {
                 console.log(error)
                 setError(error)
             })
-    }, [userId, nameChanged])
+    }, [userId, nameChanged, deleted])
 
     if (!loggedIn) {
         return <Redirect to="/" />
@@ -259,20 +258,21 @@ export default function Profile({ loggedIn }) {
                         <div class="recipe-container-outer">
                             <div class="tab-container">
                                 <Tabs
+                                    className={classes.pTabs}
                                     value={value}
                                     onChange={handleChange}
                                     indicatorColor="primary"
                                     centered
                                 >
-                                    <Tab label={`${user.name}'s Recipes (${recipesNum})`} />
-                                    <Tab label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
+                                    <Tab className={classes.pTabs} label={`${user.name}'s Recipes (${recipesNum})`} />
+                                    <Tab className={classes.pTabs} label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
                                 </Tabs>
                             </div>
                             <div class="tab-panel-container">
-                                <TabPanel value={value} index={0}>
-                                    <YourRecipes user={user} loggedIn={loggedIn} />
+                                <TabPanel className={classes.pTabs} value={value} index={0}>
+                                    <YourRecipes user={user} loggedIn={loggedIn} setDeleted={setDeleted} />
                                 </TabPanel>
-                                <TabPanel value={value} index={1}>
+                                <TabPanel className={classes.pTabs} value={value} index={1}>
                                     <LikedRecipes user={user} loggedIn={loggedIn} />
                                 </TabPanel>
                             </div>
