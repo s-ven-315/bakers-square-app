@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import RecipeDetails from '../components/RecipeDetails'
-import { Like, EditRecipeName } from '../helpers'
+import { Like, EditRecipeName, DeleteRecipe } from '../helpers'
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -21,6 +21,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Comments from "../components/Comments"
 import { useStyles } from "../containers/styles"
 import {UserListDialog} from "../containers/dialogs/UserListDialog";
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 
 function TabPanel(props) {
@@ -51,16 +53,14 @@ TabPanel.propTypes = {
 
 
 export default function Profile({ loggedIn }) {
+    const history = useHistory()
     const [recipe, setRecipe] = useState({})
     const [error, setError] = useState(null)
     const [baker, setBaker] = useState({})
     const { recipeId } = useParams()
-    const [ingrList, setIngrList] = useState([])
-    const [steps, setSteps] = useState([])
+    const [deleted, setDeleted] = useState(false)
 
     const classes = useStyles();
-    const history = useHistory();
-    console.log(classes.recipe)
 
     // edit recipe name dialog
     const [editOpen, setEditOpen] = React.useState(false);
@@ -101,15 +101,13 @@ export default function Profile({ loggedIn }) {
                 const data = response.data.data
                 setRecipe(data)
                 setBaker(data.user)
-                setIngrList(data.ingredients)
-                setSteps(data.steps)
                 setLikes(data.likes)
             })
             .catch((error) => {
                 console.log(error)
                 setError(error)
             })
-    }, [])
+    }, [deleted])
 
     return (
         <>
@@ -157,10 +155,8 @@ export default function Profile({ loggedIn }) {
                             </div>
                         </div>
                         <div className="recipe-button-container">
-                            {baker.name === loggedIn.name ?
-                                <button className="recipe-button"><EditIcon/></button> : null
-                            }
-                            <button className="recipe-button">Start Baking</button>
+                            <button className="recipe-button" onClick={() => DeleteRecipe(loggedIn, recipeId, setDeleted)}><DeleteIcon /></button>
+                            <button className="recipe-button" onClick={() => history.push(`/recipes/${recipeId}/sessions`)}>Start Baking</button>
                             {isLike ?
                                 <button className="recipe-button"
                                         onClick={() => Like(recipe.id, loggedIn, false, likes, setLikes)}>Liked</button> :
@@ -171,6 +167,7 @@ export default function Profile({ loggedIn }) {
                     </div>
                     <Tabs
                         value={value}
+                        className={classes.rTabs}
                         onChange={handleChange}
                         indicatorColor="primary"
                         textColor="primary"

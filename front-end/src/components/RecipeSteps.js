@@ -18,11 +18,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 function EditList(props) {
-    const { onClose, open, steps, setSteps, setSubmitted } = props;
+    const { onClose, open, steps, setSubmitted, recipeId, loggedIn } = props;
     const [newItem, setNewItem] = useState("")
     const classes = useStyles();
-    const [tempList, setTempList] = useState(steps)
-
+    const [tempList, setTempList] = useState(steps.map(s => s.text))
+    useEffect(() => setTempList(steps.map(s => s.text)), [steps])
 
     const handleInput = (e) => {
         setNewItem(e.target.value)
@@ -30,6 +30,7 @@ function EditList(props) {
     const handleAdd = (e) => {
         e.preventDefault()
         console.log(newItem)
+        console.log(tempList)
         setTempList([...tempList, newItem])
         setNewItem("")
     }
@@ -40,13 +41,10 @@ function EditList(props) {
         setTempList(clonedList)
     }
     const handleClose = () => {
-        setTempList(steps)
+        setTempList(steps.map(s => s.text))
         onClose();
     };
-    const handleSave = () => {
-        setSteps(tempList)
-        handleClose()
-    }
+
 
     const UP = -1
     const DOWN = 1
@@ -67,7 +65,27 @@ function EditList(props) {
         console.log(reList)
         setTempList(reList)
     }
-
+    const handleSave = () => {
+        axios({
+            method: 'POST',
+            url: `http://localhost:5000/api/recipes/${recipeId}/steps`,
+            headers: {
+                Authorization: "Bearer " + loggedIn.access_token
+            },
+            data: {
+                steps: tempList
+            }
+        })
+            .then(response => {
+                console.log(response)
+                setSubmitted(true)
+            })
+            .catch(error => {
+                console.error(error.response)
+            })
+        setSubmitted(false)
+        handleClose()
+    }
     return (
         <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Edit Steps</DialogTitle>
@@ -77,7 +95,7 @@ function EditList(props) {
                         <Avatar button className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
                             <RemoveIcon />
                         </Avatar>
-                        <ListItemText className={classes.rList} primary={step.text} />
+                        <ListItemText className={classes.rList} primary={step} />
                         <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, UP)}>
                             <ExpandLessIcon />
                         </Avatar>
@@ -140,13 +158,13 @@ export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
             .catch((error) => {
                 console.log(error)
             })
-    }, [])
+    }, [submitted])
     return (
         <>
             <ol className={classes.rList}>
                 {steps.map((step) => {
                     return (
-                        <li>{step.text}</li>
+                        <li key={step.no}>{step.text}</li>
                     )
                 })}
             </ol>
@@ -155,7 +173,7 @@ export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
                     <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                         Edit
       </Button>
-                    <EditList steps={steps} setSteps={setSteps} open={open} onClose={handleClose} setSubmitted={setSubmitted} /> </> : null}
+                    <EditList steps={steps} open={open} onClose={handleClose} setSubmitted={setSubmitted} recipeId={recipeId} loggedIn={loggedIn} /> </> : null}
             </div>
         </>
     )

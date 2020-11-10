@@ -116,11 +116,13 @@ export const EditProfileName = (loggedIn, userId, input, setEditOpen, setNameCha
         .then(response => {
             console.log(response)
             setEditOpen(false)
+            setNameChanged(true)
         })
         .catch(error => {
             console.error(error.response)
         })
-    setNameChanged(true)
+    setNameChanged(false)
+
 }
 export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) => {
     const goToRecipePage = (recipeId) => {
@@ -160,4 +162,20 @@ export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) =>
             console.error(error.response)
         })
 }
-export default { Like, EditRecipeName, Follow, Unfollow, EditProfileName, AddNewRecipe }
+
+export const DeleteRecipe = (loggedIn, recipeId, setDeleted) => {
+    axios({
+        method: 'POST',
+        url: `http://localhost:5000/api/recipes/${recipeId}/delete`,
+        headers: {
+            Authorization: "Bearer " + loggedIn.access_token
+        },
+        data: {
+        }
+    }).then(response => {
+        console.log(response)
+        setDeleted(true)
+    })
+    setDeleted(false)
+}
+export default { Like, EditRecipeName, Follow, Unfollow, EditProfileName, AddNewRecipe, DeleteRecipe }

@@ -9,10 +9,11 @@ import { AddNewRecipe } from '../helpers'
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DeleteIcon from '@material-ui/icons/Delete';
 import RecipeCard from "../containers/RecipeCard";
 
 
-export default function YourRecipes({ loggedIn, user }) {
+export default function YourRecipes({ loggedIn, user, setDeleted }) {
     const classes = useStyles();
     const history = useHistory()
 

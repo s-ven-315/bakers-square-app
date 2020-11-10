@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useParams, Redirect, useHistory } from "react-router-dom";
 import axios from "axios"
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
@@ -24,59 +20,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { useStyles } from '../containers/styles'
 import {UserListDialog} from "../containers/dialogs/UserListDialog";
 
-function FollowerDialog(props) {
-    const history = useHistory()
-    const { onClose, selectedValue, followers, open } = props;
-
-    const handleClose = () => {
-        onClose();
-    };
-
-    const handleListItemClick = (value) => {
-        onClose(value);
-    };
-
-    return (
-        <Dialog onClick={handleClose} aria-labelledby="followers-dialog-title" open={open}>
-            <DialogTitle id="followers-dialog-title">Followers</DialogTitle>
-            <List>
-                {followers ?
-                    followers.map((follower) => (
-                        <ListItem button onClick={() => history.push(`/users/${follower.userId}`)} key={follower}>
-                            <ListItemText primary={follower.userId} />
-                        </ListItem>
-                    )) : null}
-            </List>
-        </Dialog>
-    );
-}
-
-function FollowingDialog(props) {
-    const history = useHistory()
-    const { onClose, selectedValue, following, open } = props;
-
-    const handleClose = () => {
-        onClose();
-    };
-
-    const handleListItemClick = (value) => {
-        onClose(value);
-    };
-
-    return (
-        <Dialog onClick={handleClose} aria-labelledby="following-dialog-title" open={open}>
-            <DialogTitle id="following-dialog-title">Following</DialogTitle>
-            <List>
-                {following ?
-                    following.map((f) => (
-                        <ListItem button onClick={() => history.push(`/users/${f.userId}`)} key={f}>
-                            <ListItemText primary={f.userId} />
-                        </ListItem>
-                    )) : null}
-            </List>
-        </Dialog>
-    );
-}
 
 function EditProfileDialog(props) {
     const {editOpen, handleEditClose, handleInput, loggedIn, userId, input, setEditOpen, setNameChanged} = props;
@@ -133,7 +76,7 @@ export default function Profile({ loggedIn }) {
     const [recipesNum, setRecipesNum] = useState(0)
     const [likedRecipesNum, setLikedRecipesNum] = useState(0)
     const [followers, setFollowers] = useState([])
-
+    const [deleted, setDeleted] = useState(false)
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
     const [input, setInput] = useState("")
@@ -177,7 +120,7 @@ export default function Profile({ loggedIn }) {
                 console.log(error)
                 setError(error)
             })
-    }, [userId, nameChanged])
+    }, [userId, nameChanged, deleted])
 
     if (!loggedIn) {
         return <Redirect to="/" />
@@ -244,20 +187,21 @@ export default function Profile({ loggedIn }) {
                         <div className="recipe-container-outer">
                             <div className="tab-container">
                                 <Tabs
+                                    className={classes.pTabs}
                                     value={value}
                                     onChange={handleChange}
                                     indicatorColor="primary"
                                     centered
                                 >
-                                    <Tab label={`${user.name}'s Recipes (${recipesNum})`} />
-                                    <Tab label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
+                                    <Tab className={classes.pTabs} label={`${user.name}'s Recipes (${recipesNum})`} />
+                                    <Tab className={classes.pTabs} label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
                                 </Tabs>
                             </div>
                             <div className="tab-panel-container">
-                                <TabPanel value={value} index={0}>
-                                    <YourRecipes user={user} loggedIn={loggedIn} />
+                                <TabPanel className={classes.pTabs} value={value} index={0}>
+                                    <YourRecipes user={user} loggedIn={loggedIn} setDeleted={setDeleted} />
                                 </TabPanel>
-                                <TabPanel value={value} index={1}>
+                                <TabPanel className={classes.pTabs} value={value} index={1}>
                                     <LikedRecipes user={user} loggedIn={loggedIn} />
                                 </TabPanel>
                             </div>
