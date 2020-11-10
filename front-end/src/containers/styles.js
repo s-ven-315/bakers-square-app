@@ -9,6 +9,9 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: "#fff",
         border: theme.palette.secondary.main,
     },
+    pTabs: {
+        padding: '0px'
+    },
     //Recipe
 
     recipeRoot: {
@@ -17,6 +20,9 @@ export const useStyles = makeStyles((theme) => ({
     recipeEdit: {
         marginLeft: 10,
         cursor: 'pointer',
+    },
+    rTabs: {
+        justifyContent: 'left !important'
     },
 
     //RecipeDetails
@@ -31,6 +37,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     recipeDetailsTabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
+    },
+    recipeDetailsTabPanel: {
+        width: '60%'
     },
 
     // RecipeIngredients & RecipeSteps
@@ -92,6 +101,17 @@ export const useStyles = makeStyles((theme) => ({
     },
     yRButton: {
         marginTop: '1rem',
+    },
+    //Comments
+    cInput: {
+        width: '80%',
+        marginTop: '1rem',
+        marginRight: '1rem'
+    },
+    //navbar
+    nButton: {
+        display: 'block',
+        width: '100%'
     }
 }));
 
