@@ -66,7 +66,7 @@ export default function LikedRecipes({ user, loggedIn }) {
                                     </a>
                                     <div className="recipe-details-container">
                                         <div className="recipe-name"><span onClick={() => history.push(`/recipes/${recipe.id}`)}>{recipe.name}</span></div>
-                                        <div className="recipe-baker">by {user.name}</div>
+                                        <div className="recipe-baker">by {recipe.user.userId}</div>
                                         <div className="recipe-following-container">
                                             <Button color="inherit" onClick={() => handleLikeOpen()}>{recipe.likes.length} Likes</Button>
                                             <FollowerDialog open={likeOpen} recipe={recipe.likes} onClose={handleLikeClose} />
