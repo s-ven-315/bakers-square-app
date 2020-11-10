@@ -78,11 +78,19 @@ export const useStyles = makeStyles((theme) => ({
     rForm: {
         width: '30rem'
     },
+    rQty: {
+        width: '3.5rem',
+        marginLeft: '1rem'
+    },
+    rUnit: {
+        width: '5rem',
+        marginLeft: '1rem'
+    },
     //Your Recipe
     yRSpan: {
         marginLeft: 5,
     },
-    yRSutton: {
+    yRButton: {
         marginTop: '1rem',
     }
 }));
