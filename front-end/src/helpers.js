@@ -208,16 +208,32 @@ export const SaveRecipeSteps = (context, tempList) => {
 
 export const EditImage = (context, formData, setOpen, setPreviewImg, isProfile) => {
     const { authUser, recipe } = context
+    console.log(recipe.id)
     const url = (isProfile) ?
         `http://localhost:5000/api/users/${authUser.userId}/image` :
         `http://localhost:5000/api/recipes/${recipe.id}/image`
-    axiosPost(url, authUser, formData)
-        .then(response => {
-            console.log(response)
-            setPreviewImg(null)
-            setOpen(false)
-        })
-        .catch(error => {
-            console.error(error.response)
-        })
+    if (isProfile) {
+        axiosPost(url, authUser, formData)
+            .then(response => {
+                console.log(response)
+                setPreviewImg(null)
+                setOpen(false)
+                GetUser(context, authUser.userId)
+            })
+            .catch(error => {
+                console.error(error.response)
+            })
+    } else {
+        axiosPost(url, authUser, formData)
+            .then(response => {
+                console.log(response)
+                setPreviewImg(null)
+                setOpen(false)
+                GetRecipe(context, recipe.id)
+
+            })
+            .catch(error => {
+                console.error(error.response)
+            })
+    }
 }

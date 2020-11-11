@@ -97,7 +97,38 @@ body {
   margin-left: auto;
   margin-right: auto;
   position:relative;
-  z-index: 2
+  z-index: 2;
+  cursor: pointer
+}
+
+.profile-img:after {
+  content: "Change Image";
+  opacity: 0;
+  transition:0.2s;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  text-shadow: 1px 1px 1px black
+}
+.profile-img:before {
+  content: "";
+  opacity: 0;
+  transition:0.2s;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(170, 170, 170, 0.596);
+}
+.profile-img:hover:after, .profile-img:hover:before {
+  opacity: 1;
 }
 
 .profile-img img{
@@ -226,8 +257,43 @@ body {
   height: 20vw;
   max-width: 150px;
   max-height: 150px;
+  position:relative;
+  overflow: hidden;
+
 }
 
+.recipe-img>img{
+  width: 100%
+}
+.recipe-img:after {
+  content: "Change Image";
+  opacity: 0;
+  transition:0.2s;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  text-shadow: 1px 1px 1px black
+}
+.recipe-img:before {
+  content: "";
+  opacity: 0;
+  transition:0.2s;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(170, 170, 170, 0.596);
+}
+.recipe-img:hover:after, .recipe-img:hover:before {
+  opacity: 1;
+}
 .recipe-details-container{
   display: flex;
   flex-flow: column nowrap;
@@ -520,7 +586,11 @@ body {
   height: 50%;
   margin: 1rem 0
 }
-
+/* CTE */
+.makeStyles-rTable-26 span{
+  text-align: left !important;
+  margin-left: 5px
+}
 
 @media screen and (max-width: 475px) {
   .menu-wide {

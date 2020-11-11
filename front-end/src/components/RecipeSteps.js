@@ -41,8 +41,8 @@ export default function RecipeSteps() {
 
                         steps.map((step, idx) => (
                             <TableRow key={step.no}>
-                                <TableCell className={classes.rTableBorderNone} align="right">{idx + 1}.</TableCell>
-                                <TableCell className={classes.rTableBorderNone} component="th" scope="row">
+                                <TableCell className={classes.rTableTd} align="right">{idx + 1}.</TableCell>
+                                <TableCell className={classes.rTableTh} component="th" scope="row">
                                     {step.text}
                                 </TableCell>
                             </TableRow>

@@ -39,17 +39,10 @@ export const useStyles = makeStyles((theme) => ({
         borderRight: `1px solid ${theme.palette.divider}`,
     },
     recipeDetailsTabPanel: {
-        width: '75%'
+        width: '80%'
     },
 
     // RecipeIngredients & RecipeSteps
-    rAvatarSmall: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
-        backgroundColor: red[500],
-        marginRight: 10,
-        cursor: 'pointer'
-    },
     rDefault: {
         marginTop: theme.spacing(2),
     },
@@ -57,26 +50,11 @@ export const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
         color: 'red',
         marginRight: 10,
-
+        verticalAlign: 'middle'
     },
     rDialog: {
         width: '65%',
         maxWidth: 'auto'
-    },
-    rArrow: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
-        backgroundColor: theme.palette.secondary.main,
-        marginRight: 10,
-        cursor: 'pointer'
-    },
-    rAvatar: {
-        backgroundColor: theme.palette.primary.main,
-        cursor: 'pointer',
-        marginRight: 10
-    },
-    rList: {
-        textTransform: "capitalize"
     },
     rMargin: {
         margin: theme.spacing(1),
@@ -98,6 +76,11 @@ export const useStyles = makeStyles((theme) => ({
     },
     rQty: {
         width: '3.5rem',
+        marginLeft: '1rem !important',
+        marginRight: '1rem !important'
+    },
+    rRemark: {
+        width: '6rem',
         marginLeft: '1rem !important',
         marginRight: '1rem !important'
     },
@@ -134,12 +117,21 @@ export const useStyles = makeStyles((theme) => ({
     //RecipeIngredients&RecipeStep Table
     rTable: {
         marginBottom: '1rem',
+        textAlign: 'left !important'
     },
     rTableHead: {
         fontWeight: 'bold !important',
     },
-    rTableBorderNone: {
-        border: 'none !important'
+    rTableTd: {
+        border: 'none !important',
+        width: ' 10px'
+    },
+    rTableTh: {
+        border: 'none !important',
+        wordBreak: 'break-word',
+        textAlign: 'left !important',
+        textTransform: "initial"
+
     },
     rEditTable: {
         display: 'flex',

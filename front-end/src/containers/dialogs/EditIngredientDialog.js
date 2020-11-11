@@ -34,6 +34,7 @@ export function EditIngredientDialog(props) {
     const { onClose, open, ingrList } = props;
     const [newItemId, setNewItemId] = useState(0)
     const [qty, setQty] = useState("")
+    const [remark, setRemark] = useState("")
     const [unit, setUnit] = useState("Unit")
     const [tempList, setTempList] = useState(ingrList)
     const [ingrOptions, setIngrOptions] = useState([])
@@ -51,11 +52,12 @@ export function EditIngredientDialog(props) {
         e.preventDefault()
         const newIngr = ingrOptions.find(ingr => ingr.id === newItemId)
         if (newIngr) {
-            setTempList([...tempList, { id: newItemId, name: newIngr.name, qty: qty, unit: unit }])
+            setTempList([...tempList, { id: newItemId, name: newIngr.name, qty: qty, unit: unit, remark: remark }])
         }
         setNewItemId(0)
         setQty("")
         setUnit("")
+        setRemark("")
     }
     const handleClose = () => {
         setTempList(ingrList)
@@ -67,6 +69,9 @@ export function EditIngredientDialog(props) {
 
     const handleQty = (e) => {
         setQty(e.target.value)
+    }
+    const handleRemark = (e) => {
+        setRemark(e.target.value)
     }
     const handleUnit = (e) => {
         setUnit(e.target.value)
@@ -101,6 +106,7 @@ export function EditIngredientDialog(props) {
                                 <TableCell className={classes.rTableHead} align="left">Ingredients</TableCell>
                                 <TableCell className={classes.rTableHead} align="right">Quantity</TableCell>
                                 <TableCell className={classes.rTableHead} align="right">Unit</TableCell>
+                                <TableCell className={classes.rTableHead} align="left">Remark</TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -113,6 +119,7 @@ export function EditIngredientDialog(props) {
                                     </TableCell>
                                     <TableCell align="right">{ingr.qty}</TableCell>
                                     <TableCell align="right">{ingr.unit === "" ? <span>-</span> : <span>{ingr.unit}</span>}</TableCell>
+                                    <TableCell align="left">{ingr.remark === null || ingr.remark === "" ? <span>-</span> : <span>{ingr.remark}</span>}</TableCell>
                                 </TableRow>
                             )) : null
                             }
@@ -155,6 +162,9 @@ export function EditIngredientDialog(props) {
                                             <MenuItem value={unit}>{unit}</MenuItem>
                                         )) : null}
                                     </Select>
+                                    <TextField InputLabelProps={{
+                                        shrink: true,
+                                    }} className={classes.rRemark} label="Remark" value={remark} onChange={handleRemark} />
                                 </form>
 
                             </div>

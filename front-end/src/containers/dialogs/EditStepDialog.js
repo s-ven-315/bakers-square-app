@@ -1,12 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
-import {useStyles} from "../styles";
-import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useStyles } from "../styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
-import RemoveIcon from "@material-ui/icons/Remove";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -15,9 +13,10 @@ import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
-import {DataContext} from "../../contexts/Context";
-import {SaveRecipeSteps} from "../../helpers";
+import { DataContext } from "../../contexts/Context";
+import { SaveRecipeSteps } from "../../helpers";
 import CTE from "react-click-to-edit"
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 
 
@@ -25,7 +24,7 @@ export function EditStepDialog(props) {
     console.log(`EditStepDialog() is rendered.`)
 
     const context = useContext(DataContext)
-    const {authUser, recipe} = context
+    const { authUser, recipe } = context
 
     const { onClose, open, steps } = props;
     const [newItem, setNewItem] = useState("")
@@ -50,12 +49,12 @@ export function EditStepDialog(props) {
         setTempList(clonedList)
     }
     const handleChange = (idx, val) => {
-        console.log(idx)
-        console.log(val)
+        console.log(tempList)
         let clonedList = [...tempList]
-        console.log(clonedList[idx])
-        // clonedList.replace(clonedList[idx], val)
         console.log(clonedList)
+        clonedList[idx] = val
+        console.log(clonedList)
+        setTempList(clonedList)
     }
 
     const handleClose = () => {
@@ -88,14 +87,15 @@ export function EditStepDialog(props) {
         handleClose()
     }
     return (
-    <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
+        <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Recipe Steps</DialogTitle>
             <List>
                 {tempList.map((step, idx) => (
-                    <ListItem key={idx}>
+                    <ListItem className={classes.rTable} key={idx}>
                         <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} />
-                        <ListItemText>
-                            <CTE wrapperCLass="wrapper" textClass="text" initialValue={`${step}`} endEditing={(val) => handleChange(idx, val)} />
+                        <ListItemText className={classes.rTableTh}>
+                            {/* <li>{step}</li> */}
+                            <CTE initialValue={step} endEditing={(val) => handleChange(idx, val)} />
                         </ListItemText>
                         {/* <ListItemText className={classes.rList} primary={step} /> */}
                         <ExpandLessIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, UP)} />
@@ -110,9 +110,7 @@ export function EditStepDialog(props) {
                             </form>
                         </Grid>
                         <Grid item >
-                            <Avatar className={classes.rAvatar} onClick={handleAdd} >
-                                <AddIcon />
-                            </Avatar>
+                            <AddCircleRoundedIcon className={classes.rAddBtn} onClick={handleAdd} />
                         </Grid>
                     </Grid>
                 </ListItem>
