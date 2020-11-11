@@ -54,7 +54,19 @@ def add_recipe():
     name = json_data.get('name')
     if not name: return flask.jsonify({'msg': 'Must provide non-empty name'}), 400
 
-    recipe = Recipe(user=user, name=name)
+    # name
+    serving = json_data.get('serving')
+    if not serving: return flask.jsonify({'msg': 'Must provide non-empty serving'}), 400
+
+    # name
+    preparation_time = json_data.get('preparation_time')
+    if not preparation_time: return flask.jsonify({'msg': 'Must provide non-empty preparation_time'}), 400
+
+    # name
+    cooking_time = json_data.get('cooking_time')
+    if not cooking_time: return flask.jsonify({'msg': 'Must provide non-empty cooking_time'}), 400
+
+    recipe = Recipe(user=user, name=name, serving=serving, preparation_time=preparation_time, cooking_time=cooking_time)
     if not recipe.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
 
@@ -70,6 +82,21 @@ def edit_recipe(recipeId: str):
     name = json_data.get('name')
     if name:
         recipe.name = name
+
+    # serving
+    serving = json_data.get('serving')
+    if serving:
+        recipe.serving = serving
+
+    # preparation_time
+    preparation_time = json_data.get('preparation_time')
+    if preparation_time:
+        recipe.preparation_time = preparation_time
+
+    # cooking_time
+    cooking_time = json_data.get('cooking_time')
+    if cooking_time:
+        recipe.cooking_time = cooking_time
 
     if not recipe.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200

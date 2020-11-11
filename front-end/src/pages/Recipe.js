@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import RecipeDetails from '../components/RecipeDetails'
-import {Like, EditRecipeName, DeleteRecipe, GetRecipe} from '../helpers'
+import {Like, EditRecipe, DeleteRecipe, GetRecipe} from '../helpers'
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -24,6 +24,7 @@ import {UserListDialog} from "../containers/dialogs/UserListDialog";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
 import {RecipeDialog} from "../containers/dialogs/RecipeDialog";
+import RecipeCard from "../containers/RecipeCard";
 
 
 
@@ -61,28 +62,7 @@ export default function Recipe() {
     const context = useContext(DataContext)
     const {authUser, recipe, setUser} = context
 
-    const history = useHistory()
-
-    // View States
-    const [editOpen, setEditOpen] = React.useState(false);
-    const [likeOpen, setLikeOpen] = React.useState(false);
-
-    // Computed Variables
-    const baker = recipe.user;
-    const isAuthUser = authUser.userId === baker.userId
-
-    const [error, setError] = useState(null)
-
     const classes = useStyles();
-
-
-    // Computed Variables
-    const [likes, setLikes] = useState(recipe.likes)
-    useEffect(() => setLikes(recipe.likes), [recipe.likes])
-    const isLike = likes.find(e => e.userId === authUser.userId)
-
-    const goToRecipePage = () => history.push(`/recipes/${recipe.id}`);
-    const goToUserPage = () => history.push(`/users/${recipe.user.userId}`);
 
     // change tab
     const [value, setValue] = useState(0);
@@ -104,55 +84,34 @@ export default function Recipe() {
 
     return (
         <>
-            {error !== null || recipe === {} ?
+            {!recipe.id?
                 <h1>Recipe not found</h1> :
-                <>
-                    <div className="recipe-header-container">
-                        <UserListDialog title={"Likes"} users={recipe.likes} open={likeOpen} setOpen={setLikeOpen}/>
-                        <img className='recipe-img' src={recipe.img_url} alt="" onClick={goToRecipePage}/>
-                        <div className="recipe-details-container">
-                            <div className="recipe-name" onClick={goToRecipePage}>{recipe.name}
-                                {isAuthUser ?
-                                    <>
-                                        <EditIcon className={classes.recipeEdit} onClick={() => setEditOpen(true)} />
-                                        <RecipeDialog title="Change Recipe's Title" editOpen={editOpen} setEditOpen={setEditOpen} isNew={false}/>
-                                    </> : null
-                                }</div>
-                            <div className="recipe-baker" onClick={goToUserPage}>by {baker.name} </div>
-                            <div className="recipe-following-container">
-                                <Button color="inherit" onClick={() => setLikeOpen(true)}>{likes ? likes.length : 0} Likes</Button>
-                                <Button color="inherit">{recipe.comments ? recipe.comments.length : 0} Comments</Button>
-                            </div>
-                        </div>
-                        <div className="recipe-button-container">
-                            <button className="recipe-button" onClick={() => DeleteRecipe(context, recipe, history, true)}><DeleteIcon /></button>
-                            <button className="recipe-button" onClick={() => history.push(`/recipes/${recipeId}/sessions`)}>Start Baking</button>
-                            {isLike ?
-                                <button className="recipe-button"
-                                        onClick={() => Like(context, false, recipe, setLikes)}>Liked</button> :
-                                <button className="recipe-button"
-                                        onClick={() => Like(context, true, recipe, setLikes)}>Like</button>
-                            }
-                        </div>
+                <div style={{display:'flex', flexFlow: 'column nowrap', alignItems: 'center', maxWidth: '1080px', margin: '0 auto'}}>
+                    <RecipeCard recipe={recipe}
+                                key={recipe.id}
+                                hideComments={true}
+                                hideEdit={false}
+                    />
+                    <div className="recipe-page-container-outer">
+                        <Tabs
+                            value={value}
+                            className={classes.rTabs}
+                            onChange={handleChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            centered
+                        >
+                            <Tab label="The Recipe" />
+                            <Tab label="Comments" />
+                        </Tabs>
+                        <TabPanel value={value} index={0}>
+                            <RecipeDetails />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <Comments />
+                        </TabPanel>
                     </div>
-                    <Tabs
-                        value={value}
-                        className={classes.rTabs}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        centered
-                    >
-                        <Tab label="The Recipe" />
-                        <Tab label="Comments" />
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                        <RecipeDetails />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <Comments />
-                    </TabPanel>
-                </>
+                </div>
             }
         </>
     )
