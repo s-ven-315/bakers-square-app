@@ -1,10 +1,13 @@
+import os
 from functools import wraps
 
 import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
+from flask_api.blueprints.utils.decorators import api_post_file
 from models.model_recipe import Recipe
 from models.model_user import User
+import services.storage as storage
 
 recipes_api_blueprint = flask.Blueprint('recipes_api', __name__)
 
@@ -23,10 +26,12 @@ def recipeExists(func):
 @recipes_api_blueprint.route('/', methods=['GET'])
 def get_recipes():
     userId = flask.request.args.get('userId')
-    if not userId: return flask.jsonify({'msg': 'Must provide userId'}), 400
+    if not userId:
+        return flask.jsonify({'msg': 'Must provide userId'}), 400
 
     query = Recipe.select().join(User)
-    if userId: query = query.where(User.userId == userId)
+    if userId:
+        query = query.where(User.userId == userId)
 
     recipes = [c for c in query]
     recipe_dicts = [c.as_dict() for c in recipes]
@@ -48,14 +53,17 @@ def add_recipe():
     # userId
     userId = json_data.get('userId')
     user = User.get_or_none(User.userId == userId)
-    if not user: return flask.jsonify({'msg': 'Must provide valid userId'}), 400
+    if not user:
+        return flask.jsonify({'msg': 'Must provide valid userId'}), 400
 
     # name
     name = json_data.get('name')
-    if not name: return flask.jsonify({'msg': 'Must provide non-empty name'}), 400
+    if not name:
+        return flask.jsonify({'msg': 'Must provide non-empty name'}), 400
 
     recipe = Recipe(user=user, name=name)
-    if not recipe.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
+    if not recipe.save():
+        return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
 
 
@@ -71,7 +79,8 @@ def edit_recipe(recipeId: str):
     if name:
         recipe.name = name
 
-    if not recipe.save(): return flask.jsonify({'msg': 'Error in saving data'}), 400
+    if not recipe.save():
+        return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success'}), 200
 
 
@@ -80,5 +89,31 @@ def edit_recipe(recipeId: str):
 @recipeExists
 def delete_recipe(recipeId: str):
     recipe = Recipe.get_by_id(recipeId)
-    if not recipe.delete_instance(): return flask.jsonify({'msg': 'Error in deleting data'}), 400
+    if not recipe.delete_instance():
+        return flask.jsonify({'msg': 'Error in deleting data'}), 400
+    return flask.jsonify({'msg': 'Success'}), 200
+
+
+@recipes_api_blueprint.route('/<recipeId>/image', methods=['POST'])
+@api_post_file()
+@recipeExists
+def edit_image(recipeId):
+    print("received")
+    if "image" not in flask.request.files:
+        return flask.jsonify({'msg': 'No \'image\' key in request.files'}), 400
+
+    file = flask.request.files['image']
+    print(file)
+    if file.filename == '':
+        return flask.jsonify({'msg': 'No file is found in \'image\' in request.files'}), 400
+
+    if file and storage.allowed_file(file.filename):
+        print("here")
+        file.filename = "recipe{}-profile{}".format(
+            recipeId, os.path.splitext(file.filename)[1])
+        upload_error = storage.upload_file_to_s3(file)
+        if not upload_error:
+            Recipe.update(imgName=file.filename).where(
+                Recipe.id == recipeId).execute()
+
     return flask.jsonify({'msg': 'Success'}), 200
