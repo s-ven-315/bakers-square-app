@@ -73,15 +73,20 @@ export const Like = (context, setLikeTo, recipe, setLikes) => {
 }
 
 
-export const EditRecipeName = (context, name, setOpen) => {
-    const {authUser, recipe, setRecipe} = context
+export const EditRecipe = (context, name, serving, preparationTime, cookingTime, setOpen) => {
+    const {authUser, recipe} = context
+    console.log(name)
 
     const url = `http://localhost:5000/api/recipes/${recipe.id}/edit`
-    axiosPost(url, authUser, {name})
+    axiosPost(url, authUser, {
+        'name': name,
+        "serving": serving,
+        "preparation_time": preparationTime,
+        "cooking_time": cookingTime
+    })
         .then(response => {
             console.log(response)
-            recipe.name = name
-            setRecipe(recipe)
+            GetRecipe(context, recipe.id)
             setOpen(false)
         })
         .catch(error => {
@@ -125,7 +130,7 @@ export const EditProfileName = (context, name, setOpen) => {
             console.error(error.response)
         })
 }
-export const AddNewRecipe = (context, name, setOpen, history) => {
+export const CreateRecipe = (context, name, serving, preparationTime, cookingTime, setOpen, history) => {
     const {authUser} = context
 
     const goToRecipePage = (recipeId) => {
@@ -143,7 +148,13 @@ export const AddNewRecipe = (context, name, setOpen, history) => {
     }
 
     const url = 'http://localhost:5000/api/recipes/'
-    axiosPost(url, authUser, {'userId': authUser.userId, 'name': name})
+    axiosPost(url, authUser, {
+        'userId': authUser.userId,
+        'name': name,
+        "serving": serving,
+        "preparation_time": preparationTime,
+        "cooking_time": cookingTime
+    })
         .then(response => {
             console.log(response)
             setOpen(false)

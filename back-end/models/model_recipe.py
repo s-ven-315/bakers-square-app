@@ -25,6 +25,7 @@ class Recipe(BaseModel):
                 name=self.name,
                 user=dict(
                     userId=self.user.userId,
+                    img_url=self.user.imgUrl,
                     name=self.user.name,
                 ),
                 ingredients=[d.as_dict() for d in self.ingredients],
@@ -47,6 +48,7 @@ class Recipe(BaseModel):
                 user=dict(
                     userId=self.user.id,
                     name=self.user.name,
+                    img_url=self.user.imgUrl,
                 ),
                 likes=self.likes_dict(False),
                 comments=self.comments_dict(False),

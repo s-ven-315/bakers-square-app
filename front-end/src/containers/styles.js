@@ -106,7 +106,8 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: 5,
     },
     yRButton: {
-        marginTop: '1rem',
+        height: '36px',
+        margin: 'auto 0',
     },
     //Comments
     cInput: {

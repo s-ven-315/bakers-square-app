@@ -47,7 +47,7 @@ const Navbar = () => {
     return (
         <>
             <div className="navbar">
-                <div>
+                <div className='navbar-title' onClick={() => history.push('/')}>
                     <h2>Baker's Square</h2>
                 </div>
                 <div className="navbar-menu">
@@ -81,8 +81,6 @@ const Navbar = () => {
                                             <ClickAwayListener onClickAway={handleClose}>
                                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                                     <ListItemText /><Button className={classes.nButton} onClick={() => history.push(`/users/${authUser.userId}`)}>Profile Page</Button>
-                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push('/signup')}>Start Baking</Button>
-                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push('/')}>Ingredient Checklist</Button>
                                                     <ListItemText /><Button className={classes.nButton} onClick={handleLogout}>Logout</Button>
                                                 </MenuList>
                                             </ClickAwayListener>

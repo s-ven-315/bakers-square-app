@@ -29,7 +29,10 @@ export const emptyRecipe = {
     user: {
         userId: '',
         name: ''
-    }
+    },
+    serving: 0,
+    preparation_time: 0,
+    baking_time: 0,
 }
 
 

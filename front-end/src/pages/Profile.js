@@ -6,8 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import YourRecipes from '../components/YourRecipes';
-import LikedRecipes from '../components/LikedRecipes';
+import RecipeList from '../components/RecipeList';
 import EditIcon from '@material-ui/icons/Edit';
 import {Follow, GetRecipe, GetUser} from '../helpers'
 import { useStyles } from '../containers/styles'
@@ -15,6 +14,8 @@ import {UserListDialog} from "../containers/dialogs/UserListDialog";
 import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
 import {EditProfileDialog} from "../containers/dialogs/EditProfileDialog";
 import { ImgDialog } from "../containers/dialogs/ImgDialog";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import {RecipeDialog} from "../containers/dialogs/RecipeDialog";
 
 
 
@@ -82,6 +83,7 @@ export default function Profile() {
     // followers / following dialog
     const [followerOpen, setFollowerOpen] = useState(false);
     const [followingOpen, setFollowingOpen] = useState(false);
+    const [createOpen, setCreateOpen] = useState(false);
 
     // axios get
     useEffect(() => {
@@ -163,13 +165,23 @@ export default function Profile() {
                                     <Tab className={classes.pTabs} label={`${user.name}'s Recipes (${recipesNum})`} />
                                     <Tab className={classes.pTabs} label={`${user.name}'s Liked Recipes (${likedRecipesNum})`} />
                                 </Tabs>
+                                {user.userId === authUser.userId ?
+                                    <>
+                                        <Button className={classes.yRButton} variant="contained" color="primary"
+                                                onClick={() => setCreateOpen(true)}>
+                                            <AddCircleOutlineOutlinedIcon />
+                                            <span className={classes.yRSpan} >Add New Recipe</span>
+                                        </Button>
+                                        <RecipeDialog title={"Create New Recipe"} recipe={emptyRecipe} open={createOpen} setOpen={setCreateOpen} isNew={true}/>
+                                    </> : null
+                                }
                             </div>
                             <div className="tab-panel-container">
                                 <TabPanel className={classes.pTabs} value={value} index={0}>
-                                    <YourRecipes />
+                                    <RecipeList recipes={user.recipes} emptyText={'This user has not created any recipes'}/>
                                 </TabPanel>
                                 <TabPanel className={classes.pTabs} value={value} index={1}>
-                                    <LikedRecipes />
+                                    <RecipeList recipes={user.liked_recipes} emptyText={'This user has not liked any recipes'}/>
                                 </TabPanel>
                             </div>
                         </div>

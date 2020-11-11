@@ -43,7 +43,9 @@ export default function RecipeIngredients() {
 
 
     const classes = useStyles();
-    const [ingrList, setIngrList] = useState([])
+    const [ingrList, setIngrList] = useState(recipe.ingredients)
+    useEffect(()=> setIngrList(recipe.ingredients), [recipe.ingredients])
+
     const [submitted, setSubmitted] = useState(false)
 
     const handleClickOpen = () => {

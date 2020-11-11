@@ -26,7 +26,6 @@ export default function Session() {
     const { recipeId } = useParams()
     const steps = recipe.steps
 
-    console.log(steps)
 
 
     useEffect(() => {
@@ -37,36 +36,29 @@ export default function Session() {
             setUser(emptyUser)
         }
     }, [recipeId])
+
     if (!authUser.access_token) {
         return <Redirect to="/" />
     }
 
     return (
-        <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
-            navigation
-            pagination={{
-                renderBullet: function (index, className) {
-                    return '<span class="' + className + '">' + (index + 1) + '</span>'
-                }, clickable: true
-            }
-            }
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log('slide change')}
-        >
-            {steps !== [] ?
-                steps.map((step, idx) => {
-                    return (
-                        <SwiperSlide>
-                            <div className="step-no">Step {idx + 1}</div>
-                            <div className="step-text">{step.text}</div>
-                            <div/>
-                        </SwiperSlide>
-                    )
-                })
-
-                : null}
-        </Swiper>
+        (steps.length === 0)? null :
+            <Swiper
+                spaceBetween={50}
+                slidesPerView={1}
+                navigation
+                pagination={{
+                    renderBullet: function(index, className) {return '<span class="' + className + '">' + (index + 1) + '</span>'},
+                    clickable: true
+                }}
+            >
+                {steps.map((step, idx) => (
+                    <SwiperSlide>
+                        <div className="step-no">Step {idx + 1} of {steps.length}</div>
+                        <div className="step-text">{step.text}</div>
+                        <div/>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
     );
 };
