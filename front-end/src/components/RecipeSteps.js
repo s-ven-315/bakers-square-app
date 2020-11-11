@@ -15,6 +15,16 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from '@material-ui/core/TextField';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import CTE from "react-click-to-edit"
+import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
+
 
 
 function EditList(props) {
@@ -44,6 +54,14 @@ function EditList(props) {
         setTempList(steps.map(s => s.text))
         onClose();
     };
+    const handleChange = (idx, val) => {
+        console.log(idx)
+        console.log(val)
+        let clonedList = [...tempList]
+        console.log(clonedList[idx])
+        // clonedList.replace(clonedList[idx], val)
+        console.log(clonedList)
+    }
 
 
     const UP = -1
@@ -88,20 +106,17 @@ function EditList(props) {
     }
     return (
         <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
-            <DialogTitle id="simple-dialog-title">Edit Steps</DialogTitle>
+            <DialogTitle id="simple-dialog-title">Recipe Steps</DialogTitle>
             <List>
                 {tempList.map((step, idx) => (
                     <ListItem key={idx}>
-                        <Avatar button className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
-                            <RemoveIcon />
-                        </Avatar>
-                        <ListItemText className={classes.rList} primary={step} />
-                        <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, UP)}>
-                            <ExpandLessIcon />
-                        </Avatar>
-                        <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, DOWN)}>
-                            <ExpandMoreIcon />
-                        </Avatar>
+                        <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} />
+                        <ListItemText>
+                            <CTE wrapperCLass="wrapper" textClass="text" initialValue={`${step}`} endEditing={(val) => handleChange(idx, val)} />
+                        </ListItemText>
+                        {/* <ListItemText className={classes.rList} primary={step} /> */}
+                        <ExpandLessIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, UP)} />
+                        <ExpandMoreIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, DOWN)} />
                     </ListItem>
                 ))}
                 <ListItem>
@@ -161,18 +176,26 @@ export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
     }, [submitted])
     return (
         <>
-            <ol className={classes.rList}>
-                {steps.map((step) => {
-                    return (
-                        <li key={step.no}>{step.text}</li>
-                    )
-                })}
-            </ol>
+            <Table className={classes.rTable}>
+                <TableBody >
+                    {steps == [] ? null :
+
+                        steps.map((step, idx) => (
+                            <TableRow key={step.no}>
+                                <TableCell className={classes.rTableBorderNone} align="right">{idx + 1}.</TableCell>
+                                <TableCell className={classes.rTableBorderNone} component="th" scope="row">
+                                    {step.text}
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
+                </TableBody>
+            </Table>
             <div>
                 {loggedIn.userId == baker.userId ? <>
                     <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                         Edit
-      </Button>
+                    </Button>
                     <EditList steps={steps} open={open} onClose={handleClose} setSubmitted={setSubmitted} recipeId={recipeId} loggedIn={loggedIn} /> </> : null}
             </div>
         </>

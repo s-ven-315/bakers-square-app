@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import { useStyles } from "../containers/styles"
-
+import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 
 export default function Comments({ loggedIn, recipeId }) {
+    const history = useHistory();
     const classes = useStyles()
     const userId = loggedIn.userId
     const [input, setInput] = useState("")
@@ -14,6 +20,9 @@ export default function Comments({ loggedIn, recipeId }) {
     const handleInput = (e) => {
         setInput(e.target.value)
     }
+    const onClick = userId => {
+        history.push(`/users/${userId}`)
+    };
     const sendComment = (userId, recipeId, input) => {
         axios({
             method: 'POST',
@@ -57,10 +66,12 @@ export default function Comments({ loggedIn, recipeId }) {
             {comments === [] ? null :
                 comments.map(comment => {
                     return (
-                        <div className="comment-inner">
-                            <p className="comment-user">{comment.user.userId}</p>
-                            <p className="comment-text">{comment.text}</p>
-                        </div>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar className={classes.cAvatar} onClick={() => onClick(comment.user.userId)} alt={comment.user.userId} src={comment.user.img_url} />
+                            </ListItemAvatar>
+                            <ListItemText primary={comment.user.name} secondary={comment.text} />
+                        </ListItem>
                     )
                 })
             }

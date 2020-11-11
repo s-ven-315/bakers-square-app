@@ -83,7 +83,7 @@ export default function RecipeDetails({ recipeId, loggedIn, baker }) {
                     <RecipeIngredients recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
                 </TabPanel>
 
-                <TabPanel value={value} index={1}>
+                <TabPanel className={classes.recipeDetailsTabPanel} value={value} index={1}>
                     <RecipeSteps recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
                 </TabPanel>
 

@@ -18,12 +18,13 @@ import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useStyles } from '../containers/styles'
-import {UserListDialog} from "../containers/dialogs/UserListDialog";
+import { UserListDialog } from "../containers/dialogs/UserListDialog";
+import { ImgDialog } from "../containers/dialogs/ImgDialog";
 
 
 function EditProfileDialog(props) {
     const [name, setName] = useState("")
-    const {open, setOpen, loggedIn, user, setUser} = props;
+    const { open, setOpen, loggedIn, user, setUser } = props;
 
     const closeDialog = () => setOpen(false);
 
@@ -32,11 +33,11 @@ function EditProfileDialog(props) {
             <DialogTitle id="form-dialog-title">Change Profile Name</DialogTitle>
             <DialogContent>
                 <TextField autoFocus margin="dense" id="name" label="New Profile Name" type="text"
-                           onChange={e => setName(e.target.value)} fullWidth='true' autoComplete='off'/>
+                    onChange={e => setName(e.target.value)} fullWidth='true' autoComplete='off' />
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => EditProfileName(loggedIn, name, setName, user, setUser, setOpen)}
-                        color="primary">Save</Button>
+                    color="primary">Save</Button>
                 <Button onClick={closeDialog} color="primary">Cancel</Button>
             </DialogActions>
         </Dialog>
@@ -78,7 +79,10 @@ export default function Profile({ loggedIn }) {
     const [deleted, setDeleted] = useState(false)
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
-
+    // edit profile img
+    const [editImgOpen, setEditImgOpen] = useState(false);
+    const [previewImg, setPreviewImg] = useState(null)
+    const [imageFile, setImageFile] = useState({})
     const recipesNum = (user.recipes) ? user.recipes.length : 0;
     const likedRecipesNum = (user.liked_recipes) ? user.liked_recipes.length : 0;
     const followers = (user.followers) ? user.followers : [];
@@ -120,17 +124,18 @@ export default function Profile({ loggedIn }) {
 
     return (
         <>
-            <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen}/>
-            <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen}/>
+            <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen} />
+            <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen} />
+            <ImgDialog loggedIn={loggedIn} title={"Change Profile Pic"} user={user} open={editImgOpen} setOpen={setEditImgOpen} previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} />
 
-            {(user === {})?
+            {(user === {}) ?
                 <h1>User not found</h1> :
                 <>
                     <div className="profile-page-container">
                         <div className="profile-container">
                             <div className="profile-container-inner">
                                 <div className="profile-img">
-                                    <img src={user.img_url} style={{backgroundColor: '#e6e6e6'}}/>
+                                    <img src={user.img_url} style={{ backgroundColor: '#e6e6e6' }} onClick={() => setEditImgOpen(true)} />
                                 </div>
                                 <div className="profile-details">
                                     <div className="profile-name">{user.name}
@@ -139,10 +144,10 @@ export default function Profile({ loggedIn }) {
                                             <>
                                                 <EditIcon color="primary" onClick={handleEdit} />
                                                 <EditProfileDialog open={editOpen}
-                                                                   setOpen={setEditOpen}
-                                                                   loggedIn={loggedIn}
-                                                                   user={user}
-                                                                   setUser={setUser}
+                                                    setOpen={setEditOpen}
+                                                    loggedIn={loggedIn}
+                                                    user={user}
+                                                    setUser={setUser}
                                                 />
                                             </> : null
                                         }

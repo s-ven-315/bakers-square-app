@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme) => ({
         borderRight: `1px solid ${theme.palette.divider}`,
     },
     recipeDetailsTabPanel: {
-        width: '60%'
+        width: '75%'
     },
 
     // RecipeIngredients & RecipeSteps
@@ -49,6 +49,12 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: red[500],
         marginRight: 10,
         cursor: 'pointer'
+    },
+    rDeleteBtn: {
+        cursor: 'pointer',
+        color: 'red',
+        marginRight: 10,
+
     },
     rDialog: {
         width: '65%',
@@ -104,14 +110,31 @@ export const useStyles = makeStyles((theme) => ({
     },
     //Comments
     cInput: {
-        width: '80%',
+        width: '70%',
         marginTop: '1rem',
-        marginRight: '1rem'
+        marginRight: '1rem !important'
+    },
+    cAvatar: {
+        cursor: 'pointer'
     },
     //navbar
     nButton: {
         display: 'block',
         width: '100%'
+    },
+    //RecipeIngredients&RecipeStep Table
+    rTable: {
+        marginBottom: '1rem',
+    },
+    rTableHead: {
+        fontWeight: 'bold !important',
+    },
+    rTableBorderNone: {
+        border: 'none !important'
+    },
+    rEditTable: {
+        display: 'flex',
+        alignItems: 'center'
     }
 }));
 
