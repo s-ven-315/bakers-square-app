@@ -35,7 +35,8 @@ def set_subscription(userId: str):
     if not from_user.subscribe(to_user):
         return flask.jsonify({'msg': 'Error in saving data'}), 400
     return flask.jsonify({'msg': 'Success', 'data': {
-        'followers': to_user.followers_dict(basic=True)
+        'from_user': {'followers': from_user.followers_dict(basic=True)},
+        'to_user': {'followers': to_user.followers_dict(basic=True)},
     }}), 200
 
 
@@ -49,5 +50,6 @@ def unset_subscription(userId: str):
     if not from_user.unsubscribe(to_user):
         return flask.jsonify({'msg': 'Error in deleting data'}), 400
     return flask.jsonify({'msg': 'Success', 'data': {
-        'followers': to_user.followers_dict(basic=True)
+        'from_user': {'followers': from_user.followers_dict(basic=True)},
+        'to_user': {'followers': to_user.followers_dict(basic=True)},
     }}), 200

@@ -7,32 +7,25 @@ import Login from "./pages/Login"
 import Profile from "./pages/Profile"
 import Recipe from "./pages/Recipe"
 import Session from "./pages/Session"
-import { useState } from "react"
 import React from 'react'
+import DataProvider from "./contexts/Context";
 
 function App() {
-  const userJsonString = localStorage.getItem('user')
-  const initialLoggedIn = (userJsonString) ? JSON.parse(userJsonString) : null
-  const [loggedIn, setLogged] = useState(initialLoggedIn)
-
   return (
-    <div className="App">
-      <Navbar loggedIn={loggedIn} setLogged={setLogged} />
-      <Switch>
-        <Route exact path="/"><Homepage /></Route>
-        <Route exact path="/signup"><SignUp loggedIn={loggedIn} setLogged={setLogged} /></Route>
-        <Route exact path="/login"><Login loggedIn={loggedIn} setLogged={setLogged} /></Route>
-        {loggedIn ?
-          <>
-            <Route exact path="/users/:userId"><Profile loggedIn={loggedIn} /></Route>
-            <Route exact path="/recipes/:recipeId"><Recipe loggedIn={loggedIn} /></Route>
-            <Route exact path="/recipes/:recipeId/sessions"><Session loggedIn={loggedIn} /></Route>
-          </>
-          : null
-        }
-        <Redirect to="/" />
-      </Switch>
-    </div>
+      <DataProvider>
+        <div className="App">
+          <Navbar/>
+          <Switch>
+            <Route exact path="/"><Homepage/></Route>
+            <Route exact path="/signup"><SignUp/></Route>
+            <Route exact path="/login"><Login/></Route>
+            <Route exact path="/users/:userId"><Profile/></Route>
+            <Route exact path="/recipes/:recipeId"><Recipe/></Route>
+            <Route exact path="/recipes/:recipeId/sessions"><Session/></Route>
+            <Redirect to="/" />
+          </Switch>
+        </div>
+      </DataProvider>
   );
 }
 

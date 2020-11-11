@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 
 
 const Homepage = () => {
+    console.log("Homepage() is rendered.")
+
     return (
         <>
             <div className="banner-container">

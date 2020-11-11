@@ -10,9 +10,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
 
 
-export function UserListDialog(props) {
+export function UserListDialog({ title, users, open, setOpen }) {
+    console.log(`UserListDialog() is rendered (title: ${title}).`)
     const history = useHistory();
-    const { title, users, open, setOpen } = props;
 
     const onClick = userId => {
         history.push(`/users/${userId}`)

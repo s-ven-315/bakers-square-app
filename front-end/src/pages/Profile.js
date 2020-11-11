@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react"
-import { useParams, Redirect, useHistory } from "react-router-dom";
-import axios from "axios"
+import React, {useContext, useEffect, useState} from "react"
+import { useParams, Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
@@ -11,37 +8,15 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import YourRecipes from '../components/YourRecipes';
 import LikedRecipes from '../components/LikedRecipes';
-import ProfileImg from '../assets/images/profile-placeholder.png'
 import EditIcon from '@material-ui/icons/Edit';
-import { Follow, EditProfileName } from '../helpers'
-import TextField from '@material-ui/core/TextField';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import {Follow, GetRecipe, GetUser} from '../helpers'
 import { useStyles } from '../containers/styles'
 import {UserListDialog} from "../containers/dialogs/UserListDialog";
+import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
+import {EditProfileDialog} from "../containers/dialogs/EditProfileDialog";
 
 
-function EditProfileDialog(props) {
-    const [name, setName] = useState("")
-    const {open, setOpen, loggedIn, user, setUser} = props;
 
-    const closeDialog = () => setOpen(false);
-
-    return (
-        <Dialog fullwidth='true' open={open} onBackdropClick={closeDialog} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Change Profile Name</DialogTitle>
-            <DialogContent>
-                <TextField autoFocus margin="dense" id="name" label="New Profile Name" type="text"
-                           onChange={e => setName(e.target.value)} fullWidth='true' autoComplete='off'/>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={() => EditProfileName(loggedIn, name, setName, user, setUser, setOpen)}
-                        color="primary">Save</Button>
-                <Button onClick={closeDialog} color="primary">Cancel</Button>
-            </DialogActions>
-        </Dialog>
-    )
-}
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -70,12 +45,20 @@ TabPanel.propTypes = {
 };
 
 
-export default function Profile({ loggedIn }) {
-    const [user, setUser] = useState({})
+export default function Profile() {
+    console.log("Profile() is rendered.")
+
+    const context = useContext(DataContext)
+    const {authUser, user, setUser, setRecipe} = context
+    const {userId} = useParams()
+
+
+    // Computed Variables
+    const isAuthUser = authUser.userId === user.userId
+
     const [error, setError] = useState(null)
     const classes = useStyles();
-    const { userId } = useParams()
-    const [deleted, setDeleted] = useState(false)
+
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
 
@@ -99,22 +82,18 @@ export default function Profile({ loggedIn }) {
 
     // axios get
     useEffect(() => {
-        axios.get("http://localhost:5000/api/users/" + userId, {
-            headers: {
-                Authorization: "Bearer " + loggedIn.access_token
-            }
-        })
-            .then((response) => {
-                console.log(response)
-                setUser(response.data.data)
-            })
-            .catch((error) => {
-                console.log(error)
-                setError(error)
-            })
-    }, [userId, deleted])
-
-    if (!loggedIn) {
+        if (userId === context.authUser.userId){
+            setUser(context.authUser)
+            GetUser(context, context.authUser.userId)
+        }
+        else if (userId !== context.user.userId){
+            GetUser(context, userId)
+        }
+        if (context.recipe.id){
+            setRecipe(emptyRecipe)
+        }
+    }, [userId])
+    if (!authUser.access_token) {
         return <Redirect to="/" />
     }
 
@@ -123,7 +102,7 @@ export default function Profile({ loggedIn }) {
             <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen}/>
             <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen}/>
 
-            {(user === {})?
+            {(!user.userId)?
                 <h1>User not found</h1> :
                 <>
                     <div className="profile-page-container">
@@ -134,16 +113,10 @@ export default function Profile({ loggedIn }) {
                                 </div>
                                 <div className="profile-details">
                                     <div className="profile-name">{user.name}
-                                        {/*{console.log(followers)}*/}
-                                        {user.userId === loggedIn.userId ?
+                                        {isAuthUser ?
                                             <>
                                                 <EditIcon color="primary" onClick={handleEdit} />
-                                                <EditProfileDialog open={editOpen}
-                                                                   setOpen={setEditOpen}
-                                                                   loggedIn={loggedIn}
-                                                                   user={user}
-                                                                   setUser={setUser}
-                                                />
+                                                <EditProfileDialog open={editOpen} setOpen={setEditOpen}/>
                                             </> : null
                                         }
                                     </div>
@@ -161,11 +134,11 @@ export default function Profile({ loggedIn }) {
                                         </div>
                                     </div>
                                     <div className="profile-button-container">
-                                        {user.name !== loggedIn.name ?
+                                        {!isAuthUser ?
                                             followers ?
-                                                followers.find(e => e.userId === loggedIn.userId) ?
-                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn, false, user, setUser)} >Unfollow</Button>
-                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(userId, loggedIn, true, user, setUser)} >Follow</Button>
+                                                followers.find(e => e.userId === authUser.userId) ?
+                                                    <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(context, false)} >Unfollow</Button>
+                                                    : <Button variant="contained" color="primary" className="profile-button" onClick={() => Follow(context, true)} >Follow</Button>
                                                 : null
                                             : null
                                         }
@@ -188,10 +161,10 @@ export default function Profile({ loggedIn }) {
                             </div>
                             <div className="tab-panel-container">
                                 <TabPanel className={classes.pTabs} value={value} index={0}>
-                                    <YourRecipes user={user} loggedIn={loggedIn} setDeleted={setDeleted} />
+                                    <YourRecipes />
                                 </TabPanel>
                                 <TabPanel className={classes.pTabs} value={value} index={1}>
-                                    <LikedRecipes user={user} loggedIn={loggedIn} setDeleted={setDeleted} />
+                                    <LikedRecipes />
                                 </TabPanel>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import React, {useState, useEffect, useContext} from "react"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import {Redirect, useParams} from "react-router-dom"
 // import Swiper core and required components
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
@@ -11,29 +11,36 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
+import {DataContext, emptyUser} from "../contexts/Context";
+import {GetRecipe} from "../helpers";
 
 // install Swiper components
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-export default function Session({ loggedIn }) {
+export default function Session() {
+    console.log("Session() is rendered.")
+
+    const context = useContext(DataContext)
+    const {authUser, setUser} = context
+
     const { recipeId } = useParams()
     const [steps, setSteps] = useState([])
 
     console.log(steps)
 
+
     useEffect(() => {
-        axios.get("http://localhost:5000/api/recipes/" + recipeId, {
-            headers: {
-                Authorization: "Bearer " + loggedIn.access_token
-            }
-        })
-            .then((response) => {
-                setSteps(response.data.data.steps)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [])
+        if (context.recipe.id !== recipeId){
+            GetRecipe(context, recipeId)
+        }
+        if (context.user.userId){
+            setUser(emptyUser)
+        }
+    }, [recipeId])
+    if (!authUser.access_token) {
+        return <Redirect to="/" />
+    }
+
     return (
         <Swiper
             spaceBetween={50}
@@ -53,8 +60,8 @@ export default function Session({ loggedIn }) {
                     return (
                         <SwiperSlide>
                             <div className="step-no">Step {idx + 1}</div>
-                            <div lassName="step-text">{step.text}</div>
-                            <div></div>
+                            <div className="step-text">{step.text}</div>
+                            <div/>
                         </SwiperSlide>
                     )
                 })

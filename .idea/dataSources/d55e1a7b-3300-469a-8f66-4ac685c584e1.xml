@@ -1061,6 +1061,7 @@ sequence|table|21530|21532|1
     </table>
     <table id="51" parent="21" name="like_relation">
       <ObjectId>21378</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>2600</StateNumber>
     </table>

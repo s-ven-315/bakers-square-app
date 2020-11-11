@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from "axios"
 import PropTypes from 'prop-types';
 import { useStyles } from '../containers/styles'
@@ -16,132 +16,24 @@ import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import {DataContext} from "../contexts/Context";
+import {EditIngredientDialog} from "../containers/dialogs/EditIngredientDialog";
 
 
-function EditList(props) {
-    const classes = useStyles();
-    const { onClose, open, ingrList, setSubmitted, loggedIn, recipeId } = props;
-    const [newItemId, setNewItemId] = useState(0)
-    const [qty, setQty] = useState("")
-    const [unit, setUnit] = useState("")
-    const [tempList, setTempList] = useState(ingrList)
-    const [ingrOptions, setIngrOptions] = useState([])
-    useEffect(() => setTempList(ingrList), [ingrList])
-    const handleRemove = (idx) => {
-        let clonedList = [...tempList]
-        clonedList.splice(idx, 1)
-        setTempList(clonedList)
-    }
 
-    const handleAdd = (e) => {
-        e.preventDefault()
-        const newIngr = ingrOptions.find(ingr => ingr.id === newItemId)
-        if (newIngr) {
-            setTempList([...tempList, { id: newItemId, name: newIngr.name, qty: qty, unit: unit }])
-        }
-        setNewItemId(0)
-        setQty("")
-        setUnit("")
-    }
-    const handleClose = () => {
-        setTempList(ingrList)
-        onClose();
-    };
-    const handleSelect = (e) => {
-        setNewItemId(e.target.value)
-    }
-    const handleQty = (e) => {
-        setQty(e.target.value)
-    }
-    const handleUnit = (e) => {
-        setUnit(e.target.value)
-    }
-    const handleSave = () => {
-        axios({
-            method: 'POST',
-            url: `http://localhost:5000/api/recipes/${recipeId}/ingredients`,
-            headers: {
-                Authorization: "Bearer " + loggedIn.access_token
-            },
-            data: {
-                ingredientList: tempList
-            }
-        })
-            .then(response => {
-                console.log(response)
-                setSubmitted(true)
-            })
-            .catch(error => {
-                console.error(error.response)
-            })
-        setSubmitted(false)
-        handleClose()
-    }
+export default function RecipeIngredients() {
+    console.log("RecipeIngredients() is rendered.")
 
-    //get all ingredients
-    useEffect(() => {
-        axios.get("http://localhost:5000/api/ingredients/", {
-            headers: {
-                Authorization: "Bearer " + loggedIn.access_token
-            }
-        })
-            .then((response) => {
-                console.log(response.data.data)
-                setIngrOptions(response.data.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [])
-    return (
-        <Dialog onClose={handleClose} fullwidth='true' aria-labelledby="edit-list-dialog" open={open}>
-            <DialogTitle id="simple-dialog-title">Ingredient List</DialogTitle>
-            <List>
-                {tempList ? tempList.map((ingr, idx) => (
-                    <ListItem key={idx}>
-                        <Avatar button="true" className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
-                            <RemoveIcon />
-                        </Avatar>
-                        <ListItemText className={classes.rList} primary={ingr.name + "," + ingr.qty + ingr.unit} />
-                    </ListItem>
-                )) : null}
-                <ListItem>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <form className="ingredient-add-form" onSubmit={handleAdd}>
-                                <Select onChange={handleSelect} value={newItemId}>
-                                    <MenuItem value={0}>Select an Ingredient</MenuItem>
-                                    {ingrOptions ? ingrOptions.map(ingr => (
-                                        <MenuItem value={ingr.id} key={ingr.id}>{ingr.name}</MenuItem>
-                                    )) : null}
-                                </Select>
-                                <TextField className={classes.rQty} label="quantity" value={qty} onChange={handleQty} />
-                                <TextField className={classes.rUnit} label="unit" value={unit} onChange={handleUnit} />
-                            </form>
-                        </Grid>
-                        <Grid item >
-                            <Avatar className={classes.rAvatar} onClick={handleAdd} >
-                                <AddIcon />
-                            </Avatar>
-                        </Grid>
-                    </Grid>
-                </ListItem>
-            </List>
-            <Divider />
-            <div className={classes.rButtonDiv}>
-                <Button variant="contained" color="primary" className={classes.rButton} onClick={handleSave}>Save</Button>
-                <Button variant="contained" className={classes.rButtonClose} onClick={handleClose}>Close</Button>
-            </div>
-        </Dialog >
-    );
-}
+    const {authUser, recipe} = useContext(DataContext)
 
-EditList.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-};
-export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
+    // View State
     const [open, setOpen] = useState(false);
+
+    // Computed Variables
+    const baker = recipe.user
+    const isAuthUser = authUser.userId === baker.userId
+
+
     const classes = useStyles();
     const [ingrList, setIngrList] = useState([])
     const [submitted, setSubmitted] = useState(false)
@@ -155,9 +47,9 @@ export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
     };
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/recipes/" + recipeId, {
+        axios.get("http://localhost:5000/api/recipes/" + recipe.id, {
             headers: {
-                Authorization: "Bearer " + loggedIn.access_token
+                Authorization: "Bearer " + authUser.access_token
             }
         })
             .then((response) => {
@@ -172,8 +64,7 @@ export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
     return (
         <>
             <ul className={classes.rList}>
-                {ingrList == [] ? null :
-
+                {ingrList === [] ? null :
                     ingrList.map((ingr) => {
                         return (
                             <li key={ingr.id}>{ingr.name}, {ingr.qty}{ingr.unit}</li>
@@ -183,12 +74,14 @@ export default function RecipeIngredients({ recipeId, loggedIn, baker }) {
 
             </ul>
             <div>
-                {loggedIn.userId == baker.userId ?
+                {isAuthUser ?
                     <>
                         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                             Edit
                         </Button>
-                        <EditList ingrList={ingrList} setIngrList={setIngrList} open={open} onClose={handleClose} setSubmitted={setSubmitted} loggedIn={loggedIn} recipeId={recipeId} />
+                        <EditIngredientDialog
+                            ingrList={ingrList} setIngrList={setIngrList} open={open} onClose={handleClose}
+                            setSubmitted={setSubmitted} />
                     </> : null}
             </div>
         </>

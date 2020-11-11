@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -10,12 +10,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu'
 import { useHistory } from "react-router-dom"
 import { useStyles } from "./styles"
+import {DataContext} from "../contexts/Context";
 
-const Navbar = ({ loggedIn, setLogged }) => {
+
+const Navbar = () => {
+    console.log("Navbar() is rendered.")
+
+    const context = useContext(DataContext)
+    const {authUser, setAuthUser} = context
+
     const classes = useStyles()
     const handleLogout = () => {
         localStorage.removeItem("user")
-        setLogged(null)
+        setAuthUser(null)
     }
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -44,7 +51,7 @@ const Navbar = ({ loggedIn, setLogged }) => {
                     <h2>Baker's Square</h2>
                 </div>
                 <div className="navbar-menu">
-                    {loggedIn ?
+                    {authUser.userId ?
                         <>
 
                             <Button
@@ -57,7 +64,7 @@ const Navbar = ({ loggedIn, setLogged }) => {
                                     <Button
                                         variant="contained" color="primary"
                                     >
-                                        {loggedIn.name}
+                                        {authUser.name}
                                     </Button>
                                 </div>
                                 <div className="menu-narrow">
@@ -73,7 +80,7 @@ const Navbar = ({ loggedIn, setLogged }) => {
                                         <Paper>
                                             <ClickAwayListener onClickAway={handleClose}>
                                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push(`/users/${loggedIn.userId}`)}>Profile Page</Button>
+                                                    <ListItemText /><Button className={classes.nButton} onClick={() => history.push(`/users/${authUser.userId}`)}>Profile Page</Button>
                                                     <ListItemText /><Button className={classes.nButton} onClick={() => history.push('/signup')}>Start Baking</Button>
                                                     <ListItemText /><Button className={classes.nButton} onClick={() => history.push('/')}>Ingredient Checklist</Button>
                                                     <ListItemText /><Button className={classes.nButton} onClick={handleLogout}>Logout</Button>

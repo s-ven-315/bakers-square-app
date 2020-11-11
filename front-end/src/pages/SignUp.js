@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { Redirect } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios"
+import {DataContext} from "../contexts/Context";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +32,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp({ loggedIn, setLogged }) {
+export default function SignUp() {
+    console.log("SignUp() is rendered.")
+
+    const context = useContext(DataContext)
+    const {authUser, setAuthUser} = context
+
     const classes = useStyles();
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -51,14 +57,14 @@ export default function SignUp({ loggedIn, setLogged }) {
             .then(response => {
                 console.log(response)
                 localStorage.setItem("user", JSON.stringify(response.data))
-                setLogged(response.data)
+                setAuthUser(response.data)
 
             })
             .catch(error => {
                 console.error(error.response)
             })
     }
-    if (loggedIn) {
+    if (authUser.access_token) {
         return <Redirect to="/" />
     }
     return (

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, {useState, useEffect, useContext} from "react"
 import axios from "axios"
-import { useParams, useHistory } from "react-router-dom"
+import {useParams, useHistory, Redirect} from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import RecipeDetails from '../components/RecipeDetails'
-import { Like, EditRecipeName, DeleteRecipe } from '../helpers'
+import {Like, EditRecipeName, DeleteRecipe, GetRecipe} from '../helpers'
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -22,6 +22,8 @@ import Comments from "../components/Comments"
 import { useStyles } from "../containers/styles"
 import {UserListDialog} from "../containers/dialogs/UserListDialog";
 import DeleteIcon from '@material-ui/icons/Delete';
+import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
+import {RecipeDialog} from "../containers/dialogs/RecipeDialog";
 
 
 
@@ -52,33 +54,32 @@ TabPanel.propTypes = {
 };
 
 
-export default function Recipe({ loggedIn }) {
-    const history = useHistory()
-    const [recipe, setRecipe] = useState({})
-    const [error, setError] = useState(null)
-    const [baker, setBaker] = useState({})
+export default function Recipe() {
+    console.log("Recipe() is rendered.")
+
     const { recipeId } = useParams()
-    const [deleted, setDeleted] = useState(false)
+    const context = useContext(DataContext)
+    const {authUser, recipe, setUser} = context
+
+    const history = useHistory()
+
+    // View States
+    const [editOpen, setEditOpen] = React.useState(false);
+    const [likeOpen, setLikeOpen] = React.useState(false);
+
+    // Computed Variables
+    const baker = recipe.user;
+    const isAuthUser = authUser.userId === baker.userId
+
+    const [error, setError] = useState(null)
 
     const classes = useStyles();
 
-    // edit recipe name dialog
-    const [editOpen, setEditOpen] = React.useState(false);
-    const [input, setInput] = useState("")
-    const handleInput = (e) => {
-        setInput(e.target.value)
-    }
-    const handleEdit = () => {
-        setEditOpen(true);
-    };
-    const handleEditClose = () => {
-        setEditOpen(false);
-    };
 
-    // like dialog
-    const [likeOpen, setLikeOpen] = React.useState(false);
-    const [likes, setLikes] = useState(recipe.likes || [])
-    const isLike = likes.find(e => e.userId === loggedIn.userId)
+    // Computed Variables
+    const [likes, setLikes] = useState(recipe.likes)
+    useEffect(() => setLikes(recipe.likes), [recipe.likes])
+    const isLike = likes.find(e => e.userId === authUser.userId)
 
     const goToRecipePage = () => history.push(`/recipes/${recipe.id}`);
     const goToUserPage = () => history.push(`/users/${recipe.user.userId}`);
@@ -89,25 +90,17 @@ export default function Recipe({ loggedIn }) {
         setValue(newValue);
     };
 
-    // axios get recipe
     useEffect(() => {
-        axios.get("http://localhost:5000/api/recipes/" + recipeId, {
-            headers: {
-                Authorization: "Bearer " + loggedIn.access_token
-            }
-        })
-            .then((response) => {
-                console.log(response)
-                const data = response.data.data
-                setRecipe(data)
-                setBaker(data.user)
-                setLikes(data.likes)
-            })
-            .catch((error) => {
-                console.log(error)
-                setError(error)
-            })
-    }, [deleted])
+        if (context.recipe.id !== recipeId){
+            GetRecipe(context, recipeId)
+        }
+        if (context.user.userId){
+            setUser(emptyUser)
+        }
+    }, [recipeId])
+    if (!authUser.access_token) {
+        return <Redirect to="/" />
+    }
 
     return (
         <>
@@ -119,34 +112,11 @@ export default function Recipe({ loggedIn }) {
                         <img className='recipe-img' src={recipe.img_url} alt="" onClick={goToRecipePage}/>
                         <div className="recipe-details-container">
                             <div className="recipe-name" onClick={goToRecipePage}>{recipe.name}
-                                {baker.name === loggedIn.name ?
+                                {isAuthUser ?
                                     <>
-                                        <EditIcon className={classes.recipeEdit} onClick={handleEdit} />
-                                        <Dialog fullwidth='true' open={editOpen} onClose={handleEditClose} aria-labelledby="form-dialog-title">
-                                            <DialogTitle id="form-dialog-title">Change Recipe's Name</DialogTitle>
-                                            <DialogContent>
-                                                <TextField
-                                                    autoFocus
-                                                    margin="dense"
-                                                    id="name"
-                                                    label="New Recipe's Name"
-                                                    type="email"
-                                                    onChange={handleInput}
-                                                    fullWidth='true'
-                                                    autoComplete='off'
-                                                />
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button onClick={() => EditRecipeName(loggedIn, recipeId, input, setRecipe, recipe, setEditOpen)} color="primary">
-                                                    Save
-                                            </Button>
-                                                <Button onClick={handleEditClose} color="primary">
-                                                    Cancel
-                                            </Button>
-                                            </DialogActions>
-                                        </Dialog>
-                                    </> :
-                                    null
+                                        <EditIcon className={classes.recipeEdit} onClick={() => setEditOpen(true)} />
+                                        <RecipeDialog title="Change Recipe's Title" editOpen={editOpen} setEditOpen={setEditOpen} isNew={false}/>
+                                    </> : null
                                 }</div>
                             <div className="recipe-baker" onClick={goToUserPage}>by {baker.name} </div>
                             <div className="recipe-following-container">
@@ -155,13 +125,13 @@ export default function Recipe({ loggedIn }) {
                             </div>
                         </div>
                         <div className="recipe-button-container">
-                            <button className="recipe-button" onClick={() => DeleteRecipe(loggedIn, recipeId, setDeleted)}><DeleteIcon /></button>
+                            <button className="recipe-button" onClick={() => DeleteRecipe(context, recipe, history, true)}><DeleteIcon /></button>
                             <button className="recipe-button" onClick={() => history.push(`/recipes/${recipeId}/sessions`)}>Start Baking</button>
                             {isLike ?
                                 <button className="recipe-button"
-                                        onClick={() => Like(recipe.id, loggedIn, false, likes, setLikes)}>Liked</button> :
+                                        onClick={() => Like(context, false, recipe, setLikes)}>Liked</button> :
                                 <button className="recipe-button"
-                                        onClick={() => Like(recipe.id, loggedIn, true, likes, setLikes)}>Like</button>
+                                        onClick={() => Like(context, true, recipe, setLikes)}>Like</button>
                             }
                         </div>
                     </div>
@@ -177,11 +147,10 @@ export default function Recipe({ loggedIn }) {
                         <Tab label="Comments" />
                     </Tabs>
                     <TabPanel value={value} index={0}>
-
-                        <RecipeDetails loggedIn={loggedIn} baker={baker} recipeId={recipeId} />
+                        <RecipeDetails />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <Comments loggedIn={loggedIn} recipeId={recipeId} />
+                        <Comments />
                     </TabPanel>
                 </>
             }

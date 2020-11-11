@@ -1,34 +1,70 @@
 import axios from "axios"
+import {useContext, useEffect} from "react";
+import {DataContext} from "./contexts/Context";
+import {useHistory} from "react-router-dom";
+
+
+const config = (authUser) => ({headers: {Authorization: "Bearer " + authUser.access_token}})
+export const axiosGet = (url, authUser) => axios.get(url, config(authUser))
+export const axiosPost = (url, authUser, data) => axios.post(url, data, config(authUser))
+
+
+export const GetRecipe = (context, recipeId) => {
+    const {authUser, setRecipe} = context
+
+    const url = "http://localhost:5000/api/recipes/" + recipeId
+    axiosGet(url, authUser)
+        .then((response) => {
+            const data = response.data.data
+            setRecipe(data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+}
+
+export const GetUser = (context, userId) => {
+    const {authUser, setAuthUser, setUser} = context
+
+    const url = "http://localhost:5000/api/users/" + userId
+    axiosGet(url, authUser)
+            .then((response) => {
+                console.log(response)
+                setUser(response.data.data)
+                if (userId === authUser.userId){
+                    setAuthUser({...response.data.data, 'access_token': authUser.access_token})
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+}
 
 
 
-export const Like = (recipeId, loggedIn, setLikeTo, likes, setLikes) => {
+export const Like = (context, setLikeTo, recipe, setLikes) => {
+    const {authUser} = context
     const url = (setLikeTo)?
-        `http://localhost:5000/api/users/${loggedIn.userId}/like` :
-        `http://localhost:5000/api/users/${loggedIn.userId}/unlike`
+        `http://localhost:5000/api/users/${authUser.userId}/like` :
+        `http://localhost:5000/api/users/${authUser.userId}/unlike`
 
-    const oldLikes = [...likes]
+    const oldLikes = {...recipe.likes}
     const newLikes = (setLikeTo) ? [{
-        email: loggedIn.email,
-        img_url: loggedIn.img_url,
-        name: loggedIn.name,
-        userId: loggedIn.userId,
+        email: authUser.email,
+        img_url: authUser.img_url,
+        name: authUser.name,
+        userId: authUser.userId,
         type: "User",
-    }, ...likes] : likes.filter(l => l.userId !== loggedIn.userId)
+    }, ...recipe.likes] : recipe.likes.filter(l => l.userId !== authUser.userId)
+
     setLikes(newLikes)
 
-    axios({
-        method: 'POST',
-        url: url,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'recipeId': recipeId
-        }
-    })
+    axiosPost(url, authUser, {'recipeId': recipe.id})
         .then(response => {
             console.log(response)
+            if (context.user.userId) {
+                GetUser(context, context.user.userId)
+            }
         })
         .catch(error => {
             console.error(error.response)
@@ -37,87 +73,68 @@ export const Like = (recipeId, loggedIn, setLikeTo, likes, setLikes) => {
 }
 
 
-export const EditRecipeName = (loggedIn, recipeId, input, setRecipe, recipe, setEditOpen) => {
-    axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/recipes/${recipeId}/edit`,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'name': input
-        }
-    })
+export const EditRecipeName = (context, name, setOpen) => {
+    const {authUser, recipe, setRecipe} = context
+
+    const url = `http://localhost:5000/api/recipes/${recipe.id}/edit`
+    axiosPost(url, authUser, {name})
         .then(response => {
             console.log(response)
-            recipe.name = input
+            recipe.name = name
             setRecipe(recipe)
-            setEditOpen(false)
-        })
-        .catch(error => {
-            console.error(error.response)
-        })
-}
-export const Follow = (userId, loggedIn, setFollowTo, user, setUser) => {
-    const url = (setFollowTo) ?
-        `http://localhost:5000/api/users/${loggedIn.userId}/subscribe` :
-        `http://localhost:5000/api/users/${loggedIn.userId}/unsubscribe`
-
-    axios({
-        method: 'POST',
-        url: url,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'userId': userId
-        }
-    })
-        .then(response => {
-            const data = response.data.data
-            console.log(data.followers)
-            user.followers = data.followers
-            setUser({...user})
-        })
-        .catch(error => {
-            console.error(error.response)
-        })
-}
-
-export const EditProfileName = (loggedIn, name, setName, user, setUser, setOpen) => {
-    console.log(name)
-    axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/users/${user.userId}/edit`,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'name': name,
-        }
-    })
-        .then(response => {
-            const msg = response.data.msg
-            console.log("EditProfileName then()"+ msg)
-            user.name = name
-            setUser({...user})
             setOpen(false)
         })
         .catch(error => {
             console.error(error.response)
         })
 }
-export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) => {
+export const Follow = (context, setFollowTo) => {
+    const {authUser, setAuthUser, user, setUser} = context
+
+    const url = (setFollowTo) ?
+        `http://localhost:5000/api/users/${authUser.userId}/subscribe` :
+        `http://localhost:5000/api/users/${authUser.userId}/unsubscribe`
+
+    axiosPost(url, authUser, {'userId': user.userId})
+        .then(response => {
+            const data = response.data.data
+            authUser.followers = data.from_user.followers
+            setAuthUser({...authUser})
+
+            user.followers = data.to_user.followers
+            setUser({...user})
+        })
+        .catch(error => {
+            console.error(error.response)
+        })
+}
+
+export const EditProfileName = (context, name, setOpen) => {
+    const {authUser, setAuthUser} = context
+
+    const url = `http://localhost:5000/api/users/${authUser.userId}/edit`
+    axiosPost(url, authUser, {name})
+        .then(response => {
+            const msg = response.data.msg
+            console.log("EditProfileName then()"+ msg)
+            authUser.name = name
+            setAuthUser({...authUser})
+            setOpen(false)
+        })
+        .catch(error => {
+            console.error(error.response)
+        })
+}
+export const AddNewRecipe = (context, name, setOpen, history) => {
+    const {authUser} = context
+
     const goToRecipePage = (recipeId) => {
         history.push(`/recipes/${recipeId}`)
     }
 
     const getLastRecipeId = () => {
-        axios.get("http://localhost:5000/api/users/" + userId, {
-            headers: {
-                Authorization: "Bearer " + loggedIn.access_token
-            }
-        })
+        const url = "http://localhost:5000/api/users/" + authUser.userId
+        axiosGet(url, authUser)
             .then((response) => {
                 console.log(response)
                 let recipeId = response.data.data.recipes[response.data.data.recipes.length - 1].id
@@ -125,40 +142,43 @@ export const AddNewRecipe = (loggedIn, userId, input, setCreateOpen, history) =>
             })
     }
 
-    axios({
-        method: 'POST',
-        url: 'http://localhost:5000/api/recipes/',
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-            'userId': userId,
-            'name': input
-        }
-    })
+    const url = 'http://localhost:5000/api/recipes/'
+    axiosPost(url, authUser, {'userId': authUser.userId, 'name': name})
         .then(response => {
             console.log(response)
-            setCreateOpen(false)
+            setOpen(false)
             getLastRecipeId()
+            GetUser(context, context.authUser.userId)
         })
         .catch(error => {
             console.error(error.response)
         })
 }
 
-export const DeleteRecipe = (loggedIn, recipeId, setDeleted) => {
-    axios({
-        method: 'POST',
-        url: `http://localhost:5000/api/recipes/${recipeId}/delete`,
-        headers: {
-            Authorization: "Bearer " + loggedIn.access_token
-        },
-        data: {
-        }
-    }).then(response => {
-        console.log(response)
-        setDeleted(true)
-    })
-    setDeleted(false)
+export const DeleteRecipe = (context, recipe, history, isRedirect) => {
+    const {authUser} = context
+    const url = `http://localhost:5000/api/recipes/${recipe.id}/delete`
+    axiosPost(url, authUser, {})
+        .then(response => {
+            console.log(response)
+            if (isRedirect) {
+                history.push(`/users/${context.authUser.userId}`)
+            } else {
+                GetUser(context, context.user.userId)
+            }
+        })
 }
-export default { Like, EditRecipeName, Follow, EditProfileName, AddNewRecipe, DeleteRecipe }
+
+
+export const SaveRecipeSteps = (context, tempList) => {
+    const {authUser, recipe} = context
+    const url = `http://localhost:5000/api/recipes/${recipe.id}/steps`
+    axiosPost(url, authUser, {steps: tempList})
+        .then(response => {
+            console.log(response)
+            GetRecipe(context, recipe.id)
+        })
+        .catch(error => {
+            console.error(error.response)
+            })
+}

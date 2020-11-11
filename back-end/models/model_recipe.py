@@ -11,11 +11,11 @@ from services.storage import S3_LOCATION
 class Recipe(BaseModel):
     user = pw.ForeignKeyField(User, backref='recipes', on_delete="CASCADE")
     name = pw.CharField(null=False)
-    serving = pw.IntegerField(null=True)  # in pax
-    preparation_time = pw.IntegerField(null=True)  # in minute
-    cooking_time = pw.IntegerField(null=True)  # in minute
-    description = pw.CharField(null=True)
-    imgName = pw.CharField(null=True)
+    serving = pw.IntegerField(null=True, default=0)  # in pax
+    preparation_time = pw.IntegerField(null=True, default=0)  # in minute
+    cooking_time = pw.IntegerField(null=True, default=0)  # in minute
+    description = pw.CharField(null=True, default='')
+    imgName = pw.CharField(null=True, default='recipe-img.png')
 
     def as_dict(self, basic=False):
         if not basic:
@@ -31,7 +31,10 @@ class Recipe(BaseModel):
                 equipment=[d.as_dict() for d in self.equipment],
                 steps=[d.as_dict() for d in self.steps],
                 tags=[d.as_dict() for d in self.tags],
-
+                serving=self.serving,
+                preparation_time=self.preparation_time,
+                cooking_time=self.cooking_time,
+                description=self.description,
                 likes=[d.as_dict(basic=True) for d in self.likes],
                 comments=[d.as_dict(basic=True) for d in self.comments],
                 img_url=self.imgUrl,

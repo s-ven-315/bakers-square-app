@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, {useContext, useState} from "react"
 import PropTypes from 'prop-types';
 import { useStyles } from '../containers/styles'
 import Tabs from '@material-ui/core/Tabs';
@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
+import {DataContext} from "../contexts/Context";
 
 
 function TabPanel(props) {
@@ -42,7 +43,8 @@ function a11yProps(index) {
     };
 }
 
-export default function RecipeDetails({ recipeId, loggedIn, baker }) {
+export default function RecipeDetails() {
+    console.log("RecipeDetails() is rendered.")
 
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
@@ -50,22 +52,9 @@ export default function RecipeDetails({ recipeId, loggedIn, baker }) {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    // like dialog
-    const [likeOpen, setLikeOpen] = React.useState(false);
 
-    const handleLikeOpen = () => {
-        setLikeOpen(true);
-    };
-
-    const handleLikeClose = (value) => {
-        setLikeOpen(false);
-    };
     return (
         <>
-            {/* <div className='component-container'>
-                <div className='component-title'>Ingredients</div>
-                <div classname='component-body'></div>
-            </div> */}
             <div className={classes.recipeDetailsRoot}>
                 <Tabs
                     orientation="vertical"
@@ -80,11 +69,11 @@ export default function RecipeDetails({ recipeId, loggedIn, baker }) {
 
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <RecipeIngredients recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
+                    <RecipeIngredients/>
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>
-                    <RecipeSteps recipeId={recipeId} loggedIn={loggedIn} baker={baker} />
+                    <RecipeSteps />
                 </TabPanel>
 
             </div>
