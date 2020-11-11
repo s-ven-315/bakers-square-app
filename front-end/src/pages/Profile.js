@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useParams, Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,15 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import RecipeList from '../components/RecipeList';
 import EditIcon from '@material-ui/icons/Edit';
-import {Follow, GetRecipe, GetUser} from '../helpers'
+import { Follow, GetRecipe, GetUser } from '../helpers'
 import { useStyles } from '../containers/styles'
-import {UserListDialog} from "../containers/dialogs/UserListDialog";
-import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
-import {EditProfileDialog} from "../containers/dialogs/EditProfileDialog";
-import { ImgDialog } from "../containers/dialogs/ImgDialog";
+import { UserListDialog } from "../containers/dialogs/UserListDialog";
+import { DataContext, emptyRecipe, emptyUser } from "../contexts/Context";
+import { EditProfileDialog } from "../containers/dialogs/EditProfileDialog";
+import { EditImgDialog } from "../containers/dialogs/EditImgDialog";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import {RecipeDialog} from "../containers/dialogs/RecipeDialog";
-
+import { RecipeDialog } from "../containers/dialogs/RecipeDialog";
 
 
 function TabPanel(props) {
@@ -50,8 +49,8 @@ export default function Profile() {
     console.log("Profile() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, user, setUser, setRecipe} = context
-    const {userId} = useParams()
+    const { authUser, user, setUser, setRecipe } = context
+    const { userId } = useParams()
 
 
     // Computed Variables
@@ -66,6 +65,8 @@ export default function Profile() {
     const [editImgOpen, setEditImgOpen] = useState(false);
     const [previewImg, setPreviewImg] = useState(null)
     const [imageFile, setImageFile] = useState({})
+    const isProfile = true
+
     const recipesNum = (user.recipes) ? user.recipes.length : 0;
     const likedRecipesNum = (user.liked_recipes) ? user.liked_recipes.length : 0;
     const followers = (user.followers) ? user.followers : [];
@@ -87,14 +88,14 @@ export default function Profile() {
 
     // axios get
     useEffect(() => {
-        if (userId === context.authUser.userId){
+        if (userId === context.authUser.userId) {
             setUser(context.authUser)
             GetUser(context, context.authUser.userId)
         }
-        else if (userId !== context.user.userId){
+        else if (userId !== context.user.userId) {
             GetUser(context, userId)
         }
-        if (context.recipe.id){
+        if (context.recipe.id) {
             setRecipe(emptyRecipe)
         }
     }, [userId])
@@ -106,10 +107,10 @@ export default function Profile() {
         <>
             <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen} />
             <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen} />
-            <ImgDialog title={"Change Profile Pic"} open={editImgOpen} setOpen={setEditImgOpen}
-                       previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} />
+            <EditImgDialog title={"Change Profile Picture"} open={editImgOpen} setOpen={setEditImgOpen}
+                previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} isProfile={isProfile} />
 
-            {(!user.userId)?
+            {(!user.userId) ?
                 <h1>User not found</h1> :
                 <>
                     <div className="profile-page-container">
@@ -123,7 +124,7 @@ export default function Profile() {
                                         {isAuthUser ?
                                             <>
                                                 <EditIcon color="primary" onClick={handleEdit} />
-                                                <EditProfileDialog open={editOpen} setOpen={setEditOpen}/>
+                                                <EditProfileDialog open={editOpen} setOpen={setEditOpen} />
                                             </> : null
                                         }
                                     </div>
@@ -168,20 +169,20 @@ export default function Profile() {
                                 {user.userId === authUser.userId ?
                                     <>
                                         <Button className={classes.yRButton} variant="contained" color="primary"
-                                                onClick={() => setCreateOpen(true)}>
+                                            onClick={() => setCreateOpen(true)}>
                                             <AddCircleOutlineOutlinedIcon />
                                             <span className={classes.yRSpan} >Add New Recipe</span>
                                         </Button>
-                                        <RecipeDialog title={"Create New Recipe"} recipe={emptyRecipe} open={createOpen} setOpen={setCreateOpen} isNew={true}/>
+                                        <RecipeDialog title={"Create New Recipe"} recipe={emptyRecipe} open={createOpen} setOpen={setCreateOpen} isNew={true} />
                                     </> : null
                                 }
                             </div>
                             <div className="tab-panel-container">
                                 <TabPanel className={classes.pTabs} value={value} index={0}>
-                                    <RecipeList recipes={user.recipes} emptyText={'This user has not created any recipes'}/>
+                                    <RecipeList recipes={user.recipes} emptyText={'This user has not created any recipes'} />
                                 </TabPanel>
                                 <TabPanel className={classes.pTabs} value={value} index={1}>
-                                    <RecipeList recipes={user.liked_recipes} emptyText={'This user has not liked any recipes'}/>
+                                    <RecipeList recipes={user.liked_recipes} emptyText={'This user has not liked any recipes'} />
                                 </TabPanel>
                             </div>
                         </div>

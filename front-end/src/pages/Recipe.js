@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext} from "react"
+import React, { useState, useEffect, useContext } from "react"
 import axios from "axios"
-import {useParams, useHistory, Redirect} from "react-router-dom"
+import { useParams, useHistory, Redirect } from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,17 +13,17 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import RecipeDetails from '../components/RecipeDetails'
-import {Like, EditRecipe, DeleteRecipe, GetRecipe} from '../helpers'
+import { Like, EditRecipeName, DeleteRecipe, GetRecipe } from '../helpers'
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Comments from "../components/Comments"
 import { useStyles } from "../containers/styles"
-import {UserListDialog} from "../containers/dialogs/UserListDialog";
+import { UserListDialog } from "../containers/dialogs/UserListDialog";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
-import {RecipeDialog} from "../containers/dialogs/RecipeDialog";
+import { DataContext, emptyRecipe, emptyUser } from "../contexts/Context";
+import { RecipeDialog } from "../containers/dialogs/RecipeDialog";
 import RecipeCard from "../containers/RecipeCard";
 
 
@@ -60,7 +60,7 @@ export default function Recipe() {
 
     const { recipeId } = useParams()
     const context = useContext(DataContext)
-    const {authUser, recipe, setUser} = context
+    const { authUser, recipe, setUser } = context
 
     const classes = useStyles();
 
@@ -71,10 +71,10 @@ export default function Recipe() {
     };
 
     useEffect(() => {
-        if (context.recipe.id !== recipeId){
+        if (context.recipe.id !== recipeId) {
             GetRecipe(context, recipeId)
         }
-        if (context.user.userId){
+        if (context.user.userId) {
             setUser(emptyUser)
         }
     }, [recipeId])
@@ -84,13 +84,13 @@ export default function Recipe() {
 
     return (
         <>
-            {!recipe.id?
+            {!recipe.id ?
                 <h1>Recipe not found</h1> :
-                <div style={{display:'flex', flexFlow: 'column nowrap', alignItems: 'center', maxWidth: '1080px', margin: '0 auto'}}>
+                <div style={{ display: 'flex', flexFlow: 'column nowrap', alignItems: 'center', maxWidth: '1080px', margin: '0 auto' }}>
                     <RecipeCard recipe={recipe}
-                                key={recipe.id}
-                                hideComments={true}
-                                hideEdit={false}
+                        key={recipe.id}
+                        hideComments={true}
+                        hideEdit={false}
                     />
                     <div className="recipe-page-container-outer">
                         <Tabs

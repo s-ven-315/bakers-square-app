@@ -50,6 +50,9 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: 10,
         cursor: 'pointer'
     },
+    rDefault: {
+        marginTop: theme.spacing(2),
+    },
     rDeleteBtn: {
         cursor: 'pointer',
         color: 'red',
@@ -95,11 +98,16 @@ export const useStyles = makeStyles((theme) => ({
     },
     rQty: {
         width: '3.5rem',
-        marginLeft: '1rem'
+        marginLeft: '1rem !important',
+        marginRight: '1rem !important'
     },
-    rUnit: {
-        width: '5rem',
-        marginLeft: '1rem'
+    rShrink: {
+        transform: 'translate(0, 1.1rem) scale(0.75)!important'
+    },
+    rAddBtn: {
+        cursor: 'pointer',
+        color: theme.palette.primary.main,
+        fontSize: '2rem'
     },
     //Your Recipe
     yRSpan: {
@@ -136,7 +144,8 @@ export const useStyles = makeStyles((theme) => ({
     rEditTable: {
         display: 'flex',
         alignItems: 'center'
-    }
+    },
+
 }));
 
 export default { useStyles }

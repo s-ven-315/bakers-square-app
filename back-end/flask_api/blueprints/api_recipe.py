@@ -1,13 +1,10 @@
-import os
 from functools import wraps
 
 import flask
 from flask_jwt_extended import jwt_required
 from flask_api.blueprints.utils.decorators import api_post
-from flask_api.blueprints.utils.decorators import api_post_file
 from models.model_recipe import Recipe
 from models.model_user import User
-import services.storage as storage
 
 recipes_api_blueprint = flask.Blueprint('recipes_api', __name__)
 
@@ -61,15 +58,9 @@ def add_recipe():
     if not name:
         return flask.jsonify({'msg': 'Must provide non-empty name'}), 400
 
-
-<< << << < HEAD
-  recipe = Recipe(user=user, name=name)
-   if not recipe.save():
-        return flask.jsonify({'msg': 'Error in saving data'}), 400
-== == == =
-  # name
-  serving = json_data.get('serving')
-   if not serving:
+    # name
+    serving = json_data.get('serving')
+    if not serving:
         return flask.jsonify({'msg': 'Must provide non-empty serving'}), 400
 
     # name
@@ -86,8 +77,7 @@ def add_recipe():
                     preparation_time=preparation_time, cooking_time=cooking_time)
     if not recipe.save():
         return flask.jsonify({'msg': 'Error in saving data'}), 400
->>>>>> > b6d44121e22773a045ec67a6607888b4e8080d46
-  return flask.jsonify({'msg': 'Success'}), 200
+    return flask.jsonify({'msg': 'Success'}), 200
 
 
 @recipes_api_blueprint.route('/<recipeId>/edit', methods=['POST'])

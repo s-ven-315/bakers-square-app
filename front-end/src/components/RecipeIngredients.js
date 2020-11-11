@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios"
 import PropTypes from 'prop-types';
 import { useStyles } from '../containers/styles'
@@ -24,15 +24,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import CTE from "react-click-to-edit"
-import {DataContext} from "../contexts/Context";
-import {EditIngredientDialog} from "../containers/dialogs/EditIngredientDialog";
+import { DataContext } from "../contexts/Context";
+import { EditIngredientDialog } from "../containers/dialogs/EditIngredientDialog";
 
 
 
 export default function RecipeIngredients() {
     console.log("RecipeIngredients() is rendered.")
 
-    const {authUser, recipe} = useContext(DataContext)
+    const { authUser, recipe } = useContext(DataContext)
 
     // View State
     const [open, setOpen] = useState(false);
@@ -41,13 +41,8 @@ export default function RecipeIngredients() {
     const baker = recipe.user
     const isAuthUser = authUser.userId === baker.userId
 
-
     const classes = useStyles();
-    const [ingrList, setIngrList] = useState(recipe.ingredients)
-    useEffect(()=> setIngrList(recipe.ingredients), [recipe.ingredients])
-
-    const [submitted, setSubmitted] = useState(false)
-
+    const ingrList = recipe.ingredients
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -56,23 +51,9 @@ export default function RecipeIngredients() {
         setOpen(false);
     };
 
-    useEffect(() => {
-        axios.get("http://localhost:5000/api/recipes/" + recipe.id, {
-            headers: {
-                Authorization: "Bearer " + authUser.access_token
-            }
-        })
-            .then((response) => {
-                console.log("RecipeIngredients: http://localhost:5000/api/recipes/ GET is called()")
-                setIngrList(response.data.data.ingredients)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [submitted])
-
     return (
         <>
+
             <TableContainer className={classes.rTable}>
                 <Table>
                     <TableHead>
@@ -106,8 +87,7 @@ export default function RecipeIngredients() {
                             Edit
                         </Button>
                         <EditIngredientDialog
-                            ingrList={ingrList} setIngrList={setIngrList} open={open} onClose={handleClose}
-                            setSubmitted={setSubmitted} />
+                            ingrList={ingrList} open={open} onClose={handleClose} />
                     </> : null}
             </div>
         </>
