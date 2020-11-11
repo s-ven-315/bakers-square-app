@@ -1,8 +1,10 @@
 import os
 from functools import wraps
 
+
 import flask
 from flask_api.blueprints.utils.decorators import api_post
+from flask_api.blueprints.utils.decorators import api_post_file
 from models.model_user import User
 import services.storage as storage
 
@@ -65,20 +67,24 @@ def edit_user(userId: str):
 
 
 @users_api_blueprint.route('/<userId>/image', methods=['POST'])
-@api_post()
+@api_post_file()
 @userExists
 def edit_image(userId):
-    if "img_url" not in flask.request.files:
-        return flask.jsonify({'msg': 'No \'img_url\' key in request.files'}), 400
+    if "image" not in flask.request.files:
+        return flask.jsonify({'msg': 'No \'image\' key in request.files'}), 400
 
-    file = flask.request.files['user_file']
+    file = flask.request.files['image']
+    print(file)
     if file.filename == '':
-        return flask.jsonify({'msg': 'No file is found in \'img_url\' in request.files'}), 400
+        return flask.jsonify({'msg': 'No file is found in \'image\' in request.files'}), 400
 
     if file and storage.allowed_file(file.filename):
-        file.filename = "user{}-profile{}".format(userId, os.path.splitext(file.filename)[1])
+        print("here")
+        file.filename = "user{}-profile{}".format(
+            userId, os.path.splitext(file.filename)[1])
         upload_error = storage.upload_file_to_s3(file)
         if not upload_error:
-            User.update(img_url=file.filename).where(User.id == userId).execute()
+            User.update(imgName=file.filename).where(
+                User.userId == userId).execute()
 
     return flask.jsonify({'msg': 'Success'}), 200

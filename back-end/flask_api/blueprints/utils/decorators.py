@@ -3,7 +3,8 @@ from functools import wraps
 
 
 def api_post(keywords=None):
-    if keywords is None: keywords = []
+    if keywords is None:
+        keywords = []
 
     def inner(func):
         @wraps(func)
@@ -12,6 +13,21 @@ def api_post(keywords=None):
                 return flask.abort(400)
 
             if not all([k in flask.request.json for k in keywords]):
+                return flask.abort(400)
+
+            return func(*args, **kwargs)
+        return wrapper
+    return inner
+
+
+def api_post_file(keywords=None):
+    if keywords is None:
+        keywords = []
+
+    def inner(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if flask.request.files is None:
                 return flask.abort(400)
 
             return func(*args, **kwargs)
