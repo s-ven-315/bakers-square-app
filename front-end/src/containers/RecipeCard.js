@@ -40,7 +40,7 @@ export default function RecipeCard({recipe, hideComments, hideEdit}) {
 
     return (
         <div className="recipe-container" key={recipe.id}>
-            <UserListDialog className='recipe-img' title={"Likes"} users={likes} open={likeOpen} setOpen={setLikeOpen}/>
+            <UserListDialog title={"Likes"} users={likes} open={likeOpen} setOpen={setLikeOpen}/>
             <RecipeDialog title={"Edit Recipe"} recipe={recipe} open={recipeOpen} setOpen={setRecipeOpen} isNew={false}/>
             <WarningDialog title={"Confirm Delete"} msg={"Are you sure you want to delete this recipe?"}
                            open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => DeleteRecipe(context, recipe, history, false)}/>
