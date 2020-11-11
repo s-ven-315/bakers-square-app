@@ -15,7 +15,12 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #aaa;
-  margin: 0 3rem;
+  padding: 0 3rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: white;
 }
 
 .navbar-title {
