@@ -192,6 +192,7 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
   padding: 1.5rem;
   border-radius: 5px;
   margin: 20px 50px 0;
@@ -226,6 +227,18 @@ body {
   flex: 1 0;
 }
 
+.recipe-details-top-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.recipe-details-top-left-container {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
 .recipe-name {
   font-size: 2rem;
   line-height: 2.5rem;
@@ -233,9 +246,9 @@ body {
   font-weight: 500;
   color: black;
   text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  /*text-overflow: ellipsis;*/
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
   text-align:left;
   user-select: none;
   cursor: pointer;
@@ -303,27 +316,49 @@ body {
   padding: 5px 15px;
 }
 
-.recipe-info-container {
+.recipe-comment-container {
+  position: relative;
+  min-width: 0;
+  margin-top: 0.5rem;
+}
+
+.recipe-comment-container .recipe-comment {
+  font-size: 0.8rem;
+  text-align: left;
+  min-width: 0;
+}
+
+.recipe-comment-container .recipe-comment .recipe-comment-profile {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+
+.recipe-details-top-right-container {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
+  flex: 1;
 }
 
-.recipe-info-container .recipe-info-block {
+.recipe-details-top-right-container .recipe-info-block {
   padding: 8px;
   margin: 0 4px;
+  min-width: 48px;
+  max-width: 72px;
 }
 
-.recipe-info-container .recipe-info-block:hover {
+.recipe-details-top-right-container .recipe-info-block:hover {
   background-color: #fafafa;
 }
 
-.recipe-info-container .recipe-info-block .recipe-info-image {
+.recipe-details-top-right-container .recipe-info-block .recipe-info-image {
   width: 48px;
   height: 48px;
 }
 
-.recipe-info-container .recipe-info-block .recipe-info-text {
-
+.recipe-details-top-right-container .recipe-info-block .recipe-info-text {
+  font-size: 0.8rem;
 }
 
 .recipe-button-container {

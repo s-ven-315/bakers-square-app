@@ -46,11 +46,29 @@ export default function RecipeCard({recipe, hideComments, hideEdit}) {
                            open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => DeleteRecipe(context, recipe, history, false)}/>
             <img className='recipe-img' src={recipe.img_url} alt="" onClick={goToRecipePage}/>
             <div className="recipe-details-container">
-                <div className="recipe-name" onClick={goToRecipePage}>{recipe.name}</div>
-                <div className="recipe-baker-row" onClick={goToUserPage}>
-                    <div className="recipe-baker-button">
-                        <Avatar className='recipe-baker-icon' alt={`${baker.userId}`} src={baker.img_url} style={{backgroundColor: '#e6e6e6'}}/>
-                        {baker.name} <span className='recipe-baker-userId'>@{baker.userId}</span>
+                <div className="recipe-details-top-container">
+                    <div className="recipe-details-top-left-container">
+                        <div className="recipe-name" onClick={goToRecipePage}>{recipe.name}</div>
+                        <div className="recipe-baker-row" onClick={goToUserPage}>
+                            <div className="recipe-baker-button">
+                                <Avatar className='recipe-baker-icon' alt={`${baker.userId}`} src={baker.img_url} style={{backgroundColor: '#e6e6e6'}}/>
+                                {baker.name} <span className='recipe-baker-userId'>@{baker.userId}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="recipe-details-top-right-container">
+                        <div className="recipe-info-block">
+                            <img src={servingIcon} alt="" className="recipe-info-image"/>
+                            <div className="recipe-info-text">{recipe.serving} Servings</div>
+                        </div>
+                        <div className="recipe-info-block">
+                            <img src={preparationTimeIcon} alt="" className="recipe-info-image"/>
+                            <div className="recipe-info-text">{recipe.preparation_time} Minutes</div>
+                        </div>
+                        <div className="recipe-info-block">
+                            <img src={cookingTimeIcon} alt="" className="recipe-info-image"/>
+                            <div className="recipe-info-text">{recipe.cooking_time} Minutes</div>
+                        </div>
                     </div>
                 </div>
                 <div className="recipe-following-container">
@@ -58,28 +76,13 @@ export default function RecipeCard({recipe, hideComments, hideEdit}) {
                     <Button color="inherit">{recipe.comments.length} Comments</Button>
                 </div>
                 {(hideComments)? null :
-                <div className="recipe-following-container">
-                    <Button color="inherit" onClick={() => setLikeOpen(true)}>{likes.length} Likes</Button>
-                    <Button color="inherit">{recipe.comments.length} Comments</Button>
+                <div className="recipe-comment-container">
+                    {recipe.comments.slice(0, 2).map(c => <div className='recipe-comment'>
+                        <span className='recipe-comment-profile'>{c.user.name}</span>{c.text}
+                    </div>)}
                 </div>
                     }
             </div>
-            <div className="recipe-info-container">
-                <div className="recipe-info-block">
-                    <img src={servingIcon} alt="" className="recipe-info-image"/>
-                    <div className="recipe-info-text">{recipe.serving} Servings</div>
-                </div>
-                <div className="recipe-info-block">
-                    <img src={preparationTimeIcon} alt="" className="recipe-info-image"/>
-                    <div className="recipe-info-text">{recipe.preparation_time} Minutes</div>
-                </div>
-                <div className="recipe-info-block">
-                    <img src={cookingTimeIcon} alt="" className="recipe-info-image"/>
-                    <div className="recipe-info-text">{recipe.cooking_time} Minutes</div>
-                </div>
-
-            </div>
-
             <div className="recipe-button-container">
                 {recipe.user.name === authUser.name && !hideEdit?
                     <div className="recipe-button-icon-container">
