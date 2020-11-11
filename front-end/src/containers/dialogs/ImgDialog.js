@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
 import axios from "axios";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import {DataContext} from "../../contexts/Context";
 
 
 export function ImgDialog(props) {
-    const { loggedIn, title, user, open, setOpen, previewImg, setPreviewImg, imageFile, setImageFile } = props;
+    const context = useContext(DataContext)
+    const {authUser, user, setUser} = context
+    const { title, open, setOpen, previewImg, setPreviewImg, imageFile, setImageFile } = props;
     const handleSelect = (e) => {
         setPreviewImg(URL.createObjectURL(e.target.files[0]))
         setImageFile(e.target.files[0])

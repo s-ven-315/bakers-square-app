@@ -17,6 +17,16 @@ import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import {DataContext} from "../../contexts/Context";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
+import CTE from "react-click-to-edit"
+
 
 export function EditIngredientDialog(props) {
     console.log(`EditIngredientDialog() is rendered.`)
@@ -30,6 +40,7 @@ export function EditIngredientDialog(props) {
     const [tempList, setTempList] = useState(ingrList)
     const [ingrOptions, setIngrOptions] = useState([])
     useEffect(() => setTempList(ingrList), [ingrList])
+
     const handleRemove = (idx) => {
         let clonedList = [...tempList]
         clonedList.splice(idx, 1)
@@ -97,17 +108,42 @@ export function EditIngredientDialog(props) {
             })
     }, [])
     return (
-        <Dialog onClose={handleClose} fullwidth='true' aria-labelledby="edit-list-dialog" open={open}>
+        <Dialog onClose={handleClose} fullwidth="true" aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Ingredient List</DialogTitle>
             <List>
-                {tempList ? tempList.map((ingr, idx) => (
+                <TableContainer className={classes.rTable}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classes.rTableHead} align="left">Ingredients</TableCell>
+                                <TableCell className={classes.rTableHead} align="right">Quantity</TableCell>
+                                <TableCell className={classes.rTableHead} align="right">Unit</TableCell>
+                            </TableRow>
+                        </TableHead>
+
+                        <TableBody>
+                            {tempList ? tempList.map((ingr, idx) => (
+                                <TableRow key={idx}>
+                                    <TableCell className={classes.rEditTable} component="th" scope="row">
+                                        <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} />
+                                        <CTE wrapperCLass="wrapper" textClass="text" initialValue={`${ingr.name}`} />
+                                    </TableCell>
+                                    <TableCell align="right">{ingr.qty}</TableCell>
+                                    <TableCell align="right">{ingr.unit === "" ? <span>-</span> : <span>{ingr.unit}</span>}</TableCell>
+                                </TableRow>
+                            )) : null
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {/* {tempList ? tempList.map((ingr, idx) => (
                     <ListItem key={idx}>
                         <Avatar button="true" className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
                             <RemoveIcon />
                         </Avatar>
                         <ListItemText className={classes.rList} primary={ingr.name + "," + ingr.qty + ingr.unit} />
                     </ListItem>
-                )) : null}
+                )) : null} */}
                 <ListItem>
                     <Grid container spacing={1} alignItems="flex-end">
                         <Grid item>

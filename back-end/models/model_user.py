@@ -14,7 +14,7 @@ class User(BaseModel, UserMixin):
     name = pw.CharField(unique=False, null=False)
     email = pw.CharField(unique=True, null=False)
     pw_hash = pw.CharField(unique=False, null=False)
-    imgName = pw.CharField(null=True)
+    imgName = pw.CharField(null=True, default='')
     pw = ''
 
     def validate(self):

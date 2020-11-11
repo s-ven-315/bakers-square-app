@@ -104,7 +104,8 @@ export default function Profile() {
         <>
             <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen} />
             <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen} />
-            <ImgDialog loggedIn={loggedIn} title={"Change Profile Pic"} user={user} open={editImgOpen} setOpen={setEditImgOpen} previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} />
+            <ImgDialog title={"Change Profile Pic"} open={editImgOpen} setOpen={setEditImgOpen}
+                       previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} />
 
             {(!user.userId)?
                 <h1>User not found</h1> :

@@ -17,6 +17,8 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import {DataContext} from "../../contexts/Context";
 import {SaveRecipeSteps} from "../../helpers";
+import CTE from "react-click-to-edit"
+import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 
 
 export function EditStepDialog(props) {
@@ -47,6 +49,15 @@ export function EditStepDialog(props) {
         clonedList.splice(idx, 1)
         setTempList(clonedList)
     }
+    const handleChange = (idx, val) => {
+        console.log(idx)
+        console.log(val)
+        let clonedList = [...tempList]
+        console.log(clonedList[idx])
+        // clonedList.replace(clonedList[idx], val)
+        console.log(clonedList)
+    }
+
     const handleClose = () => {
         setTempList(steps.map(s => s.text))
         onClose();
@@ -67,7 +78,7 @@ export function EditStepDialog(props) {
 
         let item = items[position]
         console.log(item)
-        let reList = items.filter((i) => i !== step)
+        let reList = items.filter((i) => i != step)
         reList.splice(position + direction, 0, item)
         console.log(reList)
         setTempList(reList)
@@ -77,21 +88,18 @@ export function EditStepDialog(props) {
         handleClose()
     }
     return (
-        <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
-            <DialogTitle id="simple-dialog-title">Edit Steps</DialogTitle>
+    <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
+            <DialogTitle id="simple-dialog-title">Recipe Steps</DialogTitle>
             <List>
                 {tempList.map((step, idx) => (
                     <ListItem key={idx}>
-                        <Avatar button className={classes.rAvatarSmall} onClick={() => handleRemove(idx)}>
-                            <RemoveIcon />
-                        </Avatar>
-                        <ListItemText className={classes.rList} primary={step} />
-                        <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, UP)}>
-                            <ExpandLessIcon />
-                        </Avatar>
-                        <Avatar button className={classes.rArrow} onClick={() => handleMove(step, idx, DOWN)}>
-                            <ExpandMoreIcon />
-                        </Avatar>
+                        <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} />
+                        <ListItemText>
+                            <CTE wrapperCLass="wrapper" textClass="text" initialValue={`${step}`} endEditing={(val) => handleChange(idx, val)} />
+                        </ListItemText>
+                        {/* <ListItemText className={classes.rList} primary={step} /> */}
+                        <ExpandLessIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, UP)} />
+                        <ExpandMoreIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, DOWN)} />
                     </ListItem>
                 ))}
                 <ListItem>

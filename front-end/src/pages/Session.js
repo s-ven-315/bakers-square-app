@@ -21,10 +21,10 @@ export default function Session() {
     console.log("Session() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, setUser} = context
+    const {authUser, setUser, recipe} = context
 
     const { recipeId } = useParams()
-    const [steps, setSteps] = useState([])
+    const steps = recipe.steps
 
     console.log(steps)
 
