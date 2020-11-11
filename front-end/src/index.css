@@ -382,23 +382,32 @@ body {
 
 /* comments */
 .comment-container-outer{
-  padding: 0 15%
-}
-.comment-inner {
-  display: flex
-}
-.comment-user{
-  font-weight: bold;
-  margin-right: 7px;
-}
-.comment-inner>p{
-  margin-top:5px;
-  margin-bottom:5px
+  padding: 0 5%
 }
 .comment-textfield {
   display:flex;
-  align-items:baseline
+  align-items:baseline;
+  padding: 0 16px
 }
+
+/* Img Upload Dialog */
+.img-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.img-preview-container>button {
+  margin-bottom: 1rem
+}
+.img-preview {
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+  margin: 1rem 0
+}
+
+
 @media screen and (max-width: 475px) {
   .menu-wide {
     display:None;

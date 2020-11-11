@@ -14,7 +14,7 @@ import { useStyles } from '../containers/styles'
 import {UserListDialog} from "../containers/dialogs/UserListDialog";
 import {DataContext, emptyRecipe, emptyUser} from "../contexts/Context";
 import {EditProfileDialog} from "../containers/dialogs/EditProfileDialog";
-
+import { ImgDialog } from "../containers/dialogs/ImgDialog";
 
 
 
@@ -61,7 +61,10 @@ export default function Profile() {
 
     // edit profile name
     const [editOpen, setEditOpen] = useState(false);
-
+    // edit profile img
+    const [editImgOpen, setEditImgOpen] = useState(false);
+    const [previewImg, setPreviewImg] = useState(null)
+    const [imageFile, setImageFile] = useState({})
     const recipesNum = (user.recipes) ? user.recipes.length : 0;
     const likedRecipesNum = (user.liked_recipes) ? user.liked_recipes.length : 0;
     const followers = (user.followers) ? user.followers : [];
@@ -99,8 +102,9 @@ export default function Profile() {
 
     return (
         <>
-            <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen}/>
-            <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen}/>
+            <UserListDialog title={"Followers"} users={user.followers} open={followerOpen} setOpen={setFollowerOpen} />
+            <UserListDialog title={"Following"} users={user.following} open={followingOpen} setOpen={setFollowingOpen} />
+            <ImgDialog loggedIn={loggedIn} title={"Change Profile Pic"} user={user} open={editImgOpen} setOpen={setEditImgOpen} previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} />
 
             {(!user.userId)?
                 <h1>User not found</h1> :
@@ -109,7 +113,7 @@ export default function Profile() {
                         <div className="profile-container">
                             <div className="profile-container-inner">
                                 <div className="profile-img">
-                                    <img src={user.img_url} style={{backgroundColor: '#e6e6e6'}}/>
+                                    <img src={user.img_url} style={{ backgroundColor: '#e6e6e6' }} onClick={() => setEditImgOpen(true)} />
                                 </div>
                                 <div className="profile-details">
                                     <div className="profile-name">{user.name}

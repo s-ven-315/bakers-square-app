@@ -72,7 +72,7 @@ export default function RecipeDetails() {
                     <RecipeIngredients/>
                 </TabPanel>
 
-                <TabPanel value={value} index={1}>
+                <TabPanel className={classes.recipeDetailsTabPanel} value={value} index={1}>
                     <RecipeSteps />
                 </TabPanel>
 

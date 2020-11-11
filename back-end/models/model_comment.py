@@ -8,14 +8,16 @@ class Comment(BaseModel):
     id = pw.AutoField()
     text = pw.CharField(null=False)
     user = pw.ForeignKeyField(User, backref='comments', on_delete="CASCADE")
-    recipe = pw.ForeignKeyField(Recipe, backref='comments', on_delete="CASCADE")
+    recipe = pw.ForeignKeyField(
+        Recipe, backref='comments', on_delete="CASCADE")
 
     def as_dict(self, basic=False):
         if not basic:
             return dict(
                 type='Comment',
                 id=self.id,
-                user=dict(userId=self.user.userId, name=self.user.name),
+                user=dict(userId=self.user.userId,
+                          name=self.user.name, img_url=self.user.imgUrl),
                 recipe=dict(id=self.recipe.id, name=self.recipe.name),
                 text=self.text,
             )
@@ -24,6 +26,7 @@ class Comment(BaseModel):
                 type='Comment',
                 id=self.id,
                 text=self.text,
-                user=dict(userId=self.user.userId, name=self.user.name),
+                user=dict(userId=self.user.userId,
+                          name=self.user.name, img_url=self.user.imgUrl),
                 recipe=dict(id=self.recipe.id, name=self.recipe.name),
             )

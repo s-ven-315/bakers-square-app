@@ -1,16 +1,23 @@
 import React, {useState, useEffect, useContext} from "react"
 import axios from "axios"
+import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import { useStyles } from "../containers/styles"
 import {DataContext} from "../contexts/Context";
 
+import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 
 export default function Comments() {
     console.log("Comments() is rendered.")
     const context = useContext(DataContext)
     const {authUser, recipe} = context
 
+    const history = useHistory();
     const classes = useStyles()
     const [input, setInput] = useState("")
     const [submitted, setSubmitted] = useState(false)
@@ -18,6 +25,10 @@ export default function Comments() {
     const handleInput = (e) => {
         setInput(e.target.value)
     }
+    const onClick = userId => {
+        history.push(`/users/${userId}`)
+    };
+
     const sendComment = (input) => {
         const userId = authUser.userId
         const recipeId = recipe.id
@@ -64,10 +75,12 @@ export default function Comments() {
             {comments === [] ? null :
                 comments.map(comment => {
                     return (
-                        <div className="comment-inner">
-                            <p className="comment-user">{comment.user.userId}</p>
-                            <p className="comment-text">{comment.text}</p>
-                        </div>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar className={classes.cAvatar} onClick={() => onClick(comment.user.userId)} alt={comment.user.userId} src={comment.user.img_url} />
+                            </ListItemAvatar>
+                            <ListItemText primary={comment.user.name} secondary={comment.text} />
+                        </ListItem>
                     )
                 })
             }
