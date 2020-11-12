@@ -1,24 +1,23 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios"
-import {DataContext} from "../contexts/Context";
+import { DataContext } from "../contexts/Context";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        paddingTop: '10px'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -31,17 +30,22 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    error: {
+        color: 'red'
+    }
 }));
 
 export default function Login() {
     console.log("Login() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, setAuthUser} = context
+    const { authUser, setAuthUser } = context
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const classes = useStyles();
+    const [error, setError] = useState("")
+
     const handleLogin = (e) => {
         e.preventDefault()
         axios({
@@ -58,6 +62,8 @@ export default function Login() {
             })
             .catch(error => {
                 console.error(error.response)
+                setError(error.response.data.msg)
+
             })
     }
     if (authUser.access_token) {
@@ -97,10 +103,7 @@ export default function Login() {
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
+                    <Typography className={classes.error} variant="caption" display="block" gutterBottom>{error ? <span>Error: {error}</span> : null}</Typography>
                     <Button
                         type="submit"
                         fullWidth

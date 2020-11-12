@@ -205,6 +205,23 @@ export const SaveRecipeSteps = (context, tempList) => {
             console.error(error.response)
         })
 }
+export const PostComment = (context, input, setInput) => {
+    const { authUser, recipe } = context
+    const url = 'http://localhost:5000/api/comments/'
+    axiosPost(url, authUser, {
+        'userId': authUser.userId,
+        'recipeId': recipe.id,
+        'text': input
+    })
+        .then(response => {
+            console.log(response)
+            setInput("")
+            GetRecipe(context, recipe.id)
+        })
+        .catch(error => {
+            console.error(error.response)
+        })
+}
 
 export const EditImage = (context, formData, setOpen, setPreviewImg, isProfile) => {
     const { authUser, recipe } = context

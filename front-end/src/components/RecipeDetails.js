@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react"
+import React, { useContext, useState } from "react"
 import PropTypes from 'prop-types';
 import { useStyles } from '../containers/styles'
 import Tabs from '@material-ui/core/Tabs';
@@ -7,8 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import RecipeIngredients from './RecipeIngredients'
 import RecipeSteps from './RecipeSteps'
-import {DataContext} from "../contexts/Context";
-
+import { DataContext } from "../contexts/Context";
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -55,6 +58,24 @@ export default function RecipeDetails() {
 
     return (
         <>
+            <div className={classes.recipeDetailsMobile}>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        Ingredients
+                    </AccordionSummary>
+                    <AccordionDetails className={classes.aDetails}>
+                        <RecipeIngredients />
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        Recipe Steps
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <RecipeSteps />
+                    </AccordionDetails>
+                </Accordion>
+            </div>
             <div className={classes.recipeDetailsRoot}>
                 <Tabs
                     orientation="vertical"
@@ -68,8 +89,9 @@ export default function RecipeDetails() {
                     <Tab label="Recipe Steps" {...a11yProps(1)} />
 
                 </Tabs>
+
                 <TabPanel value={value} index={0}>
-                    <RecipeIngredients/>
+                    <RecipeIngredients />
                 </TabPanel>
 
                 <TabPanel className={classes.recipeDetailsTabPanel} value={value} index={1}>

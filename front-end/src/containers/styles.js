@@ -33,7 +33,10 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
         height: 224,
-        textAlign: 'left'
+        textAlign: 'left',
+        "@media screen and (max-width: 767px)": {
+            display: 'none'
+        }
     },
     recipeDetailsTabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
@@ -41,7 +44,14 @@ export const useStyles = makeStyles((theme) => ({
     recipeDetailsTabPanel: {
         width: '80%'
     },
-
+    recipeDetailsMobile: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100vw',
+        "@media screen and (min-width: 768px)": {
+            display: 'none'
+        }
+    },
     // RecipeIngredients & RecipeSteps
     rDefault: {
         marginTop: theme.spacing(2),
@@ -136,6 +146,10 @@ export const useStyles = makeStyles((theme) => ({
     rEditTable: {
         display: 'flex',
         alignItems: 'center'
+    },
+    // Accordion
+    aDetails: {
+        overflowY: 'auto'
     },
 
 }));

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios"
-import {DataContext} from "../contexts/Context";
+import { DataContext } from "../contexts/Context";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        paddingTop: '10px'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -30,19 +31,23 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    error: {
+        color: 'red'
+    }
 }));
 
 export default function SignUp() {
     console.log("SignUp() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, setAuthUser} = context
+    const { authUser, setAuthUser } = context
 
     const classes = useStyles();
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConf, setPasswordConf] = useState("")
+    const [error, setError] = useState("")
     const handleSignup = (e) => {
         e.preventDefault()
         axios({
@@ -61,7 +66,9 @@ export default function SignUp() {
 
             })
             .catch(error => {
-                console.error(error.response)
+                console.log(error.response)
+                console.log(error.response.data.msg)
+                setError(error.response.data.msg)
             })
     }
     if (authUser.access_token) {
@@ -111,7 +118,7 @@ export default function SignUp() {
                         type="password"
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
-                        helperText="Password must contain at least 7 characters with a mixture of uppercase and lowercase letter and numeric character"
+                    // helperText="Password must contain at least 7 characters with a mixture of uppercase and lowercase letter and numeric character"
                     />
                     <TextField
                         variant="outlined"
@@ -123,6 +130,7 @@ export default function SignUp() {
                         onChange={(e) => setPasswordConf(e.target.value)}
                         type="password"
                     />
+                    <Typography className={classes.error} variant="caption" display="block" gutterBottom>{error ? <span>Error: {error}</span> : null}</Typography>
                     <Button
                         type="submit"
                         fullWidth
