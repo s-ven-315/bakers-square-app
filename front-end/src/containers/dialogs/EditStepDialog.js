@@ -15,9 +15,9 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { DataContext } from "../../contexts/Context";
 import { SaveRecipeSteps } from "../../helpers";
-import CTE from "react-click-to-edit"
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
+import {ClickToEdit} from "../ClickToEdit";
 
 
 export function EditStepDialog(props) {
@@ -31,6 +31,8 @@ export function EditStepDialog(props) {
     const classes = useStyles();
     const [tempList, setTempList] = useState(steps.map(s => s.text))
     useEffect(() => setTempList(steps.map(s => s.text)), [steps])
+
+    console.log(tempList)
 
     const handleInput = (e) => {
         setNewItem(e.target.value)
@@ -77,7 +79,7 @@ export function EditStepDialog(props) {
 
         let item = items[position]
         console.log(item)
-        let reList = items.filter((i) => i != step)
+        let reList = items.filter((i) => i !== step)
         reList.splice(position + direction, 0, item)
         console.log(reList)
         setTempList(reList)
@@ -86,6 +88,7 @@ export function EditStepDialog(props) {
         SaveRecipeSteps(context, tempList)
         handleClose()
     }
+
     return (
         <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
             <DialogTitle id="simple-dialog-title">Recipe Steps</DialogTitle>
@@ -94,8 +97,7 @@ export function EditStepDialog(props) {
                     <ListItem className={classes.rTable} key={idx}>
                         <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} />
                         <ListItemText className={classes.rTableTh}>
-                            {/* <li>{step}</li> */}
-                            <CTE initialValue={step} endEditing={(val) => handleChange(idx, val)} />
+                            <ClickToEdit initialValue={step} endEditing={(val) => handleChange(idx, val)} inputClass={'click-to-edit-input'} textClass={'click-to-edit-text'}/>
                         </ListItemText>
                         {/* <ListItemText className={classes.rList} primary={step} /> */}
                         <ExpandLessIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, UP)} />

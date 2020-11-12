@@ -592,6 +592,26 @@ body {
   margin-left: 5px
 }
 
+.click-to-edit-input {
+  resize: none;
+  box-sizing: border-box;
+  text-align: left!important;
+  /*border: 1px solid red!important;*/
+  line-height: 1.5rem;
+  min-height: 1.5rem!important;
+  overflow: hidden;
+}
+
+.click-to-edit-text {
+  width: 100%;
+  box-sizing: border-box;
+  /*border: 1px solid blue!important;*/
+  margin-left: 0!important;
+  line-height: 1.5rem;
+  min-height: 1.5rem!important;
+}
+
+
 @media screen and (max-width: 475px) {
   .menu-wide {
     display:None;

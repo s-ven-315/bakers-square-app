@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 
 import peewee as pw
@@ -117,7 +118,7 @@ class Recipe(BaseModel):
         from models.model_step import Step
         try:
             # Delete all existing steps
-            toDel = Step.delete().where(Step.recipe == self)
+            toDel = Step.delete().where(Step.recipe == self, Step.created_at < datetime.now())
             toDel.execute()
 
             # Add new steps
@@ -125,8 +126,8 @@ class Recipe(BaseModel):
             for no, step in enumerate(stepList):
                 toAdd.append({'no': no+1, "text": step, "recipe": self})
             if len(toAdd) > 0:
-                Step.insert_many(toAdd).execute()
-
+                [Step.create(**k) for k in toAdd]
             return True
-        except:
+        except Exception as e:
+            raise e
             return False

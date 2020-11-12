@@ -1088,6 +1088,7 @@ sequence|table|21530|21532|1
     </table>
     <table id="56" parent="21" name="step">
       <ObjectId>21472</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>Tan Yi Quan</Owner>
       <StateNumber>2613</StateNumber>
     </table>
