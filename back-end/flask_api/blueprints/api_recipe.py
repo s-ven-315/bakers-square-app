@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from functools import wraps
 
 import flask
@@ -141,8 +142,8 @@ def edit_image(recipeId):
 
     if file and storage.allowed_file(file.filename):
         print("here")
-        file.filename = "recipe{}-profile{}".format(
-            recipeId, os.path.splitext(file.filename)[1])
+        file.filename = "recipe{}-profile-{}{}".format(
+            recipeId, datetime.strftime(datetime.now(), "%y%m%d%H%M%S"), os.path.splitext(file.filename)[1])
         upload_error = storage.upload_file_to_s3(file)
         if not upload_error:
             Recipe.update(imgName=file.filename).where(

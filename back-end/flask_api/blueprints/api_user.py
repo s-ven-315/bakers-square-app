@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from functools import wraps
 
 
@@ -80,8 +81,8 @@ def edit_image(userId):
 
     if file and storage.allowed_file(file.filename):
         print("here")
-        file.filename = "user{}-profile{}".format(
-            userId, os.path.splitext(file.filename)[1])
+        file.filename = "user{}-profile-{}{}".format(
+            userId, datetime.strftime(datetime.now(), "%y%m%d%H%M%S"), os.path.splitext(file.filename)[1])
         upload_error = storage.upload_file_to_s3(file)
         if not upload_error:
             User.update(imgName=file.filename).where(
