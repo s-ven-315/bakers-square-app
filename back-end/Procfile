@@ -1,0 +1,3 @@
+ release: python migrate.py
+ release: python seed.py
+ web: gunicorn start:app --preload
