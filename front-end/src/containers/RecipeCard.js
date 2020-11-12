@@ -97,7 +97,7 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
                         <button className="recipe-button recipe-button-icon" onClick={() => setConfirmOpen(true)}><DeleteIcon /></button>
                     </div> : null
                 }
-                <button className="recipe-button" onClick={() => history.push(`recipes/${recipe.id}/session`)}>Start Baking</button>
+                <button className="recipe-button" onClick={() => history.push(`/recipes/${recipe.id}/sessions`)}>Start Baking</button>
                 {isLike ?
                     <button className="recipe-button"
                         onClick={() => Like(context, false, recipe, setLikes)}>Liked</button> :
