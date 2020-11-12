@@ -10,21 +10,25 @@ export const axiosPost = (url, authUser, data) => axios.post(url, data, config(a
 
 
 export const GetRecipe = (context, recipeId) => {
-    const { authUser, setRecipe } = context
+    const { authUser, setRecipe, setLoading } = context
+    setLoading(true)
 
     const url = "http://localhost:5000/api/recipes/" + recipeId
     axiosGet(url, authUser)
         .then((response) => {
             const data = response.data.data
             setRecipe(data)
+            setLoading(false)
         })
         .catch((error) => {
             console.log(error)
+            setLoading(false)
         })
 }
 
 export const GetUser = (context, userId) => {
-    const { authUser, setAuthUser, setUser } = context
+    const { authUser, setAuthUser, setUser, setLoading } = context
+    setLoading(true)
 
     const url = "http://localhost:5000/api/users/" + userId
     axiosGet(url, authUser)
@@ -34,9 +38,11 @@ export const GetUser = (context, userId) => {
             if (userId === authUser.userId) {
                 setAuthUser({ ...response.data.data, 'access_token': authUser.access_token })
             }
+            setLoading(false)
         })
         .catch((error) => {
             console.log(error)
+            setLoading(false)
         })
 }
 

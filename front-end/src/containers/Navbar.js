@@ -10,19 +10,20 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu'
 import { useHistory } from "react-router-dom"
 import { useStyles } from "./styles"
-import {DataContext} from "../contexts/Context";
+import {DataContext, emptyUser} from "../contexts/Context";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 
 const Navbar = () => {
     console.log("Navbar() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, setAuthUser} = context
+    const {authUser, setAuthUser, isLoading} = context
 
     const classes = useStyles()
     const handleLogout = () => {
         localStorage.removeItem("user")
-        setAuthUser(null)
+        setAuthUser(emptyUser)
     }
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -125,7 +126,8 @@ const Navbar = () => {
                         </>
                     }
                 </div >
-            </div >
+            </div>
+            {(isLoading)? <LinearProgress />: <div style={{height: '4px', backgroundColor: 'transparent'}} />}
         </>
     )
 }

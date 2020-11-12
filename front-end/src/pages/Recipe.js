@@ -60,7 +60,7 @@ export default function Recipe() {
 
     const { recipeId } = useParams()
     const context = useContext(DataContext)
-    const { authUser, recipe, setUser } = context
+    const { authUser, recipe, setUser, isLoading } = context
 
     const classes = useStyles();
 
@@ -85,7 +85,7 @@ export default function Recipe() {
     return (
         <>
             {!recipe.id ?
-                <h1>Recipe not found</h1> :
+                ((isLoading)? null : <h1>Recipe not found</h1>) :
                 <div style={{ display: 'flex', flexFlow: 'column nowrap', alignItems: 'center', maxWidth: '1080px', margin: '0 auto' }}>
                     <RecipeCard recipe={recipe}
                         key={recipe.id}

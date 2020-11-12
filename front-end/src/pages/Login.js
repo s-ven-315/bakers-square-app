@@ -37,13 +37,14 @@ export default function Login() {
     console.log("Login() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, setAuthUser} = context
+    const {authUser, setAuthUser, setLoading} = context
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const classes = useStyles();
     const handleLogin = (e) => {
         e.preventDefault()
+        setLoading(true)
         axios({
             method: 'POST',
             url: 'http://localhost:5000/api/auth/login',
@@ -55,9 +56,11 @@ export default function Login() {
             .then(response => {
                 console.log(response)
                 setAuthUser(response.data)
+                setLoading(false)
             })
             .catch(error => {
                 console.error(error.response)
+                setLoading(false)
             })
     }
     if (authUser.access_token) {

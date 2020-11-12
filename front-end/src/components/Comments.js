@@ -21,7 +21,8 @@ export default function Comments() {
     const classes = useStyles()
     const [input, setInput] = useState("")
     const [submitted, setSubmitted] = useState(false)
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState(recipe.comments)
+    useEffect(() => setComments(recipe.comments),[recipe.comments])
     const handleInput = (e) => {
         setInput(e.target.value)
     }

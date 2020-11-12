@@ -36,7 +36,7 @@ export default function SignUp() {
     console.log("SignUp() is rendered.")
 
     const context = useContext(DataContext)
-    const {authUser, setAuthUser} = context
+    const {authUser, setAuthUser, setLoading} = context
 
     const classes = useStyles();
     const [name, setName] = useState("")
@@ -45,6 +45,7 @@ export default function SignUp() {
     const [passwordConf, setPasswordConf] = useState("")
     const handleSignup = (e) => {
         e.preventDefault()
+        setLoading(true)
         axios({
             method: 'POST',
             url: 'http://localhost:5000/api/auth/signup',
@@ -58,10 +59,11 @@ export default function SignUp() {
                 console.log(response)
                 localStorage.setItem("user", JSON.stringify(response.data))
                 setAuthUser(response.data)
-
+                setLoading(false)
             })
             .catch(error => {
                 console.error(error.response)
+                setLoading(false)
             })
     }
     if (authUser.access_token) {

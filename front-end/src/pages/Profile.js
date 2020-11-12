@@ -49,7 +49,7 @@ export default function Profile() {
     console.log("Profile() is rendered.")
 
     const context = useContext(DataContext)
-    const { authUser, user, setUser, setRecipe } = context
+    const { authUser, user, setUser, setRecipe, isLoading } = context
     const { userId } = useParams()
 
 
@@ -111,7 +111,7 @@ export default function Profile() {
                 previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} isProfile={isProfile} />
 
             {(!user.userId) ?
-                <h1>User not found</h1> :
+                ((isLoading)? null : <h1>User not found</h1>) :
                 <>
                     <div className="profile-page-container">
                         <div className="profile-container">

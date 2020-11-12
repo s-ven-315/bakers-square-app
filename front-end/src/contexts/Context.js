@@ -42,7 +42,9 @@ export const DataContext = createContext({
     user: emptyUser,
     setUser: () => {},
     recipe: emptyRecipe,
-    setRecipe: () => {}
+    setRecipe: () => {},
+    isLoading: false,
+    setLoading: () => {}
 });
 
 const { Provider } = DataContext;
@@ -54,6 +56,7 @@ const DataProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(initialAuthUser);
     const [user, setUser] = useState(emptyUser);
     const [recipe, setRecipe] = useState(emptyRecipe);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(()=> {
         if (authUser.access_token) {
@@ -63,7 +66,7 @@ const DataProvider = ({ children }) => {
         }
     }, [authUser])
 
-    return <Provider value={{authUser, setAuthUser, user, setUser, recipe, setRecipe}}>{children}</Provider>
+    return <Provider value={{authUser, setAuthUser, user, setUser, recipe, setRecipe, isLoading, setLoading}}>{children}</Provider>
 };
 
 DataProvider.context = DataContext;

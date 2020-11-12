@@ -51,7 +51,7 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
             <EditImgDialog title={"Change Recipe Picture"} open={editImgOpen} setOpen={setEditImgOpen}
                 previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} isProfile={false} />
             <WarningDialog title={"Confirm Delete"} msg={"Are you sure you want to delete this recipe?"}
-                open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => DeleteRecipe(context, recipe, history, false)} />
+                open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => DeleteRecipe(context, recipe, history, true)} />
             <div className={(canEdit)? 'recipe-img recipe-img-hover' : 'recipe-img'}>
                 <img src={recipe.img_url} alt="" onClick={() => (canEdit)? setEditImgOpen(true): goToRecipePage()} />
             </div>
