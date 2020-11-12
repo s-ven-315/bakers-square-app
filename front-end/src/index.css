@@ -528,11 +528,6 @@ body {
   text-align: left
 }
 
-/* RecipeIngredients.js */
-.ingredient-add-form {
-  display: flex
-}
-
 /* slides */
 .swiper-slide {
   display: flex;
@@ -593,10 +588,6 @@ body {
   margin-left: 5px
 }
 
-.table-ingr-name-container {
-  display: flex;
-}
-
 .wrapper {
   display: inline!important;
   position: relative;
@@ -613,20 +604,121 @@ body {
   font-size: 0.875rem;
 }
 
+
+
+.inline {
+  border-bottom: 2px solid transparent;
+  outline: none;
+  width: 100%;
+}
+
+.inline.MuiInput-underline:after, .inline.MuiInput-underline:hover:not(.Mui-disabled):before, .inline.MuiInput-underline:before {
+  border-bottom: 2px solid transparent;
+}
+
+.inline .MuiInput-underline:after, .inline .MuiInput-underline:hover:not(.Mui-disabled):before, .inline .MuiInput-underline:before {
+  border-bottom: 2px solid transparent;
+}
+
+.inline .MuiInputBase-input {
+  padding-bottom: 6px;
+}
+
+.inline .MuiInput-underline input {
+  text-align: inherit;
+}
+
 .ingredient-dialog {
   width: 100%;
   height: 100%;
-  max-width: 450px;
-  margin: auto;
-  border: 1px solid deeppink;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.ingredient-dialog .MuiDialog-paperScrollPaper {
+  height: 100%;
+  max-height: 750px;
+}
+
+.ingredient-dialog-table {
+  overflow: scroll;
+  flex: 1;
+  position: relative;
+}
+
+.ingredient-dialog-table-blank {
+  display: flex;
+  flex: 1;
+  min-height: calc(48px*2);
+}
+
+.floating-button {
+  position: absolute;
+  bottom: 48px;
+  right: 40px;
+  cursor: pointer;
+  height: 3rem !important;
+  width: 3rem !important;
+  color: #c6783c;
 }
 
 .ingredient-dialog-cell {
   height: 0;
-  max-height: 0;
+  max-height: 48px;
+  line-height: 48px;
   min-height: 0;
-  padding: 0!important;
-  border: 1px solid black;
+  padding: 4px 4px!important;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.recipe-list {
+  padding-top: 0 !important;
+  padding-bottom: 0!important;
+}
+
+.recipe-list .list-blank {
+  flex: 1;
+  min-height: 0;
+}
+
+.recipe-add-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 8px;
+}
+
+.recipe-add-container .recipe-add-form {
+  flex: 1;
+  min-width: 0;
+  padding: 0 8px;
+}
+
+.recipe-add-container .recipe-add-form .recipe-add-field {
+  width: 100%;
+}
+
+.recipe-add-container .recipe-add-form .recipe-add-field {
+  width: 100%;
+}
+
+.recipe-add-container .recipe-add-button {
+  cursor: pointer;
+  color: #c6783c;
+  font-size: 2rem;
+  padding: 0 8px;
+}
+
+.table-ingr-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.table-ingr-name-container .MuiTableCell-root {
+  line-height: 48px!important;
 }
 
 .click-to-edit-input {

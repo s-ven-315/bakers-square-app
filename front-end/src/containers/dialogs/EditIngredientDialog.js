@@ -23,20 +23,24 @@ import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import InputLabel from '@material-ui/core/InputLabel';
 import {SaveRecipeIngr} from "../../helpers";
 import {ClickToEdit} from "../ClickToEdit";
-import {ClickToDropdown} from "../ClickToDowndown";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
+const emptyIngr = {
+    id: 0,
+    name: '',
+    qty: '',
+    unit: '',
+    remark: '',
+}
 
 
 export function EditIngredientDialog(props) {
     console.log(`EditIngredientDialog() is rendered.`)
 
     const context = useContext(DataContext)
-    const { authUser, recipe } = context
+    const { authUser } = context
     const classes = useStyles();
     const { onClose, open, ingrList } = props;
-    const [newItemId, setNewItemId] = useState(0)
-    const [qty, setQty] = useState("")
-    const [remark, setRemark] = useState("")
-    const [unit, setUnit] = useState("Unit")
     const [tempList, setTempList] = useState(ingrList)
     const [ingrOptions, setIngrOptions] = useState([])
     const allowedUnit = ['pc', 'gram', 'kg', 'oz', 'litre', 'tbsp', 'tsp', 'millilitre', 'pinch', 'stick', 'cup']
@@ -50,48 +54,29 @@ export function EditIngredientDialog(props) {
     }
 
     const handleAdd = (e) => {
-        e.preventDefault()
-        const newIngr = ingrOptions.find(ingr => ingr.id === newItemId)
-        if (newIngr) {
-            setTempList([...tempList, { id: newItemId, name: newIngr.name, qty: qty, unit: unit, remark: remark }])
-        }
-        setNewItemId(0)
-        setQty("")
-        setUnit("")
-        setRemark("")
-    }
-    const handleClose = () => {
-        setTempList(ingrList)
-        onClose();
-    };
-    const handleSelect = (e) => {
-        setNewItemId(e.target.value)
+        setTempList([...tempList, emptyIngr])
     }
 
-    const handleQty = (e) => {
-        setQty(e.target.value)
+    function handleClose() {
+        setTempList(ingrList)
+        onClose();
     }
-    const handleRemark = (e) => {
-        setRemark(e.target.value)
-    }
-    const handleUnit = (e) => {
-        setUnit(e.target.value)
-    }
+
     const handleSave = () => {
-        SaveRecipeIngr(context, tempList)
-        handleClose()
+        SaveRecipeIngr(context, tempList, handleClose)
     }
 
     const handleChange = (idx, value, key) => {
         const ingrToEdit = tempList[idx]
         if (key === 'name') {
-            ingrToEdit.id = ingrList[value].id
+            ingrToEdit.id = value
+            ingrToEdit.name = ingrOptions.find(i => i.id === value).name
         }
         else if (key === 'qty') {
             ingrToEdit.qty = value
         }
         else if (key === 'unit') {
-            ingrToEdit.unit = allowedUnit[value]
+            ingrToEdit.unit = value
         }
         else if (key === 'remark') {
             ingrToEdit.remark = value
@@ -117,6 +102,7 @@ export function EditIngredientDialog(props) {
     }, [])
     return (
         <Dialog onBackdropClick={handleClose} open={open} className='ingredient-dialog'>
+            <DialogTitle id="simple-dialog-title">Recipe Ingredients</DialogTitle>
             <TableContainer className='ingredient-dialog-table'>
                 <Table stickyHeader>
                     <TableHead>
@@ -134,87 +120,46 @@ export function EditIngredientDialog(props) {
                                 <TableCell className='ingredient-dialog-cell' align='left' width='40%'>
                                     <div className="table-ingr-name-container">
                                         <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} style={{display: 'inline'}}/>
-                                        <ClickToDropdown
-                                            wrapperClass="wrapper"
-                                            value={ingr.name}
-                                            list={ingrList.map(i => i.name)}
-                                            endEditing={(selectIdx) => handleChange(idx, selectIdx, 'name')}
-                                            inputClass={'click-to-edit-input'}
-                                            textClass={'click-to-edit-text'}
-                                        />
+                                        <Select value={ingr.id}
+                                                onChange={(event) => handleChange(idx, event.target.value, 'name')}
+                                                className='inline'
+                                        >
+                                            {ingrOptions.map(l => <MenuItem value={l.id} key={l.id}>{l.name}</MenuItem>)}
+                                        </Select>
                                     </div>
                                 </TableCell>
                                 <TableCell className='ingredient-dialog-cell' align='right' width='20%'>
-                                    <ClickToEdit
-                                        wrapperClass="wrapper wrapper-qty"
-                                        initialValue={ingr.qty}
-                                        endEditing={(val) => handleChange(idx, val, 'qty')}
-                                        inputClass={'click-to-edit-input'}
-                                        textClass={'click-to-edit-text'}
+                                    <TextField value={ingr.qty}
+                                               onChange={(e) => handleChange(idx, e.target.value, 'qty')}
+                                               className='inline'
                                     />
                                 </TableCell>
                                 <TableCell className='ingredient-dialog-cell' align='right' width='10%'>
-                                    <ClickToDropdown
-                                        wrapperClass="wrapper"
-                                        value={ingr.unit}
-                                        list={allowedUnit}
-                                        endEditing={(selectIdx) => handleChange(idx, selectIdx, 'unit')}
-                                        inputClass={'click-to-edit-input'}
-                                        textClass={'click-to-edit-text'}
-                                    />
+                                    <Select value={ingr.unit}
+                                            onChange={(event) => handleChange(idx, event.target.value, 'unit')}
+                                            className='inline'>
+                                        {allowedUnit.map(l => <MenuItem value={l} key={l}>{l}</MenuItem>)}
+                                    </Select>
                                 </TableCell>
                                 <TableCell className='ingredient-dialog-cell' align='left' width='20%'>
-                                    <ClickToEdit
-                                        wrapperClass="wrapper wrapper-remark"
-                                        initialValue={(ingr.remark || ingr.remark === '') ? '-' : ingr.remark}
-                                        endEditing={(val) => handleChange(idx, val, 'remark')}
-                                        inputClass={'click-to-edit-input'}
-                                        textClass={'click-to-edit-text'}
-                                    />
+                                   <TextField value={ingr.remark}
+                                              onChange={(e) => handleChange(idx, e.target.value, 'remark')}
+                                              className='inline'
+                                   />
                                 </TableCell>
                             </TableRow>
                         )) : null
                         }
                     </TableBody>
                 </Table>
+                <div className="ingredient-dialog-table-blank"/>
             </TableContainer>
-            <Divider />
-                <div className="ingredient-add-form">
-                    <form >
-                        <InputLabel shrink className={classes.rShrink} id="demo-simple-select-placeholder-label-label">
-                            Ingredient
-                        </InputLabel>
-                        <Select className={classes.rDefault} onChange={handleSelect} value={newItemId}>
-                            <MenuItem value={0}>Select an Ingredient</MenuItem>
-                            {ingrOptions ? ingrOptions.map(ingr => (
-                                <MenuItem value={ingr.id} key={ingr.id}>{ingr.name}</MenuItem>
-                            )) : null}
-                        </Select>
-                        <TextField InputLabelProps={{
-                            shrink: true,
-                        }} className={classes.rQty} label="Quantity" value={qty} onChange={handleQty} />
-                    </form>
-                    <form>
-                        <InputLabel shrink className={classes.rShrink} id="demo-simple-select-placeholder-label-label">
-                            Unit
-                        </InputLabel>
-                        <Select className={classes.rDefault} onChange={handleUnit} value={unit}>
-                            <MenuItem value={unit}>Unit</MenuItem>
-                            {allowedUnit ? allowedUnit.map(unit => (
-                                <MenuItem value={unit}>{unit}</MenuItem>
-                            )) : null}
-                        </Select>
-                        <TextField InputLabelProps={{
-                            shrink: true,
-                        }} className={classes.rRemark} label="Remark" value={remark} onChange={handleRemark} />
-                    </form>
-                    <AddCircleRoundedIcon className={classes.rAddBtn} onClick={handleAdd} />
-                </div>
             <Divider />
             <div className={classes.rButtonDiv}>
                 <Button variant="contained" color="primary" className={classes.rButton} onClick={handleSave}>Save</Button>
                 <Button variant="contained" className={classes.rButtonClose} onClick={handleClose}>Close</Button>
             </div>
+            <AddCircleRoundedIcon onClick={handleAdd} className='floating-button'/>
         </Dialog >
     );
 }

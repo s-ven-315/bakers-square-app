@@ -116,7 +116,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     //RecipeIngredients&RecipeStep Table
     rTable: {
-        marginBottom: '1rem',
         textAlign: 'left !important',
     },
     rTableHead: {

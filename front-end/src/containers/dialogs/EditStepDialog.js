@@ -18,6 +18,8 @@ import { SaveRecipeSteps } from "../../helpers";
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import {ClickToEdit} from "../ClickToEdit";
+import TableCell from "@material-ui/core/TableCell";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 
 export function EditStepDialog(props) {
@@ -51,11 +53,9 @@ export function EditStepDialog(props) {
         setTempList(clonedList)
     }
     const handleChange = (idx, val) => {
-        console.log(tempList)
+        console.log('handleChange is triggered()')
         let clonedList = [...tempList]
-        console.log(clonedList)
         clonedList[idx] = val
-        console.log(clonedList)
         setTempList(clonedList)
     }
 
@@ -90,33 +90,32 @@ export function EditStepDialog(props) {
     }
 
     return (
-        <Dialog onClose={handleClose} fullWidth='true' aria-labelledby="edit-list-dialog" open={open}>
+        <Dialog onClose={handleClose} fullWidth='true' open={open} className='ingredient-dialog'>
             <DialogTitle id="simple-dialog-title">Recipe Steps</DialogTitle>
-            <List>
+            <List style={{overflowY: 'scroll', flex: 1}}>
                 {tempList.map((step, idx) => (
-                    <ListItem className={classes.rTable} key={idx}>
+                    <ListItem className='recipe-list' key={idx}>
                         <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} />
                         <ListItemText className={classes.rTableTh}>
-                            <ClickToEdit initialValue={step} endEditing={(val) => handleChange(idx, val)} inputClass={'click-to-edit-input'} textClass={'click-to-edit-text'}/>
+                            <TextField value={step}
+                                       onChange={(e) => handleChange(idx, e.target.value)}
+                                       multiline
+                                       className='inline'
+                            />
                         </ListItemText>
                         {/* <ListItemText className={classes.rList} primary={step} /> */}
                         <ExpandLessIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, UP)} />
                         <ExpandMoreIcon className={classes.rDeleteBtn} onClick={() => handleMove(step, idx, DOWN)} />
                     </ListItem>
                 ))}
-                <ListItem>
-                    <Grid container spacing={1} alignItems="flex-end" justify="space-between">
-                        <Grid item>
-                            <form onSubmit={handleAdd}>
-                                <TextField className={classes.rForm} autoComplete='off' size='medium' id="input-with-icon-grid" label="Add Step" value={newItem} onChange={handleInput} />
-                            </form>
-                        </Grid>
-                        <Grid item >
-                            <AddCircleRoundedIcon className={classes.rAddBtn} onClick={handleAdd} />
-                        </Grid>
-                    </Grid>
-                </ListItem>
+                <div className="list-blank"/>
             </List>
+            <div className='recipe-add-container'>
+                <form onSubmit={handleAdd} className='recipe-add-form'>
+                    <TextField className='recipe-add-field' autoComplete='off' size='medium' id="input-with-icon-grid" label="Add Step" value={newItem} onChange={handleInput} />
+                </form>
+                <AddCircleRoundedIcon className='recipe-add-button' onClick={handleAdd} />
+            </div>
             <div className={classes.rButtonDiv}>
                 <Button variant="contained" color="primary" className={classes.rButton} onClick={handleSave}>Save</Button>
                 <Button variant="contained" className={classes.rButtonClose} onClick={handleClose}>Close</Button>

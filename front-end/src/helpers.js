@@ -187,13 +187,14 @@ export const DeleteRecipe = (context, recipe, history, isRedirect) => {
 }
 
 
-export const SaveRecipeIngr = (context, tempList) => {
+export const SaveRecipeIngr = (context, tempList, handleClose) => {
     const { authUser, recipe } = context
     const url = `http://localhost:5000/api/recipes/${recipe.id}/ingredients`
     axiosPost(url, authUser, { ingredientList: tempList })
         .then(response => {
             console.log(response)
             GetRecipe(context, recipe.id)
+            handleClose()
         })
         .catch(error => {
             console.error(error.response)
