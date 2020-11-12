@@ -130,6 +130,7 @@ export const EditProfileName = (context, name, setOpen) => {
             console.log("EditProfileName then()" + msg)
             authUser.name = name
             setAuthUser({ ...authUser })
+            GetUser(context, authUser.userId)
             setOpen(false)
         })
         .catch(error => {

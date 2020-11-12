@@ -71,7 +71,7 @@ export default function RecipeDetails() {
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         Recipe Steps
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails className={classes.aDetails}>
                         <RecipeSteps />
                     </AccordionDetails>
                 </Accordion>

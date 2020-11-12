@@ -14,7 +14,7 @@ class User(BaseModel, UserMixin):
     name = pw.CharField(unique=False, null=False)
     email = pw.CharField(unique=True, null=False)
     pw_hash = pw.CharField(unique=False, null=False)
-    imgName = pw.CharField(null=True, default='')
+    imgName = pw.CharField(null=True, default='profile-img.png')
     pw = ''
 
     def validate(self):
@@ -23,7 +23,7 @@ class User(BaseModel, UserMixin):
             self.errors.append('This email has been registered! Try another email!')
             return
 
-        if self.userId == '':
+        if self.userId is None:
             idx = random.randint(0, 99)
             userIdText = secure_filename(self.name).lower().replace("_", "")
             otherUserIds = [int(u.userId[-2:]) for u in

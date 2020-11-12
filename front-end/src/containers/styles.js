@@ -127,6 +127,7 @@ export const useStyles = makeStyles((theme) => ({
     //RecipeIngredients&RecipeStep Table
     rTable: {
         textAlign: 'left !important',
+        marginBottom: '1rem',
     },
     rTableHead: {
         fontWeight: 'bold !important',
@@ -148,7 +149,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     // Accordion
     aDetails: {
-        overflowY: 'auto'
+        overflowY: 'auto',
+        justifyContent: 'center'
     },
 
 }));

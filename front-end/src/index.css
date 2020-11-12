@@ -552,7 +552,7 @@ body {
 
 /* comments */
 .comment-container-outer{
-  padding: 0 5%
+  /*padding: 0 5%*/
 }
 .comment-textfield {
   display:flex;
