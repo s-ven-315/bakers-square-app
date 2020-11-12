@@ -536,7 +536,9 @@ body {
   font-size: 0.8rem
 }
 .swiper-slide .step-text {
-  font-size:1.5rem
+  font-size:1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem
 }
 .swiper-pagination-bullet {
   width:20px !important;
@@ -875,11 +877,25 @@ body {
     display: block;
     text-align:right
   }
-  .recipe-info-image {
-    display: none
+  .recipe-details-top-right-container .recipe-info-block{
+    max-width: 768px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    float: right
   }
-  .recipe-following-container{
-    display: none
+
+  .recipe-details-top-right-container .recipe-info-block .recipe-info-image{
+    width: 25px;
+    height: 25px
+  }
+  /* .recipe-info-text span {
+    visibility:hidden
+  } */
+  .recipe-info-text span{
+    font-size: 0.5rem;
+    display: block
+
   }
   .recipe-button-container {
     flex-direction: row-reverse;

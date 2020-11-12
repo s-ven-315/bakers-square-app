@@ -53,8 +53,8 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
                 previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} isProfile={false} />
             <WarningDialog title={"Confirm Delete"} msg={"Are you sure you want to delete this recipe?"}
                 open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => DeleteRecipe(context, recipe, history, true)} />
-            <div className={(canEdit)? 'recipe-img recipe-img-hover' : 'recipe-img'}>
-                <img src={recipe.img_url} alt="" onClick={() => (canEdit)? setEditImgOpen(true): goToRecipePage()} />
+            <div className={(canEdit) ? 'recipe-img recipe-img-hover' : 'recipe-img'}>
+                <img src={recipe.img_url} alt="" onClick={() => (canEdit) ? setEditImgOpen(true) : goToRecipePage()} />
             </div>
             <div className="recipe-details-container">
                 <div className="recipe-details-top-container">
@@ -70,15 +70,15 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
                     <div className="recipe-details-top-right-container">
                         <div className="recipe-info-block">
                             <img src={servingIcon} alt="" className="recipe-info-image" />
-                            <div className="recipe-info-text">{recipe.serving} Servings</div>
+                            <div className="recipe-info-text">{recipe.serving} <span>Servings</span></div>
                         </div>
                         <div className="recipe-info-block">
                             <img src={preparationTimeIcon} alt="" className="recipe-info-image" />
-                            <div className="recipe-info-text">{recipe.preparation_time} Minutes</div>
+                            <div className="recipe-info-text">{recipe.preparation_time} <span>Minutes</span></div>
                         </div>
                         <div className="recipe-info-block">
                             <img src={cookingTimeIcon} alt="" className="recipe-info-image" />
-                            <div className="recipe-info-text">{recipe.cooking_time} Minutes</div>
+                            <div className="recipe-info-text">{recipe.cooking_time} <span>Minutes</span></div>
                         </div>
                     </div>
                 </div>
