@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -136,78 +138,51 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".CTE--wrapper {\n    display: inline-grid;\n    position: relative;\n white-space: pre-wrap;\n  }\n  .CTE--wrapper:after, .CTE--input, .CTE--text {\n    grid-area: 1 / 2;\n    /* resize: none; */\n    text-align: left;\n    font-size: inherit;\n    font-family: inherit;\n  }\n  .CTE--wrapper:after {\n    content: attr(data-value) ' ';\n    height: 0;\n    visibility: hidden;\n    white-space: pre-wrap;\n  }\n  .CTE--input {\n    margin: 0;\n    padding: 0;\n    border:0;\n    background:none;\n    align-self: baseline;\n    outline: none;\n    box-sizing: border-box;\n  }\n  .CTE--text {\n  }\n";
+var css_248z = ".CTE--wrapper {\n position: relative;\n white-space: pre-wrap;\n  }\n  .CTE--wrapper:after, .CTE--input, .CTE--text {\n    grid-area: 1 / 2;\n    /* resize: none; */\n    text-align: left;\n    font-size: inherit;\n    font-family: inherit;\n  }\n  .CTE--wrapper:after {\n    content: attr(data-value) ' ';\n    height: 0;\n    visibility: hidden;\n    white-space: pre-wrap;\n  }\n  .CTE--input {\n    margin: 0;\n    padding: 0;\n    border:0;\n    background:none;\n    align-self: baseline;\n    outline: none;\n    box-sizing: border-box;\n  }\n  .CTE--text {\n  }\n";
 styleInject(css_248z);
 
-export function ClickToEdit(props) {
-    const _useState = useState(props.initialValue),
-        _useState2 = _slicedToArray(_useState, 2),
-        value = _useState2[0],
-        setValue = _useState2[1];
 
-    useEffect(() => setValue(props.initialValue), [props.initialValue])
 
-    const _useState3 = useState(false),
-        _useState4 = _slicedToArray(_useState3, 2),
-        isEditMode = _useState4[0],
-        setEditMode = _useState4[1];
+export function ClickToDropdown(props) {
+    const [value, setValue] = useState(props.value)
+    useEffect(() => setValue(props.value), [props.value])
 
-    const getIntoEditMode = function getIntoEditMode() {
+    const [list, setList] = useState(props.list)
+    useEffect(() => setList(props.list), [props.list])
+
+    const [isEditMode, setEditMode] = useState(false)
+
+    const getIntoEditMode = () => {
         setEditMode(true);
-        autoGrow();
     };
 
-    const getOffEditMode = function getOffEditMode() {
-        // setEditMode(false);
+    const inputRef = useRef(null)
+
+    useEffect(() => {
+        if (isEditMode) {
+            inputRef.current &&  inputRef.current.focus()
+        }
+    }, [isEditMode])
+
+    const getOffEditMode = () => {
+        setEditMode(false);
 
         if (props.endEditing) {
-            props.endEditing(value);
+            const idx = list.findIndex(l => l === value)
+            props.endEditing(idx);
         }
     };
 
-    const handleChange = function handleChange(e) {
+    const handleChange = (e) => {
         setValue(e.target.value);
-        autoGrow();
+        getOffEditMode();
     };
 
-    const handleKeyPress = function handleKeyPress(e) {
-        if (e.keyCode === 13 || e.charCode === 13 || e.keyCode === 27 || e.charCode === 27) {
-            getOffEditMode();
-        }
-    };
-    const [inputTagStyle, setInputTagStyle] = useState({height: '24px', lineHeight: '24px'})
+    const inputTag = <Select value={value} onChange={handleChange} onBlur={getOffEditMode} ref={inputRef}>
+        {list.map(l => <MenuItem value={l} key={l}>{l}</MenuItem>)}
+    </Select>
 
-
-    const inputRef = useRef();
-    const inputTag = <textarea autoFocus={true}
-                               value={value}
-                               className={classnames("CTE--input", props.inputClass)}
-                               onChange={handleChange}
-                               onKeyPress={handleKeyPress}
-                               onBlur={getOffEditMode}
-                               style={inputTagStyle}
-                               ref={inputRef}
-    />
-
-    const textRef = useRef();
-    const textTag = <div className={classnames("CTE--text", props.textClass)} ref={textRef}>{value}</div>
-
-    useEffect(()=> {
-        if (textRef.current){
-            let height = textRef.current.clientHeight;
-            height = Math.round(height/ 24) * 24
-            setInputTagStyle({height: `${height}px`, lineHeight: '24px'})
-        }
-    }, [textRef])
-
-    const autoGrow = () => {
-        if (inputRef.current){
-            let height = inputRef.current.scrollHeight;
-            height = Math.round(height / 24) * 24
-            setInputTagStyle({height: `${height}px`, lineHeight: '24px'})
-        }
-    }
-    console.log(inputTagStyle.height)
+    const textTag = <div className={classnames("CTE--text", props.textClass)}>{value}</div>
 
     return /*#__PURE__*/React.createElement("section", {
         "data-value": value,

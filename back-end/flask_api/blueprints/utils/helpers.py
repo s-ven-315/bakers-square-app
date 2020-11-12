@@ -31,8 +31,8 @@ class Helper:
         for i, item in enumerate(arr):
             if type(item) != dict:
                 return '%s item #%d must be a dictionary / object' % (className, i), 400
-            if any([key not in item for key in ['id', 'qty', 'unit']]):
-                return '%s item #%d must has the required keys (\'id\', \'qty\', \'unit\')' % (className + 's', i), 400
+            if any([key not in item for key in ['id', 'qty', 'unit', 'remark']]):
+                return '%s item #%d must has the required keys (\'id\', \'qty\', \'unit\', \'remark\')' % (className + 's', i), 400
             if not item['id']:
                 return '%s item #%d has an empty id' % (className, i), 400
             if not item['qty']:

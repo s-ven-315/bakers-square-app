@@ -46,7 +46,7 @@ class Helper:
                 item = Class.get_by_id(a['id'])
                 existingRelation = Relation.get_or_none(RelationAttr1 == main, RelationAttr2 == item)
                 if not existingRelation:
-                    toAdd.append({attr1: main, attr2: item, 'qty': a['qty'], 'unit': a['unit']})
+                    toAdd.append({attr1: main, attr2: item, 'qty': a['qty'], 'unit': a['unit'], 'remark': a['remark']})
                 elif a['qty'] != existingRelation.qty or a['unit'] != existingRelation.unit:
                     existingRelation.qty = str(a['qty'])
                     existingRelation.unit = str(a['unit'])

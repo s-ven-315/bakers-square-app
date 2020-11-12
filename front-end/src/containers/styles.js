@@ -117,7 +117,7 @@ export const useStyles = makeStyles((theme) => ({
     //RecipeIngredients&RecipeStep Table
     rTable: {
         marginBottom: '1rem',
-        textAlign: 'left !important'
+        textAlign: 'left !important',
     },
     rTableHead: {
         fontWeight: 'bold !important',
@@ -137,7 +137,6 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center'
     },
-
 }));
 
 export default { useStyles }

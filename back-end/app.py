@@ -10,7 +10,7 @@ app = Flask('NEXTAGRAM', root_path=web_dir)
 app.config['JWT_SECRET_KEY'] = 'SecretSecret1'
 jwt = JWTManager(app)
 
-ALLOWED_QTY = ['pc', 'gram', 'kg', 'oz', 'litre', 'tbsp', 'tsp', 'millilitre', 'pinch']
+ALLOWED_QTY = ['pc', 'gram', 'kg', 'oz', 'litre', 'tbsp', 'tsp', 'millilitre', 'pinch', 'stick', 'cup']
 
 if os.getenv('FLASK_ENV') == 'production':
     app.config.from_object("config.ProductionConfig")
