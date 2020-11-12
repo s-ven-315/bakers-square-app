@@ -47,8 +47,8 @@ class Helper:
             if not item:
                 return '%s \'%s\' does not exists' % (className, item['id']), 400
 
-        idList = [item['id'] for item in arr]
-        uniqueIdList = list(set(idList))
-        if len(uniqueIdList) != len(idList):
-            return 'There is duplicated data <%s>' % (className + 's'), 400
+        # idList = [item['id'] for item in arr]
+        # uniqueIdList = list(set(idList))
+        # if len(uniqueIdList) != len(idList):
+        #     return 'There is duplicated data <%s>' % (className + 's'), 400
         return 'Success', 200
