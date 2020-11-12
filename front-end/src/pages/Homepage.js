@@ -9,9 +9,9 @@ const Homepage = () => {
     const context = useContext(DataContext)
     const {authUser} = context
 
-    if (authUser.access_token) {
-        return <Redirect to={`/users/${authUser.userId}`} />
-    }
+    // if (authUser.access_token === '') {
+    //     return <Redirect to={`/users/${authUser.userId}`} />
+    // }
     return (
         <>
             <div className="banner-container">

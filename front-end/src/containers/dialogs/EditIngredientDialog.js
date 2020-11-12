@@ -87,7 +87,7 @@ export function EditIngredientDialog(props) {
 
     //get all ingredients
     useEffect(() => {
-        axios.get("http://localhost:5000/api/ingredients/", {
+        axios.get("https://bakers-square.herokuapp.com/api/ingredients/", {
             headers: {
                 Authorization: "Bearer " + authUser.access_token
             }

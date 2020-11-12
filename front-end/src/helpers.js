@@ -13,7 +13,7 @@ export const GetRecipe = (context, recipeId) => {
     const { authUser, setRecipe, setLoading } = context
     setLoading(true)
 
-    const url = "http://localhost:5000/api/recipes/" + recipeId
+    const url = "https://bakers-square.herokuapp.com/api/recipes/" + recipeId
     axiosGet(url, authUser)
         .then((response) => {
             const data = response.data.data
@@ -30,7 +30,7 @@ export const GetUser = (context, userId) => {
     const { authUser, setAuthUser, setUser, setLoading } = context
     setLoading(true)
 
-    const url = "http://localhost:5000/api/users/" + userId
+    const url = "https://bakers-square.herokuapp.com/api/users/" + userId
     axiosGet(url, authUser)
         .then((response) => {
             console.log(response)
@@ -51,8 +51,8 @@ export const GetUser = (context, userId) => {
 export const Like = (context, setLikeTo, recipe, setLikes) => {
     const { authUser } = context
     const url = (setLikeTo) ?
-        `http://localhost:5000/api/users/${authUser.userId}/like` :
-        `http://localhost:5000/api/users/${authUser.userId}/unlike`
+        `https://bakers-square.herokuapp.com/api/users/${authUser.userId}/like` :
+        `https://bakers-square.herokuapp.com/api/users/${authUser.userId}/unlike`
 
     const oldLikes = { ...recipe.likes }
     const newLikes = (setLikeTo) ? [{
@@ -83,7 +83,7 @@ export const EditRecipe = (context, name, serving, preparationTime, cookingTime,
     const { authUser, recipe } = context
     console.log(name)
 
-    const url = `http://localhost:5000/api/recipes/${recipe.id}/edit`
+    const url = `https://bakers-square.herokuapp.com/api/recipes/${recipe.id}/edit`
     axiosPost(url, authUser, {
         'name': name,
         "serving": serving,
@@ -103,8 +103,8 @@ export const Follow = (context, setFollowTo) => {
     const { authUser, setAuthUser, user, setUser } = context
 
     const url = (setFollowTo) ?
-        `http://localhost:5000/api/users/${authUser.userId}/subscribe` :
-        `http://localhost:5000/api/users/${authUser.userId}/unsubscribe`
+        `https://bakers-square.herokuapp.com/api/users/${authUser.userId}/subscribe` :
+        `https://bakers-square.herokuapp.com/api/users/${authUser.userId}/unsubscribe`
 
     axiosPost(url, authUser, { 'userId': user.userId })
         .then(response => {
@@ -123,7 +123,7 @@ export const Follow = (context, setFollowTo) => {
 export const EditProfileName = (context, name, setOpen) => {
     const { authUser, setAuthUser } = context
 
-    const url = `http://localhost:5000/api/users/${authUser.userId}/edit`
+    const url = `https://bakers-square.herokuapp.com/api/users/${authUser.userId}/edit`
     axiosPost(url, authUser, { name })
         .then(response => {
             const msg = response.data.msg
@@ -145,7 +145,7 @@ export const CreateRecipe = (context, name, serving, preparationTime, cookingTim
     }
 
     const getLastRecipeId = () => {
-        const url = "http://localhost:5000/api/users/" + authUser.userId
+        const url = "https://bakers-square.herokuapp.com/api/users/" + authUser.userId
         axiosGet(url, authUser)
             .then((response) => {
                 console.log(response)
@@ -154,7 +154,7 @@ export const CreateRecipe = (context, name, serving, preparationTime, cookingTim
             })
     }
 
-    const url = 'http://localhost:5000/api/recipes/'
+    const url = 'https://bakers-square.herokuapp.com/api/recipes/'
     axiosPost(url, authUser, {
         'userId': authUser.userId,
         'name': name,
@@ -175,7 +175,7 @@ export const CreateRecipe = (context, name, serving, preparationTime, cookingTim
 
 export const DeleteRecipe = (context, recipe, history, isRedirect) => {
     const { authUser } = context
-    const url = `http://localhost:5000/api/recipes/${recipe.id}/delete`
+    const url = `https://bakers-square.herokuapp.com/api/recipes/${recipe.id}/delete`
     axiosPost(url, authUser, {})
         .then(response => {
             console.log(response)
@@ -190,7 +190,7 @@ export const DeleteRecipe = (context, recipe, history, isRedirect) => {
 
 export const SaveRecipeIngr = (context, tempList, handleClose) => {
     const { authUser, recipe } = context
-    const url = `http://localhost:5000/api/recipes/${recipe.id}/ingredients`
+    const url = `https://bakers-square.herokuapp.com/api/recipes/${recipe.id}/ingredients`
     axiosPost(url, authUser, { ingredientList: tempList })
         .then(response => {
             console.log(response)
@@ -203,7 +203,7 @@ export const SaveRecipeIngr = (context, tempList, handleClose) => {
 }
 export const SaveRecipeSteps = (context, tempList) => {
     const { authUser, recipe } = context
-    const url = `http://localhost:5000/api/recipes/${recipe.id}/steps`
+    const url = `https://bakers-square.herokuapp.com/api/recipes/${recipe.id}/steps`
     axiosPost(url, authUser, { steps: tempList })
         .then(response => {
             console.log(response)
@@ -215,7 +215,7 @@ export const SaveRecipeSteps = (context, tempList) => {
 }
 export const PostComment = (context, input, setInput) => {
     const { authUser, recipe } = context
-    const url = 'http://localhost:5000/api/comments/'
+    const url = 'https://bakers-square.herokuapp.com/api/comments/'
     axiosPost(url, authUser, {
         'userId': authUser.userId,
         'recipeId': recipe.id,
@@ -235,8 +235,8 @@ export const EditImage = (context, formData, setOpen, setPreviewImg, isProfile) 
     const { authUser, recipe } = context
     console.log(recipe.id)
     const url = (isProfile) ?
-        `http://localhost:5000/api/users/${authUser.userId}/image` :
-        `http://localhost:5000/api/recipes/${recipe.id}/image`
+        `https://bakers-square.herokuapp.com/api/users/${authUser.userId}/image` :
+        `https://bakers-square.herokuapp.com/api/recipes/${recipe.id}/image`
     if (isProfile) {
         axiosPost(url, authUser, formData)
             .then(response => {

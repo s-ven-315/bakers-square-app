@@ -51,7 +51,7 @@ export default function Login() {
         setLoading(true)
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/auth/login',
+            url: 'https://bakers-square.herokuapp.com/api/auth/login',
             data: {
                 email,
                 password

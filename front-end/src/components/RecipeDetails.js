@@ -23,6 +23,7 @@ function TabPanel(props) {
             id={`vertical-tabpanel-${index}`}
             aria-labelledby={`vertical-tab-${index}`}
             {...other}
+            style={{flex: 1, minWidth: 0}}
         >
             {value === index && (
                 <Box p={3}>

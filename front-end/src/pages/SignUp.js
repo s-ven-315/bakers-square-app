@@ -53,7 +53,7 @@ export default function SignUp() {
         setLoading(true)
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/auth/signup',
+            url: 'https://bakers-square.herokuapp.com/api/auth/signup',
             data: {
                 name,
                 email,

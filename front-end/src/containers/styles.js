@@ -27,12 +27,14 @@ export const useStyles = makeStyles((theme) => ({
 
     //RecipeDetails
     recipeDetailsRoot: {
-        width: '76vw',
+        width: '100%',
+        // width: '76vw',
         margin: 'auto',
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        height: 224,
+        // height: 224,
+        justifyContent: 'center',
         textAlign: 'left',
         "@media screen and (max-width: 767px)": {
             display: 'none'

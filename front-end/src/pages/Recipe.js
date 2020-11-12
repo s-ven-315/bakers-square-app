@@ -23,6 +23,7 @@ function TabPanel(props) {
             id={`nav-tabpanel-${index}`}
             aria-labelledby={`nav-tab-${index}`}
             {...other}
+            style={{maxWidth: 720, margin: '0 auto'}}
         >
             {value === index && (
                 <Box p={3}>
