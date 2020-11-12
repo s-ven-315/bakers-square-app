@@ -1,32 +1,17 @@
 import React, { useState, useEffect, useContext } from "react"
-import axios from "axios"
 import { useParams, useHistory, Redirect } from "react-router-dom"
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import RecipeDetails from '../components/RecipeDetails'
-import { Like, EditRecipeName, DeleteRecipe, GetRecipe } from '../helpers'
-import EditIcon from '@material-ui/icons/Edit';
-import TextField from '@material-ui/core/TextField';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import { GetRecipe } from '../helpers'
 import Comments from "../components/Comments"
+import Likes from "../components/Likes"
 import { useStyles } from "../containers/styles"
-import { UserListDialog } from "../containers/dialogs/UserListDialog";
-import DeleteIcon from '@material-ui/icons/Delete';
 import { DataContext, emptyRecipe, emptyUser } from "../contexts/Context";
-import { RecipeDialog } from "../containers/dialogs/RecipeDialog";
 import RecipeCard from "../containers/RecipeCard";
-
-
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -102,12 +87,16 @@ export default function Recipe() {
                             centered
                         >
                             <Tab label="The Recipe" />
-                            <Tab label="Comments" />
+                            <Tab label={`Likes (${recipe.likes.length} )`} />
+                            <Tab label={`Comments (${recipe.comments.length} )`} />
                         </Tabs>
                         <TabPanel value={value} index={0}>
                             <RecipeDetails />
                         </TabPanel>
-                        <TabPanel value={value} index={1}>
+                        <TabPanel value={value} index={1} >
+                            <Likes />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
                             <Comments />
                         </TabPanel>
                     </div>

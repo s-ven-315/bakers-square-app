@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
-import axios from "axios"
+import React, { useContext } from "react"
 import { useStyles } from '../containers/styles';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
@@ -34,7 +33,8 @@ export default function RecipeSteps() {
     };
 
     return (
-        <>
+        <div className="recipe-ingredients">
+
             <Table className={classes.rTable}>
                 <TableBody >
                     {steps === [] ? null :
@@ -55,7 +55,7 @@ export default function RecipeSteps() {
                     <Button variant="outlined" color="primary" onClick={handleClickOpen}>Edit</Button>
                     <EditStepDialog steps={steps} open={open} onClose={handleClose} /> </> : null}
             </div>
-        </>
+        </div>
     )
 }
 

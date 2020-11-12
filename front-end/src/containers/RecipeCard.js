@@ -13,6 +13,7 @@ import preparationTimeIcon from './../assets/preparation-time-icon.png';
 import cookingTimeIcon from './../assets/baking-time-icon.png';
 import { RecipeDialog } from "./dialogs/RecipeDialog";
 import { EditImgDialog } from "../containers/dialogs/EditImgDialog";
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 export default function RecipeCard({ recipe, hideComments, hideEdit }) {
@@ -81,10 +82,12 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
                         </div>
                     </div>
                 </div>
-                <div className="recipe-following-container">
-                    <Button color="inherit" onClick={() => setLikeOpen(true)}>{likes.length} Likes</Button>
-                    <Button color="inherit">{recipe.comments.length} Comments</Button>
-                </div>
+                {(hideComments) ? null :
+                    <div className="recipe-following-container">
+                        <Button color="inherit" onClick={() => setLikeOpen(true)}>{likes.length} Likes</Button>
+                        <Button color="inherit">{recipe.comments.length} Comments</Button>
+                    </div>
+                }
                 {(hideComments) ? null :
                     <div className="recipe-comment-container">
                         {recipe.comments.slice(0, 2).map(c => <div className='recipe-comment'>
@@ -103,9 +106,9 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
                 <button className="recipe-button" onClick={() => history.push(`/recipes/${recipe.id}/sessions`)}>Start Baking</button>
                 {isLike ?
                     <button className="recipe-button"
-                        onClick={() => Like(context, false, recipe, setLikes)}>Liked</button> :
+                        onClick={() => Like(context, false, recipe, setLikes)}><FavoriteIcon className="like-true" />Liked</button> :
                     <button className="recipe-button"
-                        onClick={() => Like(context, true, recipe, setLikes)}>Like</button>
+                        onClick={() => Like(context, true, recipe, setLikes)}><FavoriteIcon className="like-false" />Like</button>
                 }
             </div>
         </div>);

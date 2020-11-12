@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useStyles } from '../containers/styles'
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
@@ -36,7 +36,7 @@ export default function RecipeIngredients() {
     };
 
     return (
-        <>
+        <div className="recipe-ingredients">
 
             <TableContainer className={classes.rTable}>
                 <Table>
@@ -76,6 +76,6 @@ export default function RecipeIngredients() {
                             ingrList={ingrList} open={open} onClose={handleClose} />
                     </> : null}
             </div>
-        </>
+        </div>
     )
 }
