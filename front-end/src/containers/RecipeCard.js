@@ -25,16 +25,19 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
     const [confirmOpen, setConfirmOpen] = useState(false)
     const [recipeOpen, setRecipeOpen] = useState(false)
     const history = useHistory()
+
     // edit Image
     const [editImgOpen, setEditImgOpen] = useState(false);
     const [previewImg, setPreviewImg] = useState(null)
     const [imageFile, setImageFile] = useState({})
-    const isProfile = false
+
     const [likes, setLikes] = useState(recipe.likes)
     useEffect(() => setLikes(recipe.likes), [recipe.likes])
 
     const isLike = likes.find(e => e.userId === authUser.userId)
     const baker = recipe.user
+    const isOwner = authUser.userId === baker.userId
+    const canEdit = !hideEdit && isOwner
 
     const goToRecipePage = () => history.push(`/recipes/${recipe.id}`);
     const goToUserPage = () => history.push(`/users/${recipe.user.userId}`);
@@ -46,11 +49,11 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
             <UserListDialog title={"Likes"} users={likes} open={likeOpen} setOpen={setLikeOpen} />
             <RecipeDialog title={"Edit Recipe"} recipe={recipe} open={recipeOpen} setOpen={setRecipeOpen} isNew={false} />
             <EditImgDialog title={"Change Recipe Picture"} open={editImgOpen} setOpen={setEditImgOpen}
-                previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} isProfile={isProfile} />
+                previewImg={previewImg} setPreviewImg={setPreviewImg} imageFile={imageFile} setImageFile={setImageFile} isProfile={false} />
             <WarningDialog title={"Confirm Delete"} msg={"Are you sure you want to delete this recipe?"}
                 open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => DeleteRecipe(context, recipe, history, false)} />
-            <div className="recipe-img">
-                <img src={recipe.img_url} alt="" onClick={() => setEditImgOpen(true)} />
+            <div className={(canEdit)? 'recipe-img recipe-img-hover' : 'recipe-img'}>
+                <img src={recipe.img_url} alt="" onClick={() => (canEdit)? setEditImgOpen(true): goToRecipePage()} />
             </div>
             <div className="recipe-details-container">
                 <div className="recipe-details-top-container">
@@ -91,7 +94,7 @@ export default function RecipeCard({ recipe, hideComments, hideEdit }) {
                 }
             </div>
             <div className="recipe-button-container">
-                {recipe.user.name === authUser.name && !hideEdit ?
+                {canEdit ?
                     <div className="recipe-button-icon-container">
                         <button className="recipe-button recipe-button-icon" onClick={() => setRecipeOpen(true)}><EditIcon /></button>
                         <button className="recipe-button recipe-button-icon" onClick={() => setConfirmOpen(true)}><DeleteIcon /></button>

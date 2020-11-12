@@ -265,7 +265,8 @@ body {
 .recipe-img>img{
   width: 100%
 }
-.recipe-img:after {
+
+.recipe-img-hover:after {
   content: "Change Image";
   opacity: 0;
   transition:0.2s;
@@ -279,7 +280,7 @@ body {
   color: white;
   text-shadow: 1px 1px 1px black
 }
-.recipe-img:before {
+.recipe-img-hover:before {
   content: "";
   opacity: 0;
   transition:0.2s;
