@@ -80,6 +80,7 @@ export default function Profile() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const canEdit = authUser.userId === user.userId
 
     // followers / following dialog
     const [followerOpen, setFollowerOpen] = useState(false);
@@ -116,8 +117,9 @@ export default function Profile() {
                     <div className="profile-page-container">
                         <div className="profile-container">
                             <div className="profile-container-inner">
-                                <div className="profile-img">
-                                    <img src={user.img_url} style={{ backgroundColor: '#e6e6e6' }} onClick={() => setEditImgOpen(true)} />
+                                <div className={(canEdit)? 'profile-img profile-img-hover' : 'profile-img'}>
+                                    <img src={user.img_url} style={{ backgroundColor: '#e6e6e6' }}
+                                         onClick={() => (canEdit)? setEditImgOpen(true): null} />
                                 </div>
                                 <div className="profile-details">
                                     <div className="profile-name">{user.name}

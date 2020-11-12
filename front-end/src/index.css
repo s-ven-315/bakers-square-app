@@ -103,7 +103,7 @@ body {
   cursor: pointer
 }
 
-.profile-img:after {
+.profile-img-hover:after {
   content: "Change Image";
   opacity: 0;
   transition:0.2s;
@@ -117,7 +117,7 @@ body {
   color: white;
   text-shadow: 1px 1px 1px black
 }
-.profile-img:before {
+.profile-img-hover:before {
   content: "";
   opacity: 0;
   transition:0.2s;
@@ -129,7 +129,7 @@ body {
   right: 0;
   background-color: rgba(170, 170, 170, 0.596);
 }
-.profile-img:hover:after, .profile-img:hover:before {
+.profile-img-hover:hover:after, .profile-img-hover:hover:before {
   opacity: 1;
 }
 
@@ -255,7 +255,6 @@ body {
   max-height: 150px;
   position:relative;
   overflow: hidden;
-
 }
 
 .recipe-img>img{

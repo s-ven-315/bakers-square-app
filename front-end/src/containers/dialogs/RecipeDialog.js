@@ -41,7 +41,6 @@ export function RecipeDialog({title, recipe, open, setOpen, isNew}) {
                 autoComplete='off'
             />
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Serving"
@@ -52,7 +51,6 @@ export function RecipeDialog({title, recipe, open, setOpen, isNew}) {
                 autoComplete='off'
             />
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Preparation Time"
@@ -63,7 +61,6 @@ export function RecipeDialog({title, recipe, open, setOpen, isNew}) {
                 autoComplete='off'
             />
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Cooking Time"
