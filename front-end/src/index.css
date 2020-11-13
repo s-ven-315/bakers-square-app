@@ -5,7 +5,9 @@ html {
 
 body {
   margin: 0 auto!important;
+  overflow-x: hidden;
   width: 100%;
+  min-width: 320px;
   max-width: 1280px;
   font-family: 'Nunito', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -525,7 +527,7 @@ body {
 }
 
 .tab-panel-container .MuiBox-root {
-  padding: 0px;
+  padding: 0;
 }
 
 
@@ -534,26 +536,69 @@ body {
 }
 
 /* slides */
+.swiper-container {
+  height: calc(100vh - 80px);
+  min-height: 200px;
+  max-height: 480px;
+  max-width: 640px;
+}
+
+.swiper-wrapper {
+  /*flex-flow: column nowrap;*/
+  height: 100% !important;
+}
+
 .swiper-slide {
   display: flex;
   flex-direction: column;
-  height: 450px !important
+  min-height: 0;
+  padding-bottom: 3rem;
 }
 .swiper-slide>div {
-  margin:auto
+  /*margin: auto*/
 }
+.swiper-slide .step-recipe-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  min-height: 2rem;
+  flex: 0;
+  max-height: 3rem;
+  padding: 1rem 0 0;
+  margin: 0 auto;
+  cursor: pointer;
+  user-select: none;
+}
+
 .swiper-slide .step-no {
-  font-size: 0.8rem
+  font-size: 1rem;
+  font-weight: bold;
+  min-height: 2rem;
+  flex: 0;
+  max-height: 3rem;
+  padding: 0.5rem 0;
+  margin: 0 auto;
+  user-select: none;
 }
 .swiper-slide .step-text {
-  font-size:1.5rem;
-  padding-left: 3rem;
-  padding-right: 3rem
+  font-size: 1.5rem;
+  margin: auto 4.5rem;
+  text-align: left;
+  padding-bottom: 4rem;
+  box-sizing: border-box;
+    user-select: none;
 }
+.swiper-pagination-bullets {
+  margin: 1rem 0;
+    user-select: none;
+}
+
 .swiper-pagination-bullet {
-  width:20px !important;
-  height:20px !important;
-  color:white !important
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  font-size: 16px !important;
+  color: white !important;
+  user-select: none;
 }
 
 .swiper-pagination-bullet-active{
@@ -718,6 +763,7 @@ body {
   padding-top: 0 !important;
   padding-bottom: 0!important;
 }
+
 
 .recipe-list .list-blank {
   flex: 1;
@@ -991,6 +1037,18 @@ body {
 
   .table-ingr-cell {
     font-size: 0.75em!important;
+  }
+
+  .swiper-slide .step-text {
+    font-size: 6vw;
+    margin: auto 4.0rem;
+  }
+
+  .swiper-pagination-bullet {
+    width: 7vw !important;
+    height: 7vw !important;
+    line-height: 7vw !important;
+    font-size: 4vw !important;
   }
 }
 @media screen and (min-width: 475px) {
