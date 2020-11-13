@@ -699,6 +699,21 @@ body {
   font-size: 1.5em!important;
 }
 
+.table-ingr {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+.table-ingr-header {
+  font-weight: bold !important;
+  font-size: inherit!important;
+}
+
+.table-ingr-cell {
+  font-size: 0.875rem!important;
+}
+
+
 .recipe-list {
   padding-top: 0 !important;
   padding-bottom: 0!important;
@@ -970,6 +985,13 @@ body {
     font-size: 1.5em!important;
   }
 
+  .table-ingr {
+    font-size: 4vw!important;
+  }
+
+  .table-ingr-cell {
+    font-size: 0.75em!important;
+  }
 }
 @media screen and (min-width: 475px) {
   .menu-narrow {

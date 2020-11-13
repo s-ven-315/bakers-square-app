@@ -37,28 +37,27 @@ export default function RecipeIngredients() {
 
     return (
         <div className="recipe-ingredients">
-            <TableContainer className={classes.rTable}>
+            <TableContainer className='table-ingr'>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.rTableHead} align="left">Ingredients</TableCell>
-                            <TableCell className={classes.rTableHead} align="right">Quantity</TableCell>
-                            <TableCell className={classes.rTableHead} align="right">Unit</TableCell>
-                            <TableCell className={classes.rTableHead} align="right">Remark</TableCell>
+                            <TableCell className='table-ingr-header' align="left">Ingredients</TableCell>
+                            <TableCell className='table-ingr-header' align="right">Quantity</TableCell>
+                            <TableCell className='table-ingr-header' align="right">Unit</TableCell>
+                            <TableCell className='table-ingr-header' align="right">Remark</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
                         {ingrList === [] ? null :
-
                             ingrList.map((ingr) => (
                                 <TableRow key={ingr.id}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" className='table-ingr-cell'>
                                         {ingr.name}
                                     </TableCell>
-                                    <TableCell align="right">{ingr.qty}</TableCell>
-                                    <TableCell align="right">{ingr.unit === "" ? <span>-</span> : <span>{ingr.unit}</span>}</TableCell>
-                                    <TableCell align="center">{ingr.remark === null || ingr.remark == "" ? <span>-</span> : <span>{ingr.remark}</span>}</TableCell>
+                                    <TableCell align="right" className='table-ingr-cell'>{ingr.qty}</TableCell>
+                                    <TableCell align="right" className='table-ingr-cell'>{ingr.unit === "" ? <span>-</span> : <span>{ingr.unit}</span>}</TableCell>
+                                    <TableCell align="center" className='table-ingr-cell'>{ingr.remark === null || ingr.remark === "" ? <span>-</span> : <span>{ingr.remark}</span>}</TableCell>
                                 </TableRow>
                             ))
                         }
