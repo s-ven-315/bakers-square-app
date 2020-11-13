@@ -132,6 +132,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     rTableHead: {
         fontWeight: 'bold !important',
+        fontSize: 'inherit!important',
     },
     rTableTd: {
         border: 'none !important',

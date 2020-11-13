@@ -119,7 +119,7 @@ export function EditIngredientDialog(props) {
                             <TableRow key={idx} padding='none'>
                                 <TableCell className='ingredient-dialog-cell' align='left' width='40%'>
                                     <div className="table-ingr-name-container">
-                                        <HighlightOffRoundedIcon className={classes.rDeleteBtn} onClick={() => handleRemove(idx)} style={{display: 'inline'}}/>
+                                        <HighlightOffRoundedIcon className="deleteButton" onClick={() => handleRemove(idx)} style={{display: 'inline'}}/>
                                         <Select value={ingr.id}
                                                 onChange={(event) => handleChange(idx, event.target.value, 'name')}
                                                 className='inline'

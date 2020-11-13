@@ -614,6 +614,7 @@ body {
 
 
 .inline {
+  font-size: inherit;
   border-bottom: 2px solid transparent;
   outline: none;
   width: 100%;
@@ -631,6 +632,13 @@ body {
   padding-bottom: 6px;
 }
 
+.inline .MuiInputBase-root {
+  font-size: inherit;
+}
+.inline.MuiInputBase-root {
+  font-size: inherit;
+}
+
 .inline .MuiInput-underline input {
   text-align: inherit;
 }
@@ -642,8 +650,10 @@ body {
   margin: 0 auto;
 }
 
-.ingredient-dialog .MuiDialog-paperScrollPaper {
+.ingredient-dialog .MuiDialog-container .MuiDialog-paperScrollPaper {
   height: 100%;
+  width: 100%;
+  margin: auto;
   max-height: 750px;
 }
 
@@ -679,6 +689,14 @@ body {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+}
+
+.table-ingr-name-container .deleteButton {
+  color: red;
+  cursor: pointer;
+  margin-right: 10px;
+  vertical-align: middle;
+  font-size: 1.5em!important;
 }
 
 .recipe-list {
@@ -932,6 +950,24 @@ body {
   .recipe-details-top-right-container .recipe-info-block {
     margin: 0;
     margin-left: auto;
+  }
+
+  .floating-button {
+    position: absolute;
+    bottom: 48px;
+    right: 20px;
+  }
+
+  .ingredient-dialog-table{
+    font-size: 2.5vw!important;
+  }
+
+  .ingredient-dialog-cell {
+    font-size: 3vw!important;
+  }
+
+  .table-ingr-name-container .makeStyles-rDeleteBtn-* {
+    font-size: 1.5em!important;
   }
 
 }
