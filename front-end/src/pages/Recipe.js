@@ -46,7 +46,7 @@ export default function Recipe() {
 
     const { recipeId } = useParams()
     const context = useContext(DataContext)
-    const { authUser, recipe, setUser, isLoading } = context
+    const { authUser, recipe, setUser, isLoading, setLoading } = context
 
     const classes = useStyles();
 
@@ -55,6 +55,7 @@ export default function Recipe() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    useEffect(()=> setLoading(true), [])
 
     useEffect(() => {
         if (context.recipe.id !== recipeId) {

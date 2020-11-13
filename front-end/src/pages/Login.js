@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Redirect } from "react-router-dom";
+import {Link as RouterLink, Redirect} from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -117,10 +117,9 @@ export default function Login() {
                     >
                         Sign In
                      </Button>
-
-                    <Link href="/signup" variant="body2" fullWidth>
-                        {"Don't have an account? Sign up here"}
-                    </Link>
+                    <RouterLink to="/signup">
+                        <Link variant="body2">Don't have an account? Sign up here</Link>
+                    </RouterLink>
                 </form>
             </div>
 

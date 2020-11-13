@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import { Link as RouterLink } from "react-router-dom";
 import Link from '@material-ui/core/Link';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -145,9 +146,9 @@ export default function SignUp() {
                     >
                         Register
                     </Button>
-                    <Link href="/login" variant="body2">
-                        {"Already have an account? Login here"}
-                    </Link>
+                    <RouterLink to="/login">
+                        <Link variant="body2">Already have an account? Login here</Link>
+                    </RouterLink>
                 </form>
             </div>
 

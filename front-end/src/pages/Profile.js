@@ -49,9 +49,8 @@ export default function Profile() {
     console.log("Profile() is rendered.")
 
     const context = useContext(DataContext)
-    const { authUser, user, setUser, setRecipe, isLoading } = context
+    const { authUser, user, setUser, setRecipe, isLoading, setLoading } = context
     const { userId } = useParams()
-
 
     // Computed Variables
     const isAuthUser = authUser.userId === user.userId
@@ -86,6 +85,8 @@ export default function Profile() {
     const [followerOpen, setFollowerOpen] = useState(false);
     const [followingOpen, setFollowingOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
+
+    useEffect(()=> setLoading(true), [])
 
     // axios get
     useEffect(() => {

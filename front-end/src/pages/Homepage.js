@@ -1,6 +1,6 @@
 import React, {useContext} from "react"
 import Button from '@material-ui/core/Button';
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {DataContext} from "../contexts/Context";
 
 
@@ -8,6 +8,8 @@ const Homepage = () => {
     console.log("Homepage() is rendered.")
     const context = useContext(DataContext)
     const {authUser} = context
+
+    const history = useHistory()
 
     // if (authUser.access_token === '') {
     //     return <Redirect to={`/users/${authUser.userId}`} />
@@ -20,7 +22,9 @@ const Homepage = () => {
                 <div className="banner-text-container">
                     <div>
                         <h1 className="banner-text">Get your chef hat on!</h1>
-                        <Button href="/signup" variant="contained" color="primary">Get Started</Button>
+                        <Button variant="contained" color="primary"
+                                onClick={() => ((authUser.access_token === '') ? history.push('/signup') : history.push(`/users/${authUser.userId}`))}
+                        >Get Started</Button>
                     </div>
                 </div>
             </div>
