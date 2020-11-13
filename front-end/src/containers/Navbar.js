@@ -54,7 +54,6 @@ const Navbar = () => {
                 <div className="navbar-menu">
                     {authUser.userId ?
                         <>
-
                             <Button
                                 onClick={handleToggle}
                                 ref={anchorRef}

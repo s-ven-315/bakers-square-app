@@ -91,13 +91,13 @@ export default function Recipe() {
                             <Tab label={`Likes (${recipe.likes.length} )`} />
                             <Tab label={`Comments (${recipe.comments.length} )`} />
                         </Tabs>
-                        <TabPanel value={value} index={0}>
+                        <TabPanel value={value} index={0} className='recipe-page-tab-panel'>
                             <RecipeDetails />
                         </TabPanel>
-                        <TabPanel value={value} index={1} >
+                        <TabPanel value={value} index={1} className='recipe-page-tab-panel'>
                             <Likes />
                         </TabPanel>
-                        <TabPanel value={value} index={2}>
+                        <TabPanel value={value} index={2} className='recipe-page-tab-panel'>
                             <Comments />
                         </TabPanel>
                     </div>

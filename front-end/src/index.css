@@ -34,6 +34,16 @@ body {
   z-index: 2;
 }
 
+.recipe-page-tab-panel {
+
+}
+
+.menu-narrow {
+  margin: auto;
+  line-height: 1rem;
+}
+
+
 .banner-container {
   position:relative;
   height: 80vh;
@@ -842,6 +852,18 @@ body {
 }
 
 @media screen and (max-width: 475px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .recipe-page-tab-panel {
+    padding: 1rem 0 5rem;
+  }
+
+  .recipe-page-tab-panel .MuiBox-root{
+    padding: 0;
+  }
+
   .menu-wide {
     display:None;
   }

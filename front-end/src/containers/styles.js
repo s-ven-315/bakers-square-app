@@ -49,7 +49,6 @@ export const useStyles = makeStyles((theme) => ({
     recipeDetailsMobile: {
         display: 'flex',
         flexDirection: 'column',
-        width: '100vw',
         "@media screen and (min-width: 768px)": {
             display: 'none'
         }
@@ -152,7 +151,7 @@ export const useStyles = makeStyles((theme) => ({
     // Accordion
     aDetails: {
         overflowY: 'auto',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
 }));

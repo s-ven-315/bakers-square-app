@@ -88,7 +88,6 @@ export default function RecipeDetails() {
                 >
                     <Tab label="Ingredients" {...a11yProps(0)} />
                     <Tab label="Recipe Steps" {...a11yProps(1)} />
-
                 </Tabs>
 
                 <TabPanel value={value} index={0}>

@@ -37,7 +37,6 @@ export default function RecipeIngredients() {
 
     return (
         <div className="recipe-ingredients">
-
             <TableContainer className={classes.rTable}>
                 <Table>
                     <TableHead>
