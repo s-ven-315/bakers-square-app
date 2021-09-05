@@ -2,7 +2,7 @@
 
 NEXT Academy Full Stack Web Development Final Project (2 weeks project)
 
-Developed by me (s-ven-315) and my partner (victorbluesky)
+Developed by me (s-ven-315) and my teammate (victorbluesky)
 
 End product: https://fervent-bell-b7daed.netlify.app/
 
